@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>HeadFirst设计模式1-策略模式 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。 1. 为什么需要策略模式  考虑到如下一个场景，你构造一个Duck的SuperClass,以后各种各样的鸭子都继承该SuperClass ,代码实现应该如下。12345678910111213public class Duc">
+  <meta name="description" content="作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。">
 <meta name="keywords" content="设计模式,java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HeadFirst设计模式1-策略模式">
 <meta property="og:url" content="http://yoursite.com/2017/10/07/HeadFirst设计模式1-策略模式/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。 1. 为什么需要策略模式  考虑到如下一个场景，你构造一个Duck的SuperClass,以后各种各样的鸭子都继承该SuperClass ,代码实现应该如下。12345678910111213public class Duc">
+<meta property="og:description" content="作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-3b6fdb48f67c5312.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-10-07T14:22:12.685Z">
+<meta property="og:updated_time" content="2017-10-07T15:16:38.895Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HeadFirst设计模式1-策略模式">
-<meta name="twitter:description" content="作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。 1. 为什么需要策略模式  考虑到如下一个场景，你构造一个Duck的SuperClass,以后各种各样的鸭子都继承该SuperClass ,代码实现应该如下。12345678910111213public class Duc">
+<meta name="twitter:description" content="作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-3b6fdb48f67c5312.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
@@ -183,7 +183,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p> 作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。</p>
+        <p>作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。<br><a id="more"></a></p>
+<p> 作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。</p>
 <h5 id="1-为什么需要策略模式"><a href="#1-为什么需要策略模式" class="headerlink" title="1. 为什么需要策略模式"></a>1. 为什么需要策略模式</h5><p>  考虑到如下一个场景，你构造一个Duck的SuperClass,以后各种各样的鸭子都继承该SuperClass ,代码实现应该如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>&#123; <span class="comment">//会叫</span></div><div class="line">        System.out.println(<span class="string">"I can quack"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">()</span></span>&#123; <span class="comment">//会游泳</span></div><div class="line">        System.out.println(<span class="string">"I can swim"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span></span>&#123; <span class="comment">//外表</span></div><div class="line">        System.out.println(<span class="string">"I am a special duck with good look"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>具体的实现类如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreeHeadDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;  <span class="comment">//绿头鸭</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"I am green duck"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedHeadDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span></span>&#123;  <span class="comment">//红头鸭</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"I am red duck"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>  上面这样看起来也没毛病啊，但是它有个问题就是，当给SuperClass加上fly()方法后，表示每个子类都会飞。即便是我后来的子类不能飞，它也可以fly。此时，我们可能会想到，覆盖fly()方法，方法里面什么都不做。但是问题还是很突出。原因如下：</p>
