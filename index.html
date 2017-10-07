@@ -46,7 +46,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="null" class="profilepic">
-			<img src="http://onmo6k247.bkt.clouddn.com/me" class="js-avatar">
+			<img src="http://onmo6k247.bkt.clouddn.com/IMG_20170525_093103.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="null">Maskwang</a></h1>
@@ -106,7 +106,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="http://onmo6k247.bkt.clouddn.com/me" class="js-avatar">
+				<img src="http://onmo6k247.bkt.clouddn.com/IMG_20170525_093103.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Maskwang</h1>
@@ -161,27 +161,45 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hello" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-HeadFirst设计模式1-策略模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/hello/">hello</a>
+      <a class="article-title" href="/2017/10/07/HeadFirst设计模式1-策略模式/">HeadFirst设计模式1-策略模式</a>
     </h1>
   
 
         
-        <a href="/2017/07/22/hello/" class="archive-article-date">
-  	<time datetime="2017-07-22T15:01:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
+        <a href="/2017/10/07/HeadFirst设计模式1-策略模式/" class="archive-article-date">
+  	<time datetime="2017-10-07T13:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="hello-world-mask"><a href="#hello-world-mask" class="headerlink" title="hello world mask"></a>hello world mask</h3>
+        <p> 作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。</p>
+<h5 id="1-为什么需要策略模式"><a href="#1-为什么需要策略模式" class="headerlink" title="1. 为什么需要策略模式"></a>1. 为什么需要策略模式</h5><p>  考虑到如下一个场景，你构造一个Duck的SuperClass,以后各种各样的鸭子都继承该SuperClass ,代码实现应该如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Duck &#123;</div><div class="line">    public void quack()&#123; //会叫</div><div class="line">        System.out.println(&quot;I can quack&quot;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void swim()&#123; //会游泳</div><div class="line">        System.out.println(&quot;I can swim&quot;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void play()&#123; //外表</div><div class="line">        System.out.println(&quot;I am a special duck with good look&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>具体的实现类如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class GreeHeadDuck extends Duck &#123;  //绿头鸭</div><div class="line">    @Override</div><div class="line">    public void play()&#123;</div><div class="line">        System.out.println(&quot;I am green duck&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">public class RedHeadDuck extends Duck&#123;  //红头鸭</div><div class="line">    @Override</div><div class="line">    public void play()&#123;</div><div class="line">        System.out.println(&quot;I am red duck&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>  上面这样看起来也没毛病啊，但是它有个问题就是，当给SuperClass加上fly()方法后，表示每个子类都会飞。即便是我后来的子类不能飞，它也可以fly。此时，我们可能会想到，覆盖fly()方法，方法里面什么都不做。但是问题还是很突出。原因如下：</p>
+<ol>
+<li>代码在多个子类中重复。不管是什么类型的鸭子，都会继承来SuperClass的所有属性和方法，这其中有些子类根本就不具备。</li>
+<li>运行时的行为不容易改变。我想让某个鸭子换个叫声，在不动SuperClass的情况下做不到。</li>
+<li>很难知道所有鸭子共同的行为。比如fly方法，有些鸭子不具备，但是还是在父类中。</li>
+<li>改一发动全身，我上面还是只添加fly(),有些鸭子不会飞，但是要覆盖方法。  </li>
+</ol>
+<p>  我们接着可能会采用如下的解决办法，把fly,display从超类中抽出来，放进一个Flayable接口中。把quack()抽出来，放进Quackable接口中，代码如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public interface Quackable &#123; //会叫的接口</div><div class="line">    public void quack();</div><div class="line">&#125;</div><div class="line">public interface Flyable &#123; //会飞接口</div><div class="line">    public void fly();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>  这样对于多个会飞Duck子类，每个子类都有一个实现Flyable()的类，在里面覆写fly()方法，会造成太多Flyable()的子类，无法复用。其次，还不能动态改变fly行为，因为已经写死啦。此时，设计原则就出来了，即：<strong>找出应用之中可能需要变化之处，把他们独立出来，不要和那些不需要变化的代码混到一起。</strong></p>
+<h5 id="2-如何使用策略模式"><a href="#2-如何使用策略模式" class="headerlink" title="2. 如何使用策略模式"></a>2. 如何使用策略模式</h5><p>  解决上述问题的根本是分开变化和不会变化的部分。Duck类中的fly(),quack()会随着鸭子的不同而改变，那我们将它们从Duck类中取出来，建立一组新类来代表每个行为。此时，设计原则就应用上了即，<strong>针对接口编程，而不是针对实现编程</strong>  这句话的理解在这里就是针对超类编程。前面我们设计 Quackable，Flyable，然后让具体的类去实现这两个接口，这样，就是针对实现编程，不利于动态修改和以后的拓展。因此，我们编写两个FlyBehavior,QuackBehavior两个接口，以及他们的实现类，这样，我们把FlyBehavior和QuackBehavior作为超类的属性，这个具体的实现通过set方法通过set()传递进去，这样实现面向接口编程，可以动态改变，也可以复用代码。代码实现如下：<br>行为接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public interface FlyBehavior &#123;</div><div class="line">    public void fly();</div><div class="line">&#125;</div><div class="line">public interface QuackBehavior &#123;</div><div class="line">    public void quack();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class FlyNoWay implements FlyBehavior &#123; //不能飞</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void fly() &#123;</div><div class="line">        System.out.println(&quot;I can FlyNoWay&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">public class FlyWithWins implements FlyBehavior &#123; //用翅膀飞</div><div class="line">    @Override</div><div class="line">    public void fly() &#123;</div><div class="line">        System.out.println(&quot;i can fly with wins&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">public class Quack implements QuackBehavior &#123; //一般的叫</div><div class="line">    @Override</div><div class="line">    public void quack() &#123;</div><div class="line">        System.out.println(&quot;quack&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">public class Squack implements QuackBehavior &#123; //嘶叫</div><div class="line">    @Override</div><div class="line">    public void quack() &#123;</div><div class="line">        System.out.println(&quot;squack&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>把基本接口作为超类的属性成员，面向接口编程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class Duck &#123;</div><div class="line">    private FlyBehavior flyBehavior; //代理类，组合模式</div><div class="line">    private QuackBehavior quackBehavior;</div><div class="line"></div><div class="line">    public void fly()&#123;</div><div class="line">        flyBehavior.fly();</div><div class="line">    &#125;</div><div class="line">    public void quack()&#123;</div><div class="line">        quackBehavior.quack();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setFlyBehavior(FlyBehavior flyBehavior) &#123;</div><div class="line">        this.flyBehavior = flyBehavior;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setQuackBehavior(QuackBehavior quackBehavior) &#123;</div><div class="line">        this.quackBehavior = quackBehavior;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    public void swim()&#123; //会游泳</div><div class="line">        System.out.println(&quot;I can swim&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void play()&#123; //外表</div><div class="line">        System.out.println(&quot;I am a special duck with good look&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>测试类如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Main &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Duck duck=new Duck();</div><div class="line">        duck.setFlyBehavior(new FlyNoWay());</div><div class="line">        duck.fly();</div><div class="line">        duck.setFlyBehavior(new FlyWithWins());</div><div class="line">        duck.fly();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>结果如下图<br><img src="http://upload-images.jianshu.io/upload_images/5281821-3b6fdb48f67c5312.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="result.png"><br>  总结：上述做法的好处，面对不同飞行类型，可以在不修改Duck的基础上实现，这就是策略模式，根据你传入进来的具体实现类，执行不同的行为，这里关键就是运用多态这一特点。其次，不同的实现类可以复用，以前针对每个子类都有实现类，现在同一类型的都可以采用同一个实现类。</p>
+<h5 id="3-结论"><a href="#3-结论" class="headerlink" title="3. 结论"></a>3. 结论</h5><p>   <strong>策略模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户</strong>，简单来说，就是定义了基础接口封装在类属性里面，可以根据不同的实现类，动态的改变行为。</p>
+
       
 
       
@@ -189,11 +207,37 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/hello/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/10/07/HeadFirst设计模式1-策略模式/">展开全文 >></a>
         </p>
       
 
@@ -218,78 +262,6 @@
         
     </div>
 </aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/22/hello-world/" class="archive-article-date">
-  	<time datetime="2017-07-22T14:37:34.560Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/22/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
 
 
 
@@ -406,6 +378,14 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
