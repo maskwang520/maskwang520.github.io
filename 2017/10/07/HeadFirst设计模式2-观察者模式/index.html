@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>HeadFirst设计模式2---观察者模式 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。">
+  <meta name="description" content="&amp;emsp;&amp;emsp;在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。">
 <meta name="keywords" content="设计模式,java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HeadFirst设计模式2---观察者模式">
 <meta property="og:url" content="http://yoursite.com/2017/10/07/HeadFirst设计模式2-观察者模式/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-1f068ed6fa057888.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-d2012e80caf3ce4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-10-07T15:16:41.684Z">
+<meta property="og:updated_time" content="2017-10-08T02:25:46.149Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HeadFirst设计模式2---观察者模式">
-<meta name="twitter:description" content="在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-1f068ed6fa057888.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
@@ -194,9 +194,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。<br><a id="more"></a></p>
-<h6 id="1-为何需要观察者模式（why"><a href="#1-为何需要观察者模式（why" class="headerlink" title="1. 为何需要观察者模式（why)"></a>1. 为何需要观察者模式（why)</h6><p>  在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。</p>
-<blockquote>
+        <p>&emsp;&emsp;在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。<br><a id="more"></a></p>
+<h6 id="1-为何需要观察者模式（why"><a href="#1-为何需要观察者模式（why" class="headerlink" title="1. 为何需要观察者模式（why)"></a>1. 为何需要观察者模式（why)</h6><blockquote>
 <p>  Defidition:<em>观察者模式定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。</em></p>
 </blockquote>
 <p>下面通过一个和实例逐步弄清楚什么是观察者模式。</p>
