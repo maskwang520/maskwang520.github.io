@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-46e5af03be72f540.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-3a174a19ee986d07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-10-12T11:12:16.428Z">
+<meta property="og:updated_time" content="2017-10-12T11:16:20.237Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Springboot用WebSocket构建交互式的web应用">
 <meta name="twitter:description" content="WebSocket是html5带来的一项重大的特性，使得浏览器与服务端之间真正长连接交互成为了可能，这篇文章会带领大家窥探一下Spring 对WebSocket的支持及使用。">
@@ -223,9 +223,11 @@
 <ul>
 <li>var socket = new SockJS(‘/socket’); 先构建一个SockJS对象</li>
 <li>stompClient = Stomp.over(socket); 用Stomp将SockJS进行协议封装</li>
-<li>stompClient.connect() 与服务端进行连接，同时有一个回调函数，处理连接成功后的操作信息。发送消息</li>
-<li>stompClient.send(“/app/hello”, {}, JSON.stringify({‘name’: $(“#name”).val()}));是客户端向服务端发送消息</li>
-<li>stompClient.subscribe(‘/topic/greetings’, function (greeting) {<pre><code>    showGreeting(JSON.parse(greeting.body).content);
+<li>stompClient.connect()与服务端进行连接，同时有一个回调函数，处理连接成功后的操作信息。发送消息</li>
+<li><p>stompClient.send(“/app/hello”, {}, JSON.stringify({‘name’: $(“#name”).val()}));是客户端向服务端发送消息</p>
+</li>
+<li><p>stompClient.subscribe(‘/topic/greetings’, function (greeting) {</p>
+<pre><code>    showGreeting(JSON.parse(greeting.body).content);
 }); //是服务端向客户端发送消息
 </code></pre></li>
 </ul>
