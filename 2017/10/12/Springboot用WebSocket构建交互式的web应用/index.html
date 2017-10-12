@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Springboot用WebSocket构建交互式的web应用 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#####  WebSocket是html5带来的一项重大的特性，使得浏览器与服务端之间真正长连接交互成为了可能，这篇文章会带领大家窥探一下Spring 对WebSocket的支持及使用。">
+  <meta name="description" content="WebSocket是html5带来的一项重大的特性，使得浏览器与服务端之间真正长连接交互成为了可能，这篇文章会带领大家窥探一下Spring 对WebSocket的支持及使用。">
 <meta name="keywords" content="websocket,springboot,web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Springboot用WebSocket构建交互式的web应用">
 <meta property="og:url" content="http://yoursite.com/2017/10/12/Springboot用WebSocket构建交互式的web应用/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="#####  WebSocket是html5带来的一项重大的特性，使得浏览器与服务端之间真正长连接交互成为了可能，这篇文章会带领大家窥探一下Spring 对WebSocket的支持及使用。">
+<meta property="og:description" content="WebSocket是html5带来的一项重大的特性，使得浏览器与服务端之间真正长连接交互成为了可能，这篇文章会带领大家窥探一下Spring 对WebSocket的支持及使用。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-46e5af03be72f540.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-3a174a19ee986d07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-10-12T11:07:05.798Z">
+<meta property="og:updated_time" content="2017-10-12T11:08:29.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Springboot用WebSocket构建交互式的web应用">
-<meta name="twitter:description" content="#####  WebSocket是html5带来的一项重大的特性，使得浏览器与服务端之间真正长连接交互成为了可能，这篇文章会带领大家窥探一下Spring 对WebSocket的支持及使用。">
+<meta name="twitter:description" content="WebSocket是html5带来的一项重大的特性，使得浏览器与服务端之间真正长连接交互成为了可能，这篇文章会带领大家窥探一下Spring 对WebSocket的支持及使用。">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-46e5af03be72f540.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
@@ -194,7 +194,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#####  WebSocket是html5带来的一项重大的特性，使得浏览器与服务端之间真正长连接交互成为了可能，这篇文章会带领大家窥探一下Spring 对WebSocket的支持及使用。<br><a id="more"></a></p>
+        <p> WebSocket是html5带来的一项重大的特性，使得浏览器与服务端之间真正长连接交互成为了可能，这篇文章会带领大家窥探一下Spring 对WebSocket的支持及使用。<br><a id="more"></a></p>
 <blockquote>
 <p>　  在HTTP/1.0中，默认使用的是短连接。也就是说，浏览器和服务器每进行一次HTTP操作，就建立一次连接，但任务结束就中断连接。<br>但从 HTTP/1.1起，默认使用长连接，用以保持连接特性。使用长连接的HTTP协议，会在响应头有加入这行代码：Connection:keep-alive<br>　　在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的 TCP连接不会关闭HTTP协议的长连接和短连接，这两种实质上是TCP协议的长连接和短连接。</p>
 <p>#####项目结构</p>
