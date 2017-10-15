@@ -6,18 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Category: DesignPattern | Maskwang blogs</title>
+  <title>HeadFirst设计模式3-装饰者模式 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="偶尔要回头看看，否则永远都在追寻，而不知道自己失去了什么。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Maskwang blogs">
-<meta property="og:url" content="http://yoursite.com/categories/DesignPattern/index.html">
+  <meta name="description" content="在我们的工作中，往往会这样的需求，就是动态地将责任附加到对象上，来达到拓展对象功能的目的。例如，对于做饼这件事来说，往往在做好一个饼之后，会有加糖，加盐，加鸡蛋这样类似的客户需求，不同的需求价格当然不同。我们通常的做法创建基类（Cake），然后让其他的子类继承它，试想下，如果如果有很多的类，岂不是会造成类爆炸，新出一款新的饼，就会构造一个类，计算不同的价格。而装饰者模式应用在这上面就非常的好。你想">
+<meta name="keywords" content="设计模式,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HeadFirst设计模式3-装饰者模式">
+<meta property="og:url" content="http://yoursite.com/2017/10/15/HeadFirst设计模式3-装饰者模式/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="偶尔要回头看看，否则永远都在追寻，而不知道自己失去了什么。">
+<meta property="og:description" content="在我们的工作中，往往会这样的需求，就是动态地将责任附加到对象上，来达到拓展对象功能的目的。例如，对于做饼这件事来说，往往在做好一个饼之后，会有加糖，加盐，加鸡蛋这样类似的客户需求，不同的需求价格当然不同。我们通常的做法创建基类（Cake），然后让其他的子类继承它，试想下，如果如果有很多的类，岂不是会造成类爆炸，新出一款新的饼，就会构造一个类，计算不同的价格。而装饰者模式应用在这上面就非常的好。你想">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-519d7a057c3d5092.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-41f4828bba195c34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-10-15T15:31:46.170Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Maskwang blogs">
-<meta name="twitter:description" content="偶尔要回头看看，否则永远都在追寻，而不知道自己失去了什么。">
+<meta name="twitter:title" content="HeadFirst设计模式3-装饰者模式">
+<meta name="twitter:description" content="在我们的工作中，往往会这样的需求，就是动态地将责任附加到对象上，来达到拓展对象功能的目的。例如，对于做饼这件事来说，往往在做好一个饼之后，会有加糖，加盐，加鸡蛋这样类似的客户需求，不同的需求价格当然不同。我们通常的做法创建基类（Cake），然后让其他的子类继承它，试想下，如果如果有很多的类，岂不是会造成类爆炸，新出一款新的饼，就会构造一个类，计算不同的价格。而装饰者模式应用在这上面就非常的好。你想">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-519d7a057c3d5092.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -169,36 +174,98 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-HeadFirst设计模式3-装饰者模式" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      HeadFirst设计模式3-装饰者模式
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/15/HeadFirst设计模式3-装饰者模式/" class="archive-article-date">
+
+        
+        <a href="/2017/10/15/HeadFirst设计模式3-装饰者模式/" class="archive-article-date">
   	<time datetime="2017-10-15T15:27:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-15</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/15/HeadFirst设计模式3-装饰者模式/">HeadFirst设计模式3-装饰者模式</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在我们的工作中，往往会这样的需求，就是动态地将责任附加到对象上，来达到拓展对象功能的目的。例如，对于做饼这件事来说，往往在做好一个饼之后，会有加糖，加盐，加鸡蛋这样类似的客户需求，不同的需求价格当然不同。我们通常的做法创建基类（Cake），然后让其他的子类继承它，试想下，如果如果有很多的类，岂不是会造成类爆炸，新出一款新的饼，就会构造一个类，计算不同的价格。而装饰者模式应用在这上面就非常的好。你想加糖，那我在外面包装一层，把额外的价格加上去。以后如果有几种配料的叠加，不用创造新的类，由原来的子类通过装饰者模式包装起来就行。<br><a id="more"></a></p>
+<h6 id="2-如何实现装饰者模式how"><a href="#2-如何实现装饰者模式how" class="headerlink" title="2. 如何实现装饰者模式how)"></a>2. 如何实现装饰者模式how)</h6><ol>
+<li>定义一个饼的基类，其他的饼的种类继承它。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Cake</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> String message=<span class="string">"CAKE"</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">float</span> cost;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> message;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//每个实现类自己实现</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">float</span> <span class="title">getCost</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>油饼，和糖饼分别实现饼<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BatterCake</span> <span class="keyword">extends</span> <span class="title">Cake</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BatterCake</span><span class="params">()</span> </span>&#123;</div><div class="line">        message=<span class="string">"batterCake"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getCost</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.cost=<span class="number">1.2f</span>;</div><div class="line">        <span class="keyword">return</span> cost;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OilCake</span> <span class="keyword">extends</span> <span class="title">Cake</span></span>&#123; <span class="comment">//饼的实现类，油饼</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OilCake</span><span class="params">()</span> </span>&#123;</div><div class="line">        message=<span class="string">"oilCake"</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getCost</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.cost=<span class="number">1.5f</span>;</div><div class="line">        <span class="keyword">return</span> cost;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>可以分别加糖或者加盐，因此先来个装饰器接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CakeDecorator</span> <span class="keyword">extends</span> <span class="title">Cake</span> </span>&#123;</div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>&emsp;&emsp;分别实现通过装饰器加糖和加盐</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by maskwang on 2017/10/15 0015.</div><div class="line"> * 饼加盐</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SaltDecorator</span> <span class="keyword">extends</span> <span class="title">CakeDecorator</span></span>&#123;</div><div class="line">    Cake cake;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SaltDecorator</span><span class="params">(Cake cake)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.cake = cake;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> cake.getMessage()+<span class="string">"  with salt   "</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getCost</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> cake.getCost()+<span class="number">0.3f</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SugerDecorator</span> <span class="keyword">extends</span> <span class="title">CakeDecorator</span> </span>&#123;</div><div class="line">    Cake cake;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SugerDecorator</span><span class="params">(Cake cake)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.cake = cake;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> cake.getMessage()+<span class="string">"  with suger  "</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getCost</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> cake.getCost()+<span class="number">0.2f</span>;   <span class="comment">//饼的钱+糖的钱</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>测试一下通过装饰器既加糖又加盐<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Cake cake = <span class="keyword">new</span> OilCake();</div><div class="line">        cake = <span class="keyword">new</span> SaltDecorator(cake);</div><div class="line">        cake=<span class="keyword">new</span> SugerDecorator(cake);</div><div class="line">        System.out.println(cake.getMessage());</div><div class="line">        System.out.println(cake.getCost());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5281821-519d7a057c3d5092.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>&emsp;&emsp;这里解释一下，最后的2.0如何出来，构造出OilCake，cost就是1.5，<br> cake = new SaltDecorator(cake)，那么cost就是1.8。cake=new SugerDecorator(cake)，那么就是2.0。</p>
+<ol>
+<li>我们常见到的IO包下，就运用到装饰者模式，例如BufferedInputStream,DataInputStream等。也可以实现一个装饰器，把字母转化成小写。如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.designpattern.decoratorpattern;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.FilterInputStream;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by maskwang on 2017/10/15 0015.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UperCaseInputStream</span> <span class="keyword">extends</span> <span class="title">FilterInputStream</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UperCaseInputStream</span><span class="params">(InputStream in)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(in);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        <span class="keyword">int</span> c=<span class="keyword">super</span>.read();</div><div class="line">        <span class="keyword">return</span> (c==-<span class="number">1</span>?c:Character.toUpperCase((<span class="keyword">char</span>)c));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">byte</span>[] b, <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        <span class="keyword">int</span> result=<span class="keyword">super</span>.read(b,off,len);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=off;i&lt;off+result;i++)&#123;</div><div class="line">            b[i]=(<span class="keyword">byte</span>)Character.toUpperCase((<span class="keyword">char</span>)b[i]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>测试IO装饰类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line"><span class="comment">//        Cake cake = new OilCake();</span></div><div class="line"><span class="comment">//        cake = new SaltDecorator(cake);</span></div><div class="line"><span class="comment">//        cake=new SugerDecorator(cake);</span></div><div class="line"><span class="comment">//        System.out.println(cake.getMessage());</span></div><div class="line"><span class="comment">//        System.out.println(cake.getCost());</span></div><div class="line">        <span class="keyword">int</span> c;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            InputStream in=<span class="keyword">new</span> UperCaseInputStream(<span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"E:\\test.txt"</span>)));</div><div class="line">            <span class="keyword">while</span> ((c=in.read())&gt;<span class="number">0</span>)</div><div class="line">                System.out.println((<span class="keyword">char</span>)(c));</div><div class="line">        &#125;<span class="keyword">catch</span> (IOException e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">![Uploading image_647020.png . . .]</div></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5281821-41f4828bba195c34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h6 id="3-总结（conclution"><a href="#3-总结（conclution" class="headerlink" title="3. 总结（conclution)"></a>3. 总结（conclution)</h6><ul>
+<li>&emsp;&emsp;从上述我们可以看出来 ，装饰者模式用于已经存在的类添加额外的功能，但是它也有缺点，就是它要在设计中加入大量的小类，会造成额外的空间占用。其核心思想还是如下：<blockquote>
+<p>&emsp;&emsp;多用组合，少用继承。针对接口编程，不针对实现编程。对拓展开放，对修改关闭。<br><a href="github.com/maskwang520">github地址：github.com/maskwang520</a></p>
+</blockquote>
+</li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://onmo6k247.bkt.clouddn.com/zhifubao">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://onmo6k247.bkt.clouddn.com/mmqrcode1507380613282.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -214,7 +281,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -227,124 +294,113 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/15/HeadFirst设计模式3-装饰者模式/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/07/HeadFirst设计模式2-观察者模式/" class="archive-article-date">
-  	<time datetime="2017-10-07T14:47:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-07</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/12/Springboot用WebSocket构建交互式的web应用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Springboot用WebSocket构建交互式的web应用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/07/HeadFirst设计模式2-观察者模式/">HeadFirst设计模式2---观察者模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/07/HeadFirst设计模式1-策略模式/" class="archive-article-date">
-  	<time datetime="2017-10-07T13:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/07/HeadFirst设计模式1-策略模式/">HeadFirst设计模式1-策略模式</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="HeadFirst设计模式3-装饰者模式" ></div> 
+<script type="text/javascript"> 
+window.YiliaChangyanWrap = function() {
+    var appid = "true"; 
+    var conf = "true"; 
+    var width = window.innerWidth || document.documentElement.clientWidth; 
+    if (width < 960) { 
+    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); }
+}
+</script>
+  
 
+  
 
           </div>
         </div>
@@ -366,10 +422,10 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
