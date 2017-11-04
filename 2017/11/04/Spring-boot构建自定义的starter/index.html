@@ -17,7 +17,7 @@
 <meta property="og:description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-3db9b52e9cfc819b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-04T12:09:14.984Z">
+<meta property="og:updated_time" content="2017-11-04T12:46:47.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring boot构建自定义的starter">
 <meta name="twitter:description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
@@ -208,7 +208,7 @@
 <li><code>@ConfigurationProperties(prefix = &quot;hello&quot;)</code>是类型安全的属性获取。在application.properties 中通过hello.msg来设置，如果不设置默认就是“word”。</li>
 </ul>
 <ol>
-<li><p>定义条件类（根据此类的存在与否来创建这个类的Bean，这个类可以是第三方类库的类）。</p>
+<li><p>先定义条件类（根据此类的存在与否来创建这个类的Bean，这个类可以是第三方类库的类）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloService</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String msg;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> msg;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.msg=msg;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>自动配置类</p>
