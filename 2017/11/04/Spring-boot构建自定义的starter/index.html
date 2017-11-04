@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>HeadFirst设计模式1-策略模式 | Maskwang blogs</title>
+  <title>Spring boot构建自定义的starter | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;emsp;&amp;emsp;作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。">
-<meta name="keywords" content="设计模式,java">
+  <meta name="description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
+<meta name="keywords" content="java,Springboot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HeadFirst设计模式1-策略模式">
-<meta property="og:url" content="http://yoursite.com/2017/10/07/HeadFirst设计模式1-策略模式/index.html">
+<meta property="og:title" content="Spring boot构建自定义的starter">
+<meta property="og:url" content="http://yoursite.com/2017/11/04/Spring-boot构建自定义的starter/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。">
+<meta property="og:description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-3b6fdb48f67c5312.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-10-08T02:25:17.061Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-3db9b52e9cfc819b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-04T11:53:53.065Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HeadFirst设计模式1-策略模式">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-3b6fdb48f67c5312.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Spring boot构建自定义的starter">
+<meta name="twitter:description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-3db9b52e9cfc819b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -173,44 +173,80 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-HeadFirst设计模式1-策略模式" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Spring-boot构建自定义的starter" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      HeadFirst设计模式1-策略模式
+      Spring boot构建自定义的starter
     </h1>
   
 
         
-        <a href="/2017/10/07/HeadFirst设计模式1-策略模式/" class="archive-article-date">
-  	<time datetime="2017-10-07T13:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-07</time>
+        <a href="/2017/11/04/Spring-boot构建自定义的starter/" class="archive-article-date">
+  	<time datetime="2017-11-04T11:51:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&emsp;&emsp;作者在看HeadFirst设计模式，把整个学习过程记录下来，方便以后回顾，也可以与大家交流，欢迎拍板。整个系列每篇文章围绕why,how,conclusion这三方面展开。<br><a id="more"></a></p>
-<h5 id="1-为什么需要策略模式"><a href="#1-为什么需要策略模式" class="headerlink" title="1. 为什么需要策略模式"></a>1. 为什么需要策略模式</h5><p>  考虑到如下一个场景，你构造一个Duck的SuperClass,以后各种各样的鸭子都继承该SuperClass ,代码实现应该如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>&#123; <span class="comment">//会叫</span></div><div class="line">        System.out.println(<span class="string">"I can quack"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">()</span></span>&#123; <span class="comment">//会游泳</span></div><div class="line">        System.out.println(<span class="string">"I can swim"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span></span>&#123; <span class="comment">//外表</span></div><div class="line">        System.out.println(<span class="string">"I am a special duck with good look"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>具体的实现类如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreeHeadDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;  <span class="comment">//绿头鸭</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"I am green duck"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedHeadDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span></span>&#123;  <span class="comment">//红头鸭</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"I am red duck"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>  上面这样看起来也没毛病啊，但是它有个问题就是，当给SuperClass加上fly()方法后，表示每个子类都会飞。即便是我后来的子类不能飞，它也可以fly。此时，我们可能会想到，覆盖fly()方法，方法里面什么都不做。但是问题还是很突出。原因如下：</p>
+        <p> 在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        SpringApplication.run(App.class, args);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>  包括我自己，我平常在开发的过程中，并没有去重点关注spring boot的运行原理，大家都是约定俗成的这么去使用。接下的过程中，将会结合源码简单的分析下springboot运行原理。<br><a id="more"></a></p>
+<h4 id="一-Springboot-自动配置原理分析"><a href="#一-Springboot-自动配置原理分析" class="headerlink" title="一.Springboot 自动配置原理分析"></a>一.Springboot 自动配置原理分析</h4><p>   <code>@SpringBootApplication</code>注解<code>@SpringBootApplication</code>是一个复合注解，它包括<code>@SpringBootConfiguration</code>，<code>@EnableAutoConfiguration</code>，<code>@ComponentScan</code>三个注解。其中最关键的莫过<code>@EnableAutoConfiguration</code>这个注解。在它的源码中加入了这样一个注解<code>@Import({EnableAutoConfigurationImportSelector.class})</code>，<code>EnableAutoConfigurationImportSelector</code>,它使用<code>SpringFactoriesLoader. loadFactoryNames</code>方法来扫描<code>META-INF/spring.factories</code>文件，此文件中声明了有哪些自动配置。源码如下（我挑选出重要的一部分）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FACTORIES_RESOURCE_LOCATION = <span class="string">"META-INF/spring.factories"</span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">loadFactoryNames</span><span class="params">(Class&lt;?&gt; factoryClass, ClassLoader classLoader)</span> </span>&#123;</div><div class="line">		String factoryClassName = factoryClass.getName();</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Enumeration&lt;URL&gt; urls = (classLoader != <span class="keyword">null</span> ? classLoader.getResources(FACTORIES_RESOURCE_LOCATION) :</div><div class="line">					ClassLoader.getSystemResources(FACTORIES_RESOURCE_LOCATION));</div><div class="line">			List&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">			<span class="keyword">while</span> (urls.hasMoreElements()) &#123;</div><div class="line">				URL url = urls.nextElement();</div><div class="line">				Properties properties = PropertiesLoaderUtils.loadProperties(<span class="keyword">new</span> UrlResource(url));</div><div class="line">				String factoryClassNames = properties.getProperty(factoryClassName);</div><div class="line">				result.addAll(Arrays.asList(StringUtils.commaDelimitedListToStringArray(factoryClassNames)));</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">return</span> result;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IOException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Unable to load ["</span> + factoryClass.getName() +</div><div class="line">					<span class="string">"] factories from location ["</span> + FACTORIES_RESOURCE_LOCATION + <span class="string">"]"</span>, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>  我随便查看spring-boot-autoconfigure-1.5.3.RELEASE.jar中的spring.factories,有如下的自动配置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Auto Configure</div><div class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</div><div class="line">org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</div><div class="line">org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\</div><div class="line">org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,\</div><div class="line">org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,\</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>上述spring.factories对应key为org.springframework.boot.autoconfigure.EnableAutoConfiguration的值即为启动时候需要自动配置的类。</p>
+<p>####二. 实现自定义的starter</p>
 <ol>
-<li>代码在多个子类中重复。不管是什么类型的鸭子，都会继承来SuperClass的所有属性和方法，这其中有些子类根本就不具备。</li>
-<li>运行时的行为不容易改变。我想让某个鸭子换个叫声，在不动SuperClass的情况下做不到。</li>
-<li>很难知道所有鸭子共同的行为。比如fly方法，有些鸭子不具备，但是还是在父类中。</li>
-<li>改一发动全身，我上面还是只添加fly(),有些鸭子不会飞，但是要覆盖方法。  </li>
+<li>首先定义一个基本的对象类，用来接收application.properties里面特定字段的值。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"hello"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceProperties</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String MSG=<span class="string">"world"</span>;</div><div class="line">    <span class="keyword">private</span> String msg=MSG;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> msg;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.msg = msg;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 </ol>
-<p>  我们接着可能会采用如下的解决办法，把fly,display从超类中抽出来，放进一个Flayable接口中。把quack()抽出来，放进Quackable接口中，代码如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Quackable</span> </span>&#123; <span class="comment">//会叫的接口</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Flyable</span> </span>&#123; <span class="comment">//会飞接口</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>  这样对于多个会飞Duck子类，每个子类都有一个实现Flyable()的类，在里面覆写fly()方法，会造成太多Flyable()的子类，无法复用。其次，还不能动态改变fly行为，因为已经写死啦。此时，设计原则就出来了，即：<strong>找出应用之中可能需要变化之处，把他们独立出来，不要和那些不需要变化的代码混到一起。</strong></p>
-<h5 id="2-如何使用策略模式"><a href="#2-如何使用策略模式" class="headerlink" title="2. 如何使用策略模式"></a>2. 如何使用策略模式</h5><p>  解决上述问题的根本是分开变化和不会变化的部分。Duck类中的fly(),quack()会随着鸭子的不同而改变，那我们将它们从Duck类中取出来，建立一组新类来代表每个行为。此时，设计原则就应用上了即，<strong>针对接口编程，而不是针对实现编程</strong>  这句话的理解在这里就是针对超类编程。前面我们设计 Quackable，Flyable，然后让具体的类去实现这两个接口，这样，就是针对实现编程，不利于动态修改和以后的拓展。因此，我们编写两个FlyBehavior,QuackBehavior两个接口，以及他们的实现类，这样，我们把FlyBehavior和QuackBehavior作为超类的属性，这个具体的实现通过set方法通过set()传递进去，这样实现面向接口编程，可以动态改变，也可以复用代码。代码实现如下：<br>行为接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FlyBehavior</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">QuackBehavior</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>实现类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyNoWay</span> <span class="keyword">implements</span> <span class="title">FlyBehavior</span> </span>&#123; <span class="comment">//不能飞</span></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"I can FlyNoWay"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyWithWins</span> <span class="keyword">implements</span> <span class="title">FlyBehavior</span> </span>&#123; <span class="comment">//用翅膀飞</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"i can fly with wins"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Quack</span> <span class="keyword">implements</span> <span class="title">QuackBehavior</span> </span>&#123; <span class="comment">//一般的叫</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"quack"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Squack</span> <span class="keyword">implements</span> <span class="title">QuackBehavior</span> </span>&#123; <span class="comment">//嘶叫</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"squack"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>把基本接口作为超类的属性成员，面向接口编程<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> FlyBehavior flyBehavior; <span class="comment">//代理类，组合模式</span></div><div class="line">    <span class="keyword">private</span> QuackBehavior quackBehavior;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</div><div class="line">        flyBehavior.fly();</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>&#123;</div><div class="line">        quackBehavior.quack();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span><span class="params">(FlyBehavior flyBehavior)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.flyBehavior = flyBehavior;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setQuackBehavior</span><span class="params">(QuackBehavior quackBehavior)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.quackBehavior = quackBehavior;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">()</span></span>&#123; <span class="comment">//会游泳</span></div><div class="line">        System.out.println(<span class="string">"I can swim"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span></span>&#123; <span class="comment">//外表</span></div><div class="line">        System.out.println(<span class="string">"I am a special duck with good look"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>测试类如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Duck duck=<span class="keyword">new</span> Duck();</div><div class="line">        duck.setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</div><div class="line">        duck.fly();</div><div class="line">        duck.setFlyBehavior(<span class="keyword">new</span> FlyWithWins());</div><div class="line">        duck.fly();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>结果如下图<br><img src="http://upload-images.jianshu.io/upload_images/5281821-3b6fdb48f67c5312.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="result.png"><br>  总结：上述做法的好处，面对不同飞行类型，可以在不修改Duck的基础上实现，这就是策略模式，根据你传入进来的具体实现类，执行不同的行为，这里关键就是运用多态这一特点。其次，不同的实现类可以复用，以前针对每个子类都有实现类，现在同一类型的都可以采用同一个实现类。</p>
-<h5 id="3-结论"><a href="#3-结论" class="headerlink" title="3. 结论"></a>3. 结论</h5><p>   <strong>策略模式定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户</strong>，简单来说，就是定义了基础接口封装在类属性里面，可以根据不同的实现类，动态的改变行为。</p>
+</blockquote>
+<ul>
+<li><code>@ConfigurationProperties(prefix = &quot;hello&quot;)</code>是类型安全的属性获取。在application.properties 中通过hello.msg来设置，如果不设置默认就是“word”。</li>
+</ul>
+<ol>
+<li><p>定义条件类（根据此类的存在与否来创建这个类的Bean，这个类可以是第三方类库的类）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloService</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String msg;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> msg;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.msg=msg;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>自动配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span>  <span class="comment">//1</span></div><div class="line"><span class="meta">@EnableConfigurationProperties</span>(HelloServiceProperties.class)<span class="comment">//2</span></div><div class="line"><span class="meta">@ConditionalOnClass</span>(HelloService.class)   <span class="comment">//3</span></div><div class="line"><span class="meta">@ConditionalOnProperty</span>(prefix = <span class="string">"hello"</span>,value = <span class="string">"enabled"</span>,matchIfMissing = <span class="keyword">true</span>)  <span class="comment">//4</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceAutoConfiguration</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> HelloServiceProperties helloServiceProperties;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="meta">@ConditionalOnMissingBean</span>(HelloService.class)  <span class="comment">//5</span></div><div class="line">    <span class="function"><span class="keyword">public</span> HelloService <span class="title">helloService</span><span class="params">()</span></span>&#123;</div><div class="line">        HelloService helloService=<span class="keyword">new</span> HelloService();</div><div class="line">        helloService.setMsg(helloServiceProperties.getMsg());</div><div class="line">        <span class="keyword">return</span> helloService;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><code>@Configuration</code> 它告知 Spring 容器这个类是一个拥有 bean 定义和依赖项的配置类。</li>
+<li><code>@EnableConfigurationProperties</code>的bean可以以标准方式被注册(例如使用 @Bean 方法),即我定义HelloServiceProperties可以作为标准的Bean被容器管理。</li>
+<li><code>@ConditionalOnClass</code>表示该类在类路径下存在，自动配置该类下的Bean。</li>
+<li><code>@ConditionalOnProperty</code>当指定的属性等于指定的值的情况下加载当前配置类，在这里如果<code>matchIfMissing</code>如果为false，则在application.properties中必须存在hello.enable(且不能为false)</li>
+<li><code>@ConditionalOnMissingBean()</code>表示指定的bean不在容器中，则重新新建@Bean注解的类，并交给容器管理。</li>
+</ul>
+<p>  配置好之后，我们还需要在<code>src\main\resources</code>下新建文件夹<code>WEB-INF</code>，再新建文件<code>spring.factories</code>里面的内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</div><div class="line">com.springboot.mystartertool.HelloServiceAutoConfiguration</div></pre></td></tr></table></figure></p>
+<p>里面指定的类是上面自定义的那个配置类<code>HelloServiceAutoConfiguration</code></p>
+<blockquote>
+<p>  定义<code>spring.factories</code>的原因是因为<code>@EnableAutoConfiguration</code>会扫描jar包下所有<code>spring.factories</code>文件，从而构造自动配置类。我们使用的时候使用<code>@Autowired</code>注入就行。</p>
+</blockquote>
+<p>在以上工作完成后，我们执行如下命令<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn clean install</div></pre></td></tr></table></figure></p>
+<p>  就将项目打包到本地maven仓库中，有条件的可以安装的到私服中。</p>
+<p>####三. 应用自定义starter</p>
+<ol>
+<li><p>首先引入自定义的starter的jar包</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--引入我的start--&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.maskwang<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>Springboot-mystart<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>当我们在<code>application.properties</code>配置如下</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hello.msg=maskwang</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>  我们就可以使用自定义的starter啦。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    HelloService helloService;</div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/hello"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> helloService.sayHello();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>  由于我们没有自定义<code>HelloService</code>，所以会配置类会发挥作用，新建一个<code>HelloService</code>,并把里面的msg设置成”maskwang”。没有配置msg，则会采用默认的。结果如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5281821-3db9b52e9cfc819b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>参考文献：</p>
+<ol>
+<li><a href="https://www.ibm.com/developerworks/cn/webservices/ws-springjava/index.html" target="_blank" rel="external">使用 Java 配置进行 Spring bean 管理</a></li>
+<li>Spring boot实战（汪云飞著）<br><a href="https://github.com/maskwang520/springboot-mystarter" target="_blank" rel="external">github地址</a></li>
+</ol>
 
       
 
@@ -255,11 +291,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Springboot</a>
         		</li>
       		
 		</ul>
@@ -271,7 +307,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
+        			<a href="/categories/Springboot//" class="article-tag-list-link color1">Springboot</a>
         		</li>
       		
 		</ul>
@@ -326,7 +362,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/07/HeadFirst设计模式1-策略模式/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/11/04/Spring-boot构建自定义的starter/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -340,15 +376,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/10/07/HeadFirst设计模式2-观察者模式/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          HeadFirst设计模式2---观察者模式
-        
-      </div>
-    </a>
   
+    <a href="/2017/11/03/HeadFirst设计模式4-工厂模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HeadFirst设计模式4-工厂模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -376,7 +408,7 @@
   
 
   
-  <div id="SOHUCS" sid="HeadFirst设计模式1-策略模式" ></div> 
+  <div id="SOHUCS" sid="Spring-boot构建自定义的starter" ></div> 
 <script type="text/javascript"> 
 window.YiliaChangyanWrap = function() {
     var appid = "cytfIX7t6"; 
