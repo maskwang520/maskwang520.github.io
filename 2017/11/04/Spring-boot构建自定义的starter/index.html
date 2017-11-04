@@ -17,7 +17,7 @@
 <meta property="og:description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-3db9b52e9cfc819b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-04T12:02:47.767Z">
+<meta property="og:updated_time" content="2017-11-04T12:05:06.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring boot构建自定义的starter">
 <meta name="twitter:description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
@@ -199,11 +199,11 @@
 <p>  我随便查看spring-boot-autoconfigure-1.5.3.RELEASE.jar中的spring.factories,有如下的自动配置。<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Auto Configure</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,\</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,\</span></div></pre></td></tr></table></figure></p>
 <blockquote>
 <p>上述spring.factories对应key为org.springframework.boot.autoconfigure.EnableAutoConfiguration的值即为启动时候需要自动配置的类。</p>
+</blockquote>
 <h4 id="二-实现自定义的starter"><a href="#二-实现自定义的starter" class="headerlink" title="二. 实现自定义的starter"></a>二. 实现自定义的starter</h4><ol>
 <li>首先定义一个基本的对象类，用来接收application.properties里面特定字段的值。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"hello"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceProperties</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String MSG=<span class="string">"world"</span>;</div><div class="line">    <span class="keyword">private</span> String msg=MSG;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> msg;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.msg = msg;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
-</blockquote>
 <ul>
 <li><code>@ConfigurationProperties(prefix = &quot;hello&quot;)</code>是类型安全的属性获取。在application.properties 中通过hello.msg来设置，如果不设置默认就是“word”。</li>
 </ul>
