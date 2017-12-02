@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017/10 | Maskwang blogs</title>
+  <title>自定义注解实现Restful接口版本管理 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="偶尔要回头看看，否则永远都在追寻，而不知道自己失去了什么。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Maskwang blogs">
-<meta property="og:url" content="http://yoursite.com/archives/2017/10/index.html">
+  <meta name="description" content="&amp;emsp;&amp;emsp;在我们的日常开发中，需求总是变化的。对于某个接口，随着需求的升级，也面临里面逻辑的变化。例如，对于/v1/hello,/v2/hello 两个请求，若存在相应的映射，则对应入座。否则都映射到最新的接口上。则映射到最新的接口上。此时，我们又想保持以前的接口还保留，那么我们此时需要做的事，把对接口的请求都映射到最新的接口上，而原来的接口请求还是映射原来的接口上。我在这里介绍用">
+<meta name="keywords" content="java,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义注解实现Restful接口版本管理">
+<meta property="og:url" content="http://yoursite.com/2017/12/02/自定义注解实现Restful接口版本管理/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="偶尔要回头看看，否则永远都在追寻，而不知道自己失去了什么。">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;在我们的日常开发中，需求总是变化的。对于某个接口，随着需求的升级，也面临里面逻辑的变化。例如，对于/v1/hello,/v2/hello 两个请求，若存在相应的映射，则对应入座。否则都映射到最新的接口上。则映射到最新的接口上。此时，我们又想保持以前的接口还保留，那么我们此时需要做的事，把对接口的请求都映射到最新的接口上，而原来的接口请求还是映射原来的接口上。我在这里介绍用">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-02T14:19:05.068Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Maskwang blogs">
-<meta name="twitter:description" content="偶尔要回头看看，否则永远都在追寻，而不知道自己失去了什么。">
+<meta name="twitter:title" content="自定义注解实现Restful接口版本管理">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;在我们的日常开发中，需求总是变化的。对于某个接口，随着需求的升级，也面临里面逻辑的变化。例如，对于/v1/hello,/v2/hello 两个请求，若存在相应的映射，则对应入座。否则都映射到最新的接口上。则映射到最新的接口上。此时，我们又想保持以前的接口还保留，那么我们此时需要做的事，把对接口的请求都映射到最新的接口上，而原来的接口请求还是映射原来的接口上。我在这里介绍用">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -169,292 +171,223 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-自定义注解实现Restful接口版本管理" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      自定义注解实现Restful接口版本管理
+    </h1>
+  
+
+        
+        <a href="/2017/12/02/自定义注解实现Restful接口版本管理/" class="archive-article-date">
+  	<time datetime="2017-12-02T14:14:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-02</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> &emsp;&emsp;在我们的日常开发中，需求总是变化的。对于某个接口，随着需求的升级，也面临里面逻辑的变化。例如，对于<code>/v1/hello</code>,<code>/v2/hello</code> 两个请求，若存在相应的映射，则对应入座。否则都映射到最新的接口上。则映射到最新的接口上。此时，我们又想保持以前的接口还保留，那么我们此时需要做的事，把对接口的请求都映射到最新的接口上，而原来的接口请求还是映射原来的接口上。我在这里介绍用自定义注解的形式，在<code>@RequestMapping()</code>的映射原理上做文章。<br><a id="more"></a></p>
+<ol>
+<li>自定义注解<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="meta">@Mapping</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ApiVersion &#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">value</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;&emsp;就是定义一个简单的注解@ApiVersion，这个注解可以在类上和方法上都可以应用。</p>
+<ol>
+<li>注解的识别<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomRequestMappingHandlerMapping</span> <span class="keyword">extends</span> <span class="title">RequestMappingHandlerMapping</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span>   <span class="comment">// ①</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> RequestCondition&lt;ApiVesrsionCondition&gt; <span class="title">getCustomTypeCondition</span><span class="params">(Class&lt;?&gt; handlerType)</span> </span>&#123;</div><div class="line">        ApiVersion apiVersion = AnnotationUtils.findAnnotation(handlerType, ApiVersion.class);</div><div class="line">        <span class="keyword">return</span> createCondition(apiVersion);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span>  <span class="comment">//②</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> RequestCondition&lt;ApiVesrsionCondition&gt; <span class="title">getCustomMethodCondition</span><span class="params">(Method method)</span> </span>&#123;</div><div class="line">        ApiVersion apiVersion = AnnotationUtils.findAnnotation(method, ApiVersion.class);</div><div class="line">        <span class="keyword">return</span> createCondition(apiVersion);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//③  实例化RequestCondition</span></div><div class="line">    <span class="function"><span class="keyword">private</span> RequestCondition&lt;ApiVesrsionCondition&gt; <span class="title">createCondition</span><span class="params">(ApiVersion apiVersion)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> apiVersion == <span class="keyword">null</span> ? <span class="keyword">null</span> : <span class="keyword">new</span> ApiVesrsionCondition(apiVersion.value());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;&emsp;我们知道，光定义注解是没什么用的，重要的是我们识别到注解，做相应的事。<code>RequestMappingHandlerMapping</code>类是与 <code>@RequestMapping</code>相关的，它定义映射的规则。即满足怎样的条件则映射到那个接口上。</p>
+<p>&emsp;&emsp;①处构建类级的映射要求，<code>AnnotationUtils.findAnnotation</code>根据在类上面的注解实例化一个注解类。然后构造RequestCondition。</p>
+<p>&emsp;&emsp;②处构建类级的映射要求，<code>AnnotationUtils.findAnnotation</code>根据在方法上面的注解实例化一个注解类。然后构造RequestCondition。<br><code>AnnotationUtils.findAnnotation</code>是用到Spring的工具类，根据标注的注解识别注解。很方便，比通过反射的方式来找到注解要方便。</p>
+<ol>
+<li>自定义条件类<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiVesrsionCondition</span> <span class="keyword">implements</span> <span class="title">RequestCondition</span>&lt;<span class="title">ApiVesrsionCondition</span>&gt; </span>&#123;</div><div class="line">    <span class="comment">// 路径中版本的前缀， 这里用 /v[1-9]/的形式</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Pattern VERSION_PREFIX_PATTERN = Pattern.compile(<span class="string">"v(\\d+)/"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> apiVersion;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ApiVesrsionCondition</span><span class="params">(<span class="keyword">int</span> apiVersion)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.apiVersion = apiVersion;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//将不同的筛选条件合并,这里采用的覆盖，即后来的规则生效</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ApiVesrsionCondition <span class="title">combine</span><span class="params">(ApiVesrsionCondition other)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiVesrsionCondition(other.getApiVersion());</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//根据request查找匹配到的筛选条件</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ApiVesrsionCondition <span class="title">getMatchingCondition</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</div><div class="line">        System.out.println(request.getRequestURI());</div><div class="line">        Matcher m = VERSION_PREFIX_PATTERN.matcher(request.getRequestURI());</div><div class="line">        <span class="keyword">if</span>(m.find())&#123;</div><div class="line">            Integer version = Integer.valueOf(m.group(<span class="number">1</span>));</div><div class="line">            <span class="keyword">if</span>(version &gt;= <span class="keyword">this</span>.apiVersion) <span class="comment">// 如果请求的版本号大于配置版本号， 则满足，即与请求的</span></div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//实现不同条件类的比较，从而实现优先级排序</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(ApiVesrsionCondition other, HttpServletRequest request)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> other.getApiVersion() - <span class="keyword">this</span>.apiVersion;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getApiVersion</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> apiVersion;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;&emsp;<code>getMatchingCondition()</code>利用正则表达式把请求路径中的<code>/v1/hello</code>中的1（版本号）找出来，然后返回与大于等于1的条件类。那么<code>@RequestMapping</code>则路由到产生该条件类的方法下。</p>
+<ol>
+<li>测试<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/&#123;version&#125;/"</span>)</div><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VersionController</span> </span>&#123;</div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"hello"</span>)</div><div class="line">    <span class="meta">@ApiVersion</span>(<span class="number">1</span>)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"haha1.........."</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="string">"hello version1"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"hello"</span>)</div><div class="line">    <span class="meta">@ApiVersion</span>(<span class="number">2</span>)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello2</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"haha2........."</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="string">"hello version2"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"hello"</span>)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@ApiVersion</span>(<span class="number">5</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello5</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"haha5........."</span>);</div><div class="line">        <span class="keyword">return</span> <span class="string">"hello version5"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"test"</span>)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"test"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;&emsp;每个方法上都用  <code>@ApiVersion()</code>注解啦。当在浏览器输入<code>http://localhost:8761/v2/hello</code> 则跳到<code>hello2()</code>方法中执行。当在浏览器输入<code>http://localhost:8761/v5/hello</code> 则跳到<code>hello5()</code>中执行，因为比5大的都调到最新<code>hello5()</code>执行。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://onmo6k247.bkt.clouddn.com/zhifubao">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://onmo6k247.bkt.clouddn.com/mmqrcode1507380613282.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/15/HeadFirst设计模式3-装饰者模式/" class="archive-article-date">
-  	<time datetime="2017-10-15T15:27:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/15/HeadFirst设计模式3-装饰者模式/">HeadFirst设计模式3-装饰者模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
+        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/12/02/自定义注解实现Restful接口版本管理/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/12/Springboot用WebSocket构建交互式的web应用/" class="archive-article-date">
-  	<time datetime="2017-10-12T11:04:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-12</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/04/Spring-boot构建自定义的starter/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring boot构建自定义的starter</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/12/Springboot用WebSocket构建交互式的web应用/">Springboot用WebSocket构建交互式的web应用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">websocket</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">springboot</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Springboot//" class="article-tag-list-link color1">Springboot</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/08/弄懂Fail-Safe-Fail-First/" class="archive-article-date">
-  	<time datetime="2017-10-08T00:15:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/08/弄懂Fail-Safe-Fail-First/">弄懂Fail-Safe,Fail-First</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">集合</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/07/HeadFirst设计模式2-观察者模式/" class="archive-article-date">
-  	<time datetime="2017-10-07T14:47:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/07/HeadFirst设计模式2-观察者模式/">HeadFirst设计模式2---观察者模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/07/HeadFirst设计模式1-策略模式/" class="archive-article-date">
-  	<time datetime="2017-10-07T13:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/07/HeadFirst设计模式1-策略模式/">HeadFirst设计模式1-策略模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="自定义注解实现Restful接口版本管理" ></div> 
+<script type="text/javascript"> 
+window.YiliaChangyanWrap = function() {
+    var appid = "cytiAQ2fR"; 
+    var conf = "6911a8fffc93fa9586598ea5a9d0daf9"; 
+    var width = window.innerWidth || document.documentElement.clientWidth; 
+    if (width < 960) { 
+    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); }
+}
+</script>
+  
 
+  
 
           </div>
         </div>
@@ -476,8 +409,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
