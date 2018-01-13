@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>红黑树的原理和常见操作 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 概述在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）">
+  <meta name="description" content="1. 概述在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）&amp;lt;O(lgn)">
 <meta name="keywords" content="红黑树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="红黑树的原理和常见操作">
 <meta property="og:url" content="http://yoursite.com/2018/01/13/红黑树的原理和常见操作/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="1. 概述在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）">
+<meta property="og:description" content="1. 概述在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）&amp;lt;O(lgn)">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-36c81d2f54b4076d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-99adde28a888b1b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-1bb7f863e85d2057.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-ec21cc57c2384be3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-f1d8ca212b11777a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-13T09:05:49.030Z">
+<meta property="og:updated_time" content="2018-01-13T09:08:41.110Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="红黑树的原理和常见操作">
-<meta name="twitter:description" content="1. 概述在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）">
+<meta name="twitter:description" content="1. 概述在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）&amp;lt;O(lgn)">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-36c81d2f54b4076d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
@@ -199,7 +199,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h5><p>在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）<o(lgn) <!--="" more="" --=""></o(lgn)></p>
+        <h5 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h5><p>在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）&lt;O(lgn)</p>
+<a id="more"></a>
 <h5 id="2-红黑树的定义"><a href="#2-红黑树的定义" class="headerlink" title="2. 红黑树的定义"></a>2. 红黑树的定义</h5><ul>
 <li>每个结点要么是红的，要么是黑的。  </li>
 <li>根结点是黑的。  </li>
