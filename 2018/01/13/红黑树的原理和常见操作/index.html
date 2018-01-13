@@ -6,22 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Spring boot构建自定义的starter | Maskwang blogs</title>
+  <title>红黑树的原理和常见操作 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
-<meta name="keywords" content="java,Springboot">
+  <meta name="description" content="1. 概述在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）">
+<meta name="keywords" content="红黑树">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring boot构建自定义的starter">
-<meta property="og:url" content="http://yoursite.com/2017/11/04/Spring-boot构建自定义的starter/index.html">
+<meta property="og:title" content="红黑树的原理和常见操作">
+<meta property="og:url" content="http://yoursite.com/2018/01/13/红黑树的原理和常见操作/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
+<meta property="og:description" content="1. 概述在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-3db9b52e9cfc819b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-04T13:28:34.224Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-36c81d2f54b4076d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-99adde28a888b1b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-e4f359a37d4e2bf8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-cfe6e057718146bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-1bb7f863e85d2057.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-ec21cc57c2384be3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-f1d8ca212b11777a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-01-13T09:05:49.030Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring boot构建自定义的starter">
-<meta name="twitter:description" content="在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即123456@SpringBootApplicationpublic class App &amp;#123;    public static void main(String[] args) &amp;#123;        SpringApplication.run(App.class, args);    &amp;">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-3db9b52e9cfc819b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="红黑树的原理和常见操作">
+<meta name="twitter:description" content="1. 概述在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-36c81d2f54b4076d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -173,75 +179,76 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Spring-boot构建自定义的starter" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-红黑树的原理和常见操作" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Spring boot构建自定义的starter
+      红黑树的原理和常见操作
     </h1>
   
 
         
-        <a href="/2017/11/04/Spring-boot构建自定义的starter/" class="archive-article-date">
-  	<time datetime="2017-11-04T11:51:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-04</time>
+        <a href="/2018/01/13/红黑树的原理和常见操作/" class="archive-article-date">
+  	<time datetime="2018-01-13T09:04:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p> 在我们日常用springboot的开发过程中，经常会遇到使用如下的一个类来代表程序的入口类。即<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        SpringApplication.run(App.class, args);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>  包括我自己，我平常在开发的过程中，并没有去重点关注spring boot的运行原理，大家都是约定俗成的这么去使用。接下的过程中，将会结合源码简单的分析下springboot运行原理。<br><a id="more"></a></p>
-<h4 id="一-Springboot-自动配置原理分析"><a href="#一-Springboot-自动配置原理分析" class="headerlink" title="一.Springboot 自动配置原理分析"></a>一.Springboot 自动配置原理分析</h4><p>   <code>@SpringBootApplication</code>注解<code>@SpringBootApplication</code>是一个复合注解，它包括<code>@SpringBootConfiguration</code>，<code>@EnableAutoConfiguration</code>，<code>@ComponentScan</code>三个注解。其中最关键的莫过<code>@EnableAutoConfiguration</code>这个注解。在它的源码中加入了这样一个注解<code>@Import({EnableAutoConfigurationImportSelector.class})</code>，<code>EnableAutoConfigurationImportSelector</code>,它使用<code>SpringFactoriesLoader. loadFactoryNames</code>方法来扫描<code>META-INF/spring.factories</code>文件，此文件中声明了有哪些自动配置。源码如下（我挑选出重要的一部分）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FACTORIES_RESOURCE_LOCATION = <span class="string">"META-INF/spring.factories"</span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">loadFactoryNames</span><span class="params">(Class&lt;?&gt; factoryClass, ClassLoader classLoader)</span> </span>&#123;</div><div class="line">		String factoryClassName = factoryClass.getName();</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Enumeration&lt;URL&gt; urls = (classLoader != <span class="keyword">null</span> ? classLoader.getResources(FACTORIES_RESOURCE_LOCATION) :</div><div class="line">					ClassLoader.getSystemResources(FACTORIES_RESOURCE_LOCATION));</div><div class="line">			List&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">			<span class="keyword">while</span> (urls.hasMoreElements()) &#123;</div><div class="line">				URL url = urls.nextElement();</div><div class="line">				Properties properties = PropertiesLoaderUtils.loadProperties(<span class="keyword">new</span> UrlResource(url));</div><div class="line">				String factoryClassNames = properties.getProperty(factoryClassName);</div><div class="line">				result.addAll(Arrays.asList(StringUtils.commaDelimitedListToStringArray(factoryClassNames)));</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">return</span> result;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IOException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Unable to load ["</span> + factoryClass.getName() +</div><div class="line">					<span class="string">"] factories from location ["</span> + FACTORIES_RESOURCE_LOCATION + <span class="string">"]"</span>, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>  我随便查看spring-boot-autoconfigure-1.5.3.RELEASE.jar中的spring.factories,有如下的自动配置。<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Auto Configure</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,\</span></div><div class="line"><span class="string">org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,\</span></div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>上述spring.factories对应key为org.springframework.boot.autoconfigure.EnableAutoConfiguration的值即为启动时候需要自动配置的类。</p>
-</blockquote>
-<h4 id="二-实现自定义的starter"><a href="#二-实现自定义的starter" class="headerlink" title="二. 实现自定义的starter"></a>二. 实现自定义的starter</h4><ol>
-<li>首先定义一个基本的对象类，用来接收application.properties里面特定字段的值。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"hello"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceProperties</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String MSG=<span class="string">"world"</span>;</div><div class="line">    <span class="keyword">private</span> String msg=MSG;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> msg;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.msg = msg;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<ul>
-<li><code>@ConfigurationProperties(prefix = &quot;hello&quot;)</code>是类型安全的属性获取。在application.properties 中通过hello.msg来设置，如果不设置默认就是“word”。 </li>
+        <h5 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h5><p>在jdk1.8中，HashMap和ConcurrentHashMap中都采用了红黑树这一数据结构。即当链表达到一定的长度后，就把链表转化成红黑树。这其中主要利用了红黑树的良好性质，不管你节点怎样，他始终保持查找时间复杂度为O(logn)。这样的性质相对于链表在长度很长的时候有很大的优势。O(logn）<o(lgn) <!--="" more="" --=""></o(lgn)></p>
+<h5 id="2-红黑树的定义"><a href="#2-红黑树的定义" class="headerlink" title="2. 红黑树的定义"></a>2. 红黑树的定义</h5><ul>
+<li>每个结点要么是红的，要么是黑的。  </li>
+<li>根结点是黑的。  </li>
+<li>每个叶结点（叶结点即指树尾端NIL指针或NULL结点）是黑的。  </li>
+<li>如果一个结点是红的，那么它的俩个儿子都是黑的。  </li>
+<li>对于任一结点而言，其到叶结点树尾端NIL指针的每一条路径都包含相同数目的黑结点。<br>一棵典型的红黑树如下：<br><img src="http://upload-images.jianshu.io/upload_images/5281821-36c81d2f54b4076d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="红黑树"></li>
 </ul>
-<ol>
-<li>定义条件类（根据此类的存在与否来创建这个类的Bean，这个类可以是第三方类库的类）。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloService</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String msg;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> msg;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.msg=msg;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ol>
-<li>自动配置类<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span>  <span class="comment">//1</span></div><div class="line"><span class="meta">@EnableConfigurationProperties</span>(HelloServiceProperties.class)<span class="comment">//2</span></div><div class="line"><span class="meta">@ConditionalOnClass</span>(HelloService.class)   <span class="comment">//3</span></div><div class="line"><span class="meta">@ConditionalOnProperty</span>(prefix = <span class="string">"hello"</span>,value = <span class="string">"enabled"</span>,matchIfMissing = <span class="keyword">true</span>)  <span class="comment">//4</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceAutoConfiguration</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> HelloServiceProperties helloServiceProperties;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="meta">@ConditionalOnMissingBean</span>(HelloService.class)  <span class="comment">//5</span></div><div class="line">    <span class="function"><span class="keyword">public</span> HelloService <span class="title">helloService</span><span class="params">()</span></span>&#123;</div><div class="line">        HelloService helloService=<span class="keyword">new</span> HelloService();</div><div class="line">        helloService.setMsg(helloServiceProperties.getMsg());</div><div class="line">        <span class="keyword">return</span> helloService;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
+<h5 id="3-红黑树的插入"><a href="#3-红黑树的插入" class="headerlink" title="3. 红黑树的插入"></a>3. 红黑树的插入</h5><p>在这里，默认你熟悉二叉查找树的结构，以及他的插入和删除操作。红黑树本质上是一棵二叉查找树。<br>对红黑树的插入，我们先按二叉查找树去插入，然后对对树做调整，使其满足红黑树的五条定义。（这是因为你插入会破坏其中的规则）<br>二叉查找树的插入伪代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">RB-INSERT(T, z)  </div><div class="line"> 1  y ← nil[T]  </div><div class="line"> 2  x ← root[T]  </div><div class="line"> 3  while x ≠ nil[T]  </div><div class="line"> 4      do y ← x  </div><div class="line"> 5         if key[z] &lt; key[x]  </div><div class="line"> 6            then x ← left[x]  </div><div class="line"> 7            else x ← right[x]  </div><div class="line"> 8  p[z] ← y  </div><div class="line"> 9  if y = nil[T]  </div><div class="line">10     then root[T] ← z  </div><div class="line">11     else if key[z] &lt; key[y]  </div><div class="line">12             then left[y] ← z  </div><div class="line">13             else right[y] ← z  </div><div class="line">14  left[z] ← nil[T]  </div><div class="line">15  right[z] ← nil[T]  </div><div class="line">16  color[z] ← RED  </div><div class="line">17  RB-INSERT-FIXUP(T, z)</div></pre></td></tr></table></figure></p>
+<p>可以看出，RB-INSERT(T, z)前面的第1-13行代码基本就是二叉查找树的插入代码，然后第14-16行代码把z的左孩子、右孩子都赋为叶结点nil，再把z结点着为红色，最后为保证红黑性质在插入操作后依然保持，调用一个辅助程序RB-INSERT-FIXUP来对结点进行重新着色，并旋转。<br>换言之</p>
 <ul>
-<li><code>@Configuration</code> 它告知 Spring 容器这个类是一个拥有 bean 定义和依赖项的配置类。</li>
-<li><code>@EnableConfigurationProperties</code>的bean可以以标准方式被注册(例如使用 @Bean 方法),即我定义HelloServiceProperties可以作为标准的Bean被容器管理。</li>
-<li><code>@ConditionalOnClass</code>表示该类在类路径下存在，自动配置该类下的Bean。</li>
-<li><code>@ConditionalOnProperty</code>当指定的属性等于指定的值的情况下加载当前配置类，在这里如果<code>matchIfMissing</code>如果为false，则在application.properties中必须存在hello.enable(且不能为false)</li>
-<li><code>@ConditionalOnMissingBean()</code>表示指定的bean不在容器中，则重新新建@Bean注解的类，并交给容器管理。</li>
+<li>如果插入的是根结点，因为原树是空树，此情况只会违反性质2，所以直接把此结点涂为黑色。</li>
+<li>如果插入的结点的父结点是黑色，由于此不会违反性质2和性质4，红黑树没有被破坏，所以此时也是什么也不做。</li>
 </ul>
-<p>  配置好之后，我们还需要在<code>src\main\resources</code>下新建文件夹<code>WEB-INF</code>，再新建文件<code>spring.factories</code>里面的内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</div><div class="line">com.springboot.mystartertool.HelloServiceAutoConfiguration</div></pre></td></tr></table></figure></p>
-<p>里面指定的类是上面自定义的那个配置类<code>HelloServiceAutoConfiguration</code></p>
+<hr>
+<p><strong>但当遇到下述3种情况时：</strong></p>
+<ul>
+<li>插入修复情况1：如果当前结点的父结点是红色且祖父结点的另一个子结点（叔叔结点）是红色</li>
+<li>插入修复情况2：当前结点的父结点是红色,叔叔结点是黑色，当前结点是其父结点的右子</li>
+<li>插入修复情况3：当前结点的父结点是红色,叔叔结点是黑色，当前结点是其父结点的左子  </li>
+</ul>
+<h6 id="3-1-插入修复情况1：当前结点的父结点是红色且祖父结点的另一个子结点（叔叔结点）是红色。"><a href="#3-1-插入修复情况1：当前结点的父结点是红色且祖父结点的另一个子结点（叔叔结点）是红色。" class="headerlink" title="3.1 插入修复情况1：当前结点的父结点是红色且祖父结点的另一个子结点（叔叔结点）是红色。"></a>3.1 插入修复情况1：当前结点的父结点是红色且祖父结点的另一个子结点（叔叔结点）是红色。</h6><p>插入的伪代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1 while color[p[z]] = RED  </div><div class="line">2     do if p[z] = left[p[p[z]]]  </div><div class="line">3           then y ← right[p[p[z]]]  </div><div class="line">4                if color[y] = RED  </div><div class="line">5                   then color[p[z]] ← BLACK                    ▹ Case 1  </div><div class="line">6                        color[y] ← BLACK                       ▹ Case 1  </div><div class="line">7                        color[p[p[z]]] ← RED                   ▹ Case 1  </div><div class="line">8                        z ← p[p[z]]                            ▹ Case 1</div></pre></td></tr></table></figure></p>
+<p>如下面两个调整前的图和调整之后的图做对比。其中4为新添加的点。它的父节点为红色，叔叔节点为红色。那么调整就是把4的叔叔节点变为黑色（8节点），4的祖父节点变为红色，把当前结点指向祖父结点，从新的当前结点重新开始算法（7节点变为N)。<br><img src="http://upload-images.jianshu.io/upload_images/5281821-99adde28a888b1b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.1.1 调整前的树"><br><img src="http://upload-images.jianshu.io/upload_images/5281821-e4f359a37d4e2bf8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.1.2 调整后的红黑树"></p>
+<h6 id="3-2-插入修复情况2：当前结点的父结点是红色-叔叔结点是黑色，当前结点是其父结点的右子"><a href="#3-2-插入修复情况2：当前结点的父结点是红色-叔叔结点是黑色，当前结点是其父结点的右子" class="headerlink" title="3.2 插入修复情况2：当前结点的父结点是红色,叔叔结点是黑色，当前结点是其父结点的右子"></a>3.2 插入修复情况2：当前结点的父结点是红色,叔叔结点是黑色，当前结点是其父结点的右子</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> 9                   else if z = right[p[z]]</div><div class="line">10                           then z ← p[z]                       ▹ Case 2</div><div class="line">11                                LEFT-ROTATE(T, z)              ▹ Case 2</div></pre></td></tr></table></figure>
+<p>调整之前的图如3.1.2，经过调整后得到如下的图。过程是当前结点的父结点做为新的当前结点，以新当前结点为支点左旋.<br><img src="http://upload-images.jianshu.io/upload_images/5281821-cfe6e057718146bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.2.2 调整之后的树"></p>
+<h6 id="3-3-插入修复情况3：当前结点的父结点是红色-叔叔结点是黑色，当前结点是其父结点的左子"><a href="#3-3-插入修复情况3：当前结点的父结点是红色-叔叔结点是黑色，当前结点是其父结点的左子" class="headerlink" title="3.3 插入修复情况3：当前结点的父结点是红色,叔叔结点是黑色，当前结点是其父结点的左子"></a>3.3 插入修复情况3：当前结点的父结点是红色,叔叔结点是黑色，当前结点是其父结点的左子</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">12                           color[p[z]] ← BLACK                 ▹ Case 3</div><div class="line">13                           color[p[p[z]]] ← RED                ▹ Case 3</div><div class="line">14                           RIGHT-ROTATE(T, p[p[z]])            ▹ Case 3</div></pre></td></tr></table></figure>
+<p>调整过程是把父结点变为黑色，祖父结点变为红色，在祖父结点为支点右旋。最后，把根结点涂为黑色，整棵红黑树便重新恢复了平衡。调整之前的图如3.2.2，经过调整后得到下图。<br><img src="http://upload-images.jianshu.io/upload_images/5281821-1bb7f863e85d2057.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.3.2调整后的图"></p>
+<h5 id="3-红黑树的删除"><a href="#3-红黑树的删除" class="headerlink" title="3. 红黑树的删除"></a>3. 红黑树的删除</h5><p>在这里默认你熟悉二叉查找树的删除操作。</p>
 <blockquote>
-<p>  定义<code>spring.factories</code>的原因是因为<code>@EnableAutoConfiguration</code>会扫描jar包下所有<code>spring.factories</code>文件，从而构造自动配置类。我们使用的时候使用<code>@Autowired</code>注入就行。</p>
+<p>下面我们用一个分析技巧：我们从被删结点后来顶替它的那个结点开始调整，并认为它有额外的一重黑色。这里额外一重黑色是什么意思呢，我们不是把红黑树的结点加上除红与黑的另一种颜色，这里只是一种假设，我们认为我们当前指向它，因此空有额外一种黑色，可以认为它的黑色是从它的父结点被删除后继承给它的，它现在可以容纳两种颜色，如果它原来是红色，那么现在是红+黑，如果原来是黑色，那么它现在的颜色是黑+黑。有了这重额外的黑色，原红黑树性质5就能保持不变。现在只要恢复其它性质就可以了，做法还是尽量向根移动和穷举所有可能性。”–saturnman。<br>如果是以下情况，恢复比较简单：</p>
 </blockquote>
-<p>在以上工作完成后，我们执行如下命令<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn clean install</div></pre></td></tr></table></figure></p>
-<p>  就将项目打包到本地maven仓库中，有条件的可以安装的到私服中。</p>
-<h4 id="三-应用自定义starter"><a href="#三-应用自定义starter" class="headerlink" title="三. 应用自定义starter"></a>三. 应用自定义starter</h4><ol>
-<li>首先引入自定义的starter的jar包<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">&lt;!--引入我的start--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.maskwang<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>Springboot-mystart<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">```  </div><div class="line"></div><div class="line">2. 当我们在`application.properties`配置如下   </div><div class="line">```Groovy</div><div class="line">hello.msg=maskwang</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>  我们就可以使用自定义的starter啦。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    HelloService helloService;</div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/hello"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> helloService.sayHello();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>  由于我们没有自定义<code>HelloService</code>，所以会配置类会发挥作用，新建一个<code>HelloService</code>,并把里面的msg设置成”maskwang”。没有配置msg，则会采用默认的。结果如下</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-3db9b52e9cfc819b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>参考文献：</p>
-<ol>
-<li><a href="https://www.ibm.com/developerworks/cn/webservices/ws-springjava/index.html" target="_blank" rel="external">使用 Java 配置进行 Spring bean 管理</a></li>
-<li>Spring boot实战（汪云飞著）<br><a href="https://github.com/maskwang520/springboot-mystarter" target="_blank" rel="external">github地址</a></li>
-</ol>
+<ul>
+<li>当前结点是红+黑色<br>解法，直接把当前结点染成黑色，结束此时红黑树性质全部恢复。</li>
+<li>当前结点是黑+黑且是根结点， 解法：什么都不做，结束。</li>
+</ul>
+<hr>
+<p>下面4中特殊情况</p>
+<ul>
+<li>删除修复情况1：当前结点是黑+黑且兄弟结点为红色(此时父结点和兄弟结点的子结点分为黑)</li>
+<li>删除修复情况2：当前结点是黑加黑且兄弟是黑色且兄弟结点的两个子结点全为黑色</li>
+<li>删除修复情况3：当前结点颜色是黑+黑，兄弟结点是黑色，兄弟的左子是红色，右子是黑色</li>
+<li>删除修复情况4：当前结点颜色是黑-黑色，它的兄弟结点是黑色，但是兄弟结点的右子是红色，兄弟结点左子的颜色任意</li>
+</ul>
+<p><strong>4.1 删除修复情况1：当前结点是黑+黑且兄弟结点为红色(此时父结点和兄弟结点的子结点分为黑)。</strong><br>解法：把父结点染成红色，把兄弟结点染成黑色，之后重新进入算法（我们只讨论当前结点是其父结点左孩子时的情况）。此变换后原红黑树性质5不变，而把问题转化为兄弟结点为黑色的情况(注：变化前，原本就未违反性质5，只是为了把问题转化为兄弟结点为黑色的情况)。<br><img src="http://upload-images.jianshu.io/upload_images/5281821-ec21cc57c2384be3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="变化前"><br><img src="http://upload-images.jianshu.io/upload_images/5281821-f1d8ca212b11777a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="变化后"></p>
+<p><strong>4.2 删除修复情况2：当前结点是黑加黑且兄弟是黑色且兄弟结点的两个子结点全为黑色。</strong></p>
+<p>解法：把当前结点和兄弟结点中抽取一重黑色追加到父结点上，把父结点当成新的当前结点，重新进入算法。（此变换后性质5不变）。伪代码如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//调用RB-DELETE-FIXUP(T, x) 的9-11行代码</div><div class="line">9                if color[left[w]] = BLACK and color[right[w]] = BLACK</div><div class="line">10                   then color[w] ← RED                          ▹  Case 2</div><div class="line">11                        x p[x]                                  ▹  Case 2</div></pre></td></tr></table></figure></p>
+<p><strong>4.3 删除修复情况3：当前结点颜色是黑+黑，兄弟结点是黑色，兄弟的左子是红色，右子是黑色。</strong><br>解法：把兄弟结点染红，兄弟左子结点染黑，之后再在兄弟结点为支点解右旋，之后重新进入算法。此是把当前的情况转化为情况4，而性质5得以保持。伪代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//调用RB-DELETE-FIXUP(T, x) 的第12-16行代码</div><div class="line">12                   else if color[right[w]] = BLACK</div><div class="line">13                           then color[left[w]] ← BLACK          ▹  Case 3</div><div class="line">14                                color[w] ← RED                  ▹  Case 3</div><div class="line">15                                RIGHT-ROTATE(T, w)              ▹  Case 3</div><div class="line">16                                w ← right[p[x]]                 ▹  Case 3</div></pre></td></tr></table></figure></p>
+<p><strong>4.4 删除修复情况4：当前结点颜色是黑-黑色，它的兄弟结点是黑色，但是兄弟结点的右子是红色，兄弟结点左子的颜色任意。</strong><br>解法：把兄弟结点染成当前结点父结点的颜色，把当前结点父结点染成黑色，兄弟结点右子染成黑色，之后以当前结点的父结点为支点进行左旋，此时算法结束，红黑树所有性质调整正确。代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//调用RB-DELETE-FIXUP(T, x) 的第17-21行代码</div><div class="line">17                         color[w] ← color[p[x]]                 ▹  Case 4</div><div class="line">18                         color[p[x]] ← BLACK                    ▹  Case 4</div><div class="line">19                         color[right[w]] ← BLACK                ▹  Case 4</div><div class="line">20                         LEFT-ROTATE(T, p[x])                   ▹  Case 4</div><div class="line">21                         x ← root[T]                            ▹  Case 4</div></pre></td></tr></table></figure></p>
+<p>以上就是红黑树的结构和性质，对于面试和源码的理解很有帮助。</p>
+<p>参考文章：<br><a href="https://github.com/julycoding/The-Art-Of-Programming-By-July/blob/master/ebook/zh/03.01.md" target="_blank" rel="external">教你透彻了解红黑树</a></p>
 
       
 
@@ -286,11 +293,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Springboot</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">红黑树</a>
         		</li>
       		
 		</ul>
@@ -302,7 +305,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Springboot//" class="article-tag-list-link color1">Springboot</a>
+        			<a href="/categories/数据结构与算法//" class="article-tag-list-link color3">数据结构与算法</a>
         		</li>
       		
 		</ul>
@@ -357,7 +360,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/11/04/Spring-boot构建自定义的starter/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/01/13/红黑树的原理和常见操作/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -371,18 +374,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/12/02/自定义注解实现Restful接口版本管理/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          自定义注解实现Restful接口版本管理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/11/03/HeadFirst设计模式4-工厂模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">HeadFirst设计模式4-工厂模式</div>
+    <a href="/2018/01/12/Jdk1-8-HashMap源码分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Jdk1.8 HashMap源码分析</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -412,7 +406,7 @@
   
 
   
-  <div id="SOHUCS" sid="Spring-boot构建自定义的starter" ></div> 
+  <div id="SOHUCS" sid="红黑树的原理和常见操作" ></div> 
 <script type="text/javascript"> 
 window.YiliaChangyanWrap = function() {
     var appid = "cytiAQ2fR"; 
