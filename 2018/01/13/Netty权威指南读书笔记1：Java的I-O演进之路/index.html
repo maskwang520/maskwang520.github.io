@@ -6,23 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>HeadFirst设计模式4-工厂模式 | Maskwang blogs</title>
+  <title>Netty权威指南读书笔记1：Java的I/O演进之路 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在我平常的工作中我们往往会写下如下的代码。1234567891011public Pizza orderPizza(String type) &amp;#123;        Pizza pizza = new Pizza();        //以下是变化的部分        if (type.equals(&quot;chesss&quot;)) &amp;#123;            pizza = new Chess">
-<meta name="keywords" content="设计模式,java">
+  <meta name="description" content="1.1 用户空间以及内核空间概念针对linux操作系统而言，将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为内核空间，而将较低的3G字节（从虚拟地址0x00000000到0xBFFFFFFF），供各个进程使用，称为用户空间。有了用户空间和内核空间，整个linux内部结构可以分为三部分，从最底层到最上层依次是：硬件–&amp;gt;内核空间–&amp;gt;用户空间。">
+<meta name="keywords" content="Netty">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HeadFirst设计模式4-工厂模式">
-<meta property="og:url" content="http://yoursite.com/2017/11/03/HeadFirst设计模式4-工厂模式/index.html">
+<meta property="og:title" content="Netty权威指南读书笔记1：Java的I&#x2F;O演进之路">
+<meta property="og:url" content="http://yoursite.com/2018/01/13/Netty权威指南读书笔记1：Java的I-O演进之路/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="在我平常的工作中我们往往会写下如下的代码。1234567891011public Pizza orderPizza(String type) &amp;#123;        Pizza pizza = new Pizza();        //以下是变化的部分        if (type.equals(&quot;chesss&quot;)) &amp;#123;            pizza = new Chess">
+<meta property="og:description" content="1.1 用户空间以及内核空间概念针对linux操作系统而言，将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为内核空间，而将较低的3G字节（从虚拟地址0x00000000到0xBFFFFFFF），供各个进程使用，称为用户空间。有了用户空间和内核空间，整个linux内部结构可以分为三部分，从最底层到最上层依次是：硬件–&amp;gt;内核空间–&amp;gt;用户空间。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-70ad434a82b9a781.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-84808132effa0f88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-03T04:56:37.355Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-c81d60e971235455.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-a68ee8fdcfe4f80d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-7b267e8f33355ab6?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-cd379c9254f37f46?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-e6ee030e33dcd847?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-7024bb072b20ba7d?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-4cb3ce66e6510e25?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-e6b01265976f91f7?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-651516609e6e7111?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-01-13T15:42:44.099Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HeadFirst设计模式4-工厂模式">
-<meta name="twitter:description" content="在我平常的工作中我们往往会写下如下的代码。1234567891011public Pizza orderPizza(String type) &amp;#123;        Pizza pizza = new Pizza();        //以下是变化的部分        if (type.equals(&quot;chesss&quot;)) &amp;#123;            pizza = new Chess">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-70ad434a82b9a781.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Netty权威指南读书笔记1：Java的I&#x2F;O演进之路">
+<meta name="twitter:description" content="1.1 用户空间以及内核空间概念针对linux操作系统而言，将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为内核空间，而将较低的3G字节（从虚拟地址0x00000000到0xBFFFFFFF），供各个进程使用，称为用户空间。有了用户空间和内核空间，整个linux内部结构可以分为三部分，从最底层到最上层依次是：硬件–&amp;gt;内核空间–&amp;gt;用户空间。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-c81d60e971235455.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -174,83 +181,77 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-HeadFirst设计模式4-工厂模式" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Netty权威指南读书笔记1：Java的I-O演进之路" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      HeadFirst设计模式4-工厂模式
+      Netty权威指南读书笔记1：Java的I/O演进之路
     </h1>
   
 
         
-        <a href="/2017/11/03/HeadFirst设计模式4-工厂模式/" class="archive-article-date">
-  	<time datetime="2017-11-03T03:36:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-03</time>
+        <a href="/2018/01/13/Netty权威指南读书笔记1：Java的I-O演进之路/" class="archive-article-date">
+  	<time datetime="2018-01-13T15:41:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p> 在我平常的工作中我们往往会写下如下的代码。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Pizza <span class="title">orderPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza = <span class="keyword">new</span> Pizza();</div><div class="line">        <span class="comment">//以下是变化的部分</span></div><div class="line">        <span class="keyword">if</span> (type.equals(<span class="string">"chesss"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> ChessPizza();</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"clam"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> CalmPizza();</div><div class="line">        &#125;</div><div class="line">        pizza.bake();</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>以上代码的问题在于我们要增加种类的时候，需要打开这段代码进行修改。这样造成系统难以维护，也更容易犯错。<br>我们对拓展开放，对修改关闭。通常这种情况下，应该抽象出变化的部分。<br><a id="more"></a></p>
-<h4 id="2-如何实现工厂模式。"><a href="#2-如何实现工厂模式。" class="headerlink" title="2.如何实现工厂模式。"></a>2.如何实现工厂模式。</h4><ol>
-<li>我们首先实现一个简单工厂模式</li>
-</ol>
+        <p><strong>1.1 用户空间以及内核空间概念</strong><br>针对linux操作系统而言，将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为内核空间，而将较低的3G字节（从虚拟地址0x00000000到0xBFFFFFFF），供各个进程使用，称为用户空间。<br><img src="http://upload-images.jianshu.io/upload_images/5281821-c81d60e971235455.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><strong>有了用户空间和内核空间，整个linux内部结构可以分为三部分，从最底层到最上层依次是：硬件–&gt;内核空间–&gt;用户空间。</strong><br><a id="more"></a><br>我们都知道，为了OS的安全性等的考虑，<strong>进程是无法直接操作I/O设备的，其必须通过系统调用请求内核来协助完成I/O动作，而内核会为每个I/O设备维护一个buffer</strong>。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5281821-a68ee8fdcfe4f80d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>整个请求过程为： 用户进程发起请求，内核接受到请求后，从I/O设备中获取数据到buffer中，再将buffer中的数据copy到用户进程的地址空间，该用户进程获取到数据后再响应客户端。</strong></p>
 <ul>
-<li><p>抽象出变化的部分，就是工厂</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimplePIizzaFactory</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (type.equals(<span class="string">"ChessPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> ChessPizza();</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"CalmPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> CalmPizza();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>在整个请求过程中，数据输入至buffer需要时间，而从buffer复制数据至进程也需要时间。因此根据在这两段时间内等待方式的不同，I/O动作可以分为以下五种模式：</p>
+<ul>
+<li><p>阻塞I/O (Blocking I/O)</p>
 </li>
-<li><p>调用的时候只需要用简单工厂生成就行</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PizzaStroe</span> </span>&#123;</div><div class="line">    SimplePIizzaFactory simplePIizzaFactory;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PizzaStroe</span><span class="params">(SimplePIizzaFactory simplePIizzaFactory)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.simplePIizzaFactory = simplePIizzaFactory;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">orderPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza =simplePIizzaFactory.createPizza(type);</div><div class="line">        pizza.bake();</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>非阻塞I/O (Non-Blocking I/O)</p>
+</li>
+<li><p>I/O复用（I/O Multiplexing)</p>
+</li>
+<li><p>信号驱动的I/O (Signal Driven I/O)</p>
+</li>
+<li><p>异步I/O (Asynchrnous I/O)</p>
 </li>
 </ul>
-<p>上面这样做的好处在于抽象出变化的部分，供其他部分调用 。另外，当我们需要修改的时候，只需要修改工厂类，其他的部分就不需要变动。</p>
-<ol>
-<li>工厂模式（真正意义上的工厂模式）<blockquote>
-<p>工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类。</p>
-</blockquote>
-</li>
-</ol>
-<ul>
-<li>定义一个基本的工厂基类和它的子工厂类<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义抽象的Pizza类</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Pizza</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> String name;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> ArrayList&lt;String&gt; ingredent=<span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">prepare</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"Prepare: "</span>+name);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;ingredent.size();i++)&#123;</div><div class="line">            System.out.print(ingredent.get(i)+<span class="string">" "</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bake</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"Pizza is baking"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">getIngredent</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> ingredent;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIngredent</span><span class="params">(ArrayList&lt;String&gt; ingredent)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.ingredent = ingredent;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">PizzaStroe</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">orderPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        <span class="comment">//不用管子类是什么</span></div><div class="line">        Pizza pizza = createPizza(type);</div><div class="line">        pizza.bake();</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//定义抽象方法，由子类来实现</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//武汉的工厂类，生产出武汉style的Pizza</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuhanPizzaStore</span> <span class="keyword">extends</span> <span class="title">PizzaStroe</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (type.equals(<span class="string">"CalmPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> CalmPizza();</div><div class="line">            pizza.ingredent.add(<span class="string">"WuhanStyle"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"ChessPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> ChessPizza();</div><div class="line">            pizza.ingredent.add(<span class="string">"WuhanStyle"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//北京的工厂类，生产出北京style的Pizza</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeijingPizzaStore</span> <span class="keyword">extends</span> <span class="title">PizzaStroe</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (type.equals(<span class="string">"CalmPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> CalmPizza();</div><div class="line">            pizza.ingredent.add(<span class="string">"BeijingStyle"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"ChessPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> ChessPizza();</div><div class="line">            pizza.ingredent.add(<span class="string">"BeijingStyle"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>当我们需要Pizza的时候，只需要用那个工厂类就可以构造出那种风格的Pizza<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PizzaTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        PizzaStroe beijingPizzaStore=<span class="keyword">new</span> BeijingPizzaStore();</div><div class="line">        PizzaStroe wuhanPizzaStore=<span class="keyword">new</span> WuhanPizzaStore();</div><div class="line">        Pizza pizza1=beijingPizzaStore.orderPizza(<span class="string">"CalmPizza"</span>);</div><div class="line">        Pizza pizza2=wuhanPizzaStore.orderPizza(<span class="string">"CalmPizza"</span>);</div><div class="line">        System.out.println(pizza1.getName());</div><div class="line">        System.out.println(pizza2.getName());</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>来看下类图的关系</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-70ad434a82b9a781.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="factorypattern.png"></p>
+<h3 id="2-1-阻塞I-O-Blocking-I-O"><a href="#2-1-阻塞I-O-Blocking-I-O" class="headerlink" title="2.1 阻塞I/O (Blocking I/O)"></a>2.1 阻塞I/O (Blocking I/O)</h3><p>&emsp;&emsp;在linux中，默认情况下所有的socket都是blocking，一个典型的读操作流程大概是这样：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5281821-7b267e8f33355ab6?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"> </p>
+<p>&emsp;&emsp;当用户进程调用了recvfrom这个系统调用，内核就开始了IO的第一个阶段：等待数据准备。对于network io来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候内核就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞。当内核一直等到数据准备好了，它就会将数据从内核中拷贝到用户内存，然后内核返回结果，用户进程才解除block的状态，重新运行起来。 所以，blocking IO的特点就是<strong>在IO执行的两个阶段都被block了。（整个过程一直是阻塞的）</strong></p>
+<h3 id="2-2-非阻塞I-O-Non-Blocking-I-O"><a href="#2-2-非阻塞I-O-Non-Blocking-I-O" class="headerlink" title="2.2 非阻塞I/O (Non-Blocking I/O)"></a>2.2 非阻塞I/O (Non-Blocking I/O)</h3><p>&emsp;&emsp;linux下，可以通过设置socket使其变为non-blocking。当对一个non-blocking socket执行读操作时，流程是这个样子：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5281821-cd379c9254f37f46?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>&emsp;&emsp;当用户进程调用recvfrom时，系统不会阻塞用户进程，而是立刻返回一个ewouldblock错误，从用户进程角度讲 ，并不需要等待，而是马上就得到了一个结果（这个结果就是ewouldblock ）。用户进程判断标志是ewouldblock时，就知道数据还没准备好，于是它就可以去做其他的事了，于是它可以再次发送recvfrom，一旦内核中的数据准备好了。并且又再次收到了用户进程的system call，那么它马上就将数据拷贝到了用户内存，然后返回。 当一个应用程序在一个循环里对一个非阻塞调用recvfrom，我们称为轮询。应用程序不断轮询内核，看看是否已经准备好了某些操作。这通常是<strong>浪费CPU时间</strong>，但这种模式偶尔会遇到。</p>
+<h3 id="2-3-I-O复用（I-O-Multiplexing"><a href="#2-3-I-O复用（I-O-Multiplexing" class="headerlink" title="2.3 I/O复用（I/O Multiplexing)"></a>2.3 I/O复用（I/O Multiplexing)</h3><p>&emsp;&emsp;IO multiplexing这个词可能有点陌生，但是如果我说select，epoll，大概就都能明白了。有些地方也称这种IO方式为event driven IO。我们都知道，select/epoll的好处就在于单个process就可以同时处理多个网络连接的IO。它的基本原理就是select/epoll这个function会不断的轮询所负责的所有socket，当某个socket有数据到达了，就通知用户进程。它的流程如图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5281821-e6ee030e33dcd847?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>&emsp;&emsp;当用户进程调用了select，那么整个进程会被block，而同时，内核会“监视”所有select负责的socket，当任何一个socket中的数据准备好了，select就会返回。这个时候用户进程再调用read操作，将数据从内核拷贝到用户进程。 这个图和blocking IO的图其实并没有太大的不同，事实上，还更差一些。因为这里需要使用两个system call (select 和 recvfrom)，而blocking IO只调用了一个system call (recvfrom)。但是，用select的优势在于它可以同时处理多个connection。（多说一句。所以，如果处理的连接数不是很高的话，使用select/epoll的web server不一定比使用multi-threading + blocking IO的web server性能更好，可能延迟还更大。select/epoll的优势并不是对于单个连接能处理得更快，而是在于能处理更多的连接。） 在IO multiplexing Model中，实际中，对于每一个socket，一般都设置成为non-blocking，但是，如上图所示，整个用户的process其实是一直被block的。只不过process是被select这个函数block，而不是被socket IO给block。</p>
+<h4 id="文件描述符fd"><a href="#文件描述符fd" class="headerlink" title="文件描述符fd"></a>文件描述符fd</h4><p>Linux的内核将所有外部设备都可以看做一个文件来操作。那么我们对与外部设备的操作都可以看做对文件进行操作。我们对一个文件的读写，都通过调用内核提供的系统调用；内核给我们返回一个filede scriptor（fd,文件描述符）。而对一个socket的读写也会有相应的描述符，称为socketfd(socket描述符）。描述符就是一个数字，指向内核中一个结构体（文件路径，数据区，等一些属性）。那么我们的应用程序对文件的读写就通过对描述符的读写完成。</p>
+<h4 id="select"><a href="#select" class="headerlink" title="select"></a>select</h4><p><strong>基本原理：</strong>select 函数监视的文件描述符分3类，分别是writefds、readfds、和exceptfds。调用后select函数会阻塞，直到有描述符就绪（有数据 可读、可写、或者有except），或者超时（timeout指定等待时间，如果立即返回设为null即可），函数返回。当select函数返回后，可以通过遍历fdset，来找到就绪的描述符。</p>
+<p>缺点: 1、select最大的缺陷就是单个进程所打开的FD是有一定限制的，它由FDSETSIZE设置，32位机默认是1024个，64位机默认是2048。 一般来说这个数目和系统内存关系很大，”具体数目可以cat /proc/sys/fs/file-max察看”。32位机默认是1024个。64位机默认是2048. 2、对socket进行扫描时是线性扫描，即采用轮询的方法，效率较低。 当套接字比较多的时候，每次select()都要通过遍历FDSETSIZE个Socket来完成调度，不管哪个Socket是活跃的，都遍历一遍。这会浪费很多CPU时间。”如果能给套接字注册某个回调函数，当他们活跃时，自动完成相关操作，那就避免了轮询”，这正是epoll与kqueue做的。 3、需要维护一个用来存放大量fd的数据结构，这样会使得用户空间和内核空间在传递该结构时复制开销大。</p>
+<h4 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h4><p><strong>基本原理：</strong>poll本质上和select没有区别，它将用户传入的数组拷贝到内核空间，然后查询每个fd对应的设备状态，如果设备就绪则在设备等待队列中加入一项并继续遍历，如果遍历完所有fd后没有发现就绪设备，则挂起当前进程，直到设备就绪或者主动超时，被唤醒后它又要再次遍历fd。这个过程经历了多次无谓的遍历。</p>
+<p><strong>它没有最大连接数的限制，原因是它是基于链表来存储的，但是同样有一个缺点：</strong>1、大量的fd的数组被整体复制于用户态和内核地址空间之间，而不管这样的复制是不是有意义。 2 、poll还有一个特点是“水平触发”，如果报告了fd后，没有被处理，那么下次poll时会再次报告该fd。</p>
+<p><strong>注意：</strong>从上面看，select和poll都需要在返回后，通过遍历文件描述符来获取已经就绪的socket。事实上，同时连接的大量客户端在一时刻可能只有很少的处于就绪状态，因此随着监视的描述符数量的增长，其效率也会线性下降。</p>
+<h4 id="epoll-事件驱动）"><a href="#epoll-事件驱动）" class="headerlink" title="epoll(事件驱动）"></a>epoll(事件驱动）</h4><p>epoll是在2.6内核中提出的，是之前的select和poll的增强版本。相对于select和poll来说，epoll更加灵活，没有描述符限制。epoll使用一个文件描述符管理多个描述符，将用户关系的文件描述符的事件存放到内核的一个事件表中，这样在用户空间和内核空间的copy只需一次。</p>
+<p><strong>基本原理：</strong>epoll支持水平触发和边缘触发，最大的特点在于边缘触发，它只告诉进程哪些fd刚刚变为就绪态，并且只会通知一次。还有一个特点是，epoll使用“事件”的就绪通知方式，通过epollctl注册fd，一旦该fd就绪，内核就会采用类似callback的回调机制来激活该fd，epollwait便可以收到通知。</p>
+<p><strong>epoll的优点：</strong>1、没有最大并发连接的限制，能打开的FD的上限远大于1024（1G的内存上能监听约10万个端口）。 2、效率提升，不是轮询的方式，不会随着FD数目的增加效率下降。 只有活跃可用的FD才会调用callback函数；即Epoll最大的优点就在于它只管你“活跃”的连接，而跟连接总数无关，因此在实际的网络环境中，Epoll的效率就会远远高于select和poll。 3、内存拷贝，利用mmap()文件映射内存加速与内核空间的消息传递；即epoll使用mmap减少复制开销。</p>
+<p><strong>JDK1.5_update10版本使用epoll替代了传统的select/poll，极大的提升了NIO通信的性能。</strong></p>
 <blockquote>
-<p>&emsp;&emsp;简单工厂与工厂方法的区别：简单工厂把全部的事情在一个地方都处理完了，然而工厂方法却是创建一个框架，让子类决定如何实现。<br>简单工厂的做法，可以将对象的创建封装起来，但是简单工厂不具备工厂方法的弹性，因为简单工厂不能变更正在创建的产品。</p>
+<p><strong>备注：</strong>JDK NIO的BUG，例如臭名昭著的epoll bug，它会导致Selector空轮询，最终导致CPU 100%。官方声称在JDK1.6版本的update18修复了该问题，但是直到JDK1.7版本该问题仍旧存在，只不过该BUG发生概率降低了一些而已，它并没有被根本解决。<strong>这个可以在后续netty系列里面进行说明下。</strong></p>
 </blockquote>
-<ol>
-<li>抽象工厂模式<br>首先给出定义<blockquote>
-<p>抽象工厂模式 提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类</p>
-</blockquote>
-</li>
-</ol>
-<ul>
-<li>首先我们定义抽象接口<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PropertyFactory</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">getIngredent</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>在实际的场合中，<em>抽象接口里面的抽象方法都是返回某个想要创建的抽象类</em>，我这里比较简单，直接返回字符串和集合。之所以称为抽象工厂，我们从这里就可以看出来。通过抽象的方法，返回你希望得到的类的基类。</p>
-<ul>
-<li>我们构造抽象工厂类的实现类<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalmPropertyFactory</span> <span class="keyword">implements</span> <span class="title">PropertyFactory</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"NewCalmPizza"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">getIngredent</span><span class="params">()</span> </span>&#123;</div><div class="line">        ArrayList&lt;String&gt; arrayList=<span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        arrayList.add(<span class="string">"Newcalm"</span>);</div><div class="line">        <span class="keyword">return</span> arrayList;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChessPropertyFactory</span> <span class="keyword">implements</span> <span class="title">PropertyFactory</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"NewChessPizza"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">getIngredent</span><span class="params">()</span> </span>&#123;</div><div class="line">        ArrayList&lt;String&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        arrayList.add(<span class="string">"Newchess"</span>);</div><div class="line">        <span class="keyword">return</span> arrayList;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>那么此时的Pizza的子类应该如此构造<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalmPizza</span> <span class="keyword">extends</span> <span class="title">Pizza</span> </span>&#123;</div><div class="line">    PropertyFactory propertyFactory;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CalmPizza</span><span class="params">(PropertyFactory propertyFactory)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.propertyFactory=propertyFactory;</div><div class="line">        name=propertyFactory.getName();</div><div class="line">        ingredent=propertyFactory.getIngredent();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>直接用对应的原料工厂来构造。<br>来看下类图。<br><img src="http://upload-images.jianshu.io/upload_images/5281821-84808132effa0f88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="abstractFactory.png"></p>
-<ol>
-<li>个人总结（conclusion)<br>&emsp;&emsp;通过以上的描述，我们很容易明白工厂模式，也很容易区分简单工厂和工厂模式的区别（即构造类是在一个工厂类里面统一构造，还是通过子类的工厂方法来构造）。但是令人迷惑的是工厂模式与抽象工厂模式有什么区别。区别如下：<blockquote>
-<p>抽象工厂的每个方法实际上看起来都像是工厂方法，每个方法都被声明成抽象。而子类的方法来覆盖这些方法来创建某些对象。注意到，这里的子类是想要构造类的成分，就像我上面的写的name和ingredent成员。Pizza的子类只需要依赖依赖这些成分工厂类，例如ChessPropertyFactory ，就能构造出对象。重点突出抽象，是因为它有一个总的抽象接口，实现它的子类负责构造对象的成分，总而构成对象。</p>
-</blockquote>
-</li>
-</ol>
+<h3 id="信号驱动的I-O-Signal-Driven-I-O"><a href="#信号驱动的I-O-Signal-Driven-I-O" class="headerlink" title="信号驱动的I/O (Signal Driven I/O)"></a>信号驱动的I/O (Signal Driven I/O)</h3><p><img src="http://upload-images.jianshu.io/upload_images/5281821-7024bb072b20ba7d?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>很明显可以看出用户进程不是阻塞的。首先用户进程建立SIGIO信号处理程序，并通过系统调用sigaction执行一个信号处理函数，这时用户进程便可以做其他的事了，一旦数据准备好，系统便为该进程生成一个SIGIO信号，去通知它数据已经准备好了，于是用户进程便调用recvfrom把数据从内核拷贝出来，并返回结果。</p>
+<h3 id="3-5-异步I-O"><a href="#3-5-异步I-O" class="headerlink" title="3.5 异步I/O"></a>3.5 异步I/O</h3><p>一般来说，这些函数通过告诉内核启动操作并在整个操作（包括内核的数据到缓冲区的副本）完成时通知我们。这个模型和前面的信号驱动I/O模型的主要区别是，在信号驱动的I/O中，内核告诉我们何时可以启动I/O操作，但是异步I/O时，内核告诉我们何时I/O<strong>操作完成</strong>。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5281821-4cb3ce66e6510e25?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>当用户进程向内核发起某个操作后，会立刻得到返回，并把所有的任务都交给内核去完成（包括将数据从内核拷贝到用户自己的缓冲区），内核完成之后，只需返回一个信号告诉用户进程已经完成就可以了。</p>
+<h3 id="5中I-O模型的对比"><a href="#5中I-O模型的对比" class="headerlink" title="5中I/O模型的对比"></a>5中I/O模型的对比</h3><p><img src="http://upload-images.jianshu.io/upload_images/5281821-e6b01265976f91f7?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p><strong>结果表明：</strong>前四个模型之间的主要区别是第一阶段，四个模型的第二阶段是一样的：过程受阻在调用recvfrom当数据从内核拷贝到用户缓冲区。然而，异步I/O处理两个阶段，与前四个不同。</p>
+<p><strong>从同步、异步，以及阻塞、非阻塞两个维度来划分来看：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5281821-651516609e6e7111?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>参考文档<br><a href="https://mp.weixin.qq.com/s?__biz=MzU2NjIzNDk5NQ==&amp;mid=2247483891&amp;idx=1&amp;sn=9bc7472bbfca5dc9903f9133c8544fae&amp;chksm=fcaedbefcbd952f946a2a13f35415bbbfbc633430abebd01ee065396432546de2a2c260c8f20&amp;mpshare=1&amp;scene=23&amp;srcid=12267A9mUH5TixdNiowpFUfg#rd" target="_blank" rel="external">匠心零度的公众号</a><br><a href="">Netty权威指南第一章</a></p>
 
       
 
@@ -295,11 +296,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Netty</a>
         		</li>
       		
 		</ul>
@@ -311,7 +308,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
+        			<a href="/categories/Netty//" class="article-tag-list-link color1">Netty</a>
         		</li>
       		
 		</ul>
@@ -366,7 +363,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/11/03/HeadFirst设计模式4-工厂模式/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/01/13/Netty权威指南读书笔记1：Java的I-O演进之路/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -380,18 +377,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/11/04/Spring-boot构建自定义的starter/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Spring boot构建自定义的starter
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/10/15/HeadFirst设计模式3-装饰者模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">HeadFirst设计模式3-装饰者模式</div>
+    <a href="/2018/01/13/红黑树的原理和常见操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">红黑树的原理和常见操作</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -421,7 +409,7 @@
   
 
   
-  <div id="SOHUCS" sid="HeadFirst设计模式4-工厂模式" ></div> 
+  <div id="SOHUCS" sid="Netty权威指南读书笔记1：Java的I-O演进之路" ></div> 
 <script type="text/javascript"> 
 window.YiliaChangyanWrap = function() {
     var appid = "cytiAQ2fR"; 
