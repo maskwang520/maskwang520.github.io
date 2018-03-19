@@ -6,23 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>HeadFirst设计模式4-工厂模式 | Maskwang blogs</title>
+  <title>HTTP/2 新特性总结 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在我平常的工作中我们往往会写下如下的代码。1234567891011public Pizza orderPizza(String type) &amp;#123;        Pizza pizza = new Pizza();        //以下是变化的部分        if (type.equals(&quot;chesss&quot;)) &amp;#123;            pizza = new Chess">
-<meta name="keywords" content="设计模式,java">
+  <meta name="description" content="我在想了解HTTP/2的时候，查阅了很多资料，发现这篇很好，是外国的文章．我翻译过来，加入自己的一点理解． HTTP/2 更简单,高效,强大.它在传输层解决了以前我们HTTP1.x中一直存在的问题.使用它可以优化我们的应用.HTTP/2 的首要目标是通过完全的请求,响应多路复用,头部的压缩头部域来减小头部的体积,添加了请求优先级,服务端推送.为了支持这些特性,他需要大量的协议增加头部字段来支持,例">
+<meta name="keywords" content="HTTP&#x2F;2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HeadFirst设计模式4-工厂模式">
-<meta property="og:url" content="http://yoursite.com/2017/11/03/HeadFirst设计模式4-工厂模式/index.html">
+<meta property="og:title" content="HTTP&#x2F;2 新特性总结">
+<meta property="og:url" content="http://yoursite.com/2018/03/19/HTTP-2-新特性总结/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="在我平常的工作中我们往往会写下如下的代码。1234567891011public Pizza orderPizza(String type) &amp;#123;        Pizza pizza = new Pizza();        //以下是变化的部分        if (type.equals(&quot;chesss&quot;)) &amp;#123;            pizza = new Chess">
+<meta property="og:description" content="我在想了解HTTP/2的时候，查阅了很多资料，发现这篇很好，是外国的文章．我翻译过来，加入自己的一点理解． HTTP/2 更简单,高效,强大.它在传输层解决了以前我们HTTP1.x中一直存在的问题.使用它可以优化我们的应用.HTTP/2 的首要目标是通过完全的请求,响应多路复用,头部的压缩头部域来减小头部的体积,添加了请求优先级,服务端推送.为了支持这些特性,他需要大量的协议增加头部字段来支持,例">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-70ad434a82b9a781.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-84808132effa0f88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-03T04:56:37.355Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-5e2e23de6cbbc698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-7b0c2aa12ccc6d42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-ce9d374b7d0adf09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-a424cc207432cde0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-d97e0c65b1491baa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-38055e8dde4b4436.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-d8687e8eed1e6823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-b28c3451bc8fc3fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-19T15:35:12.180Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HeadFirst设计模式4-工厂模式">
-<meta name="twitter:description" content="在我平常的工作中我们往往会写下如下的代码。1234567891011public Pizza orderPizza(String type) &amp;#123;        Pizza pizza = new Pizza();        //以下是变化的部分        if (type.equals(&quot;chesss&quot;)) &amp;#123;            pizza = new Chess">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-70ad434a82b9a781.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="HTTP&#x2F;2 新特性总结">
+<meta name="twitter:description" content="我在想了解HTTP/2的时候，查阅了很多资料，发现这篇很好，是外国的文章．我翻译过来，加入自己的一点理解． HTTP/2 更简单,高效,强大.它在传输层解决了以前我们HTTP1.x中一直存在的问题.使用它可以优化我们的应用.HTTP/2 的首要目标是通过完全的请求,响应多路复用,头部的压缩头部域来减小头部的体积,添加了请求优先级,服务端推送.为了支持这些特性,他需要大量的协议增加头部字段来支持,例">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5281821-5e2e23de6cbbc698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -174,83 +180,136 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-HeadFirst设计模式4-工厂模式" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-HTTP-2-新特性总结" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      HeadFirst设计模式4-工厂模式
+      HTTP/2 新特性总结
     </h1>
   
 
         
-        <a href="/2017/11/03/HeadFirst设计模式4-工厂模式/" class="archive-article-date">
-  	<time datetime="2017-11-03T03:36:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-03</time>
+        <a href="/2018/03/19/HTTP-2-新特性总结/" class="archive-article-date">
+  	<time datetime="2018-03-19T15:32:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p> 在我平常的工作中我们往往会写下如下的代码。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Pizza <span class="title">orderPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza = <span class="keyword">new</span> Pizza();</div><div class="line">        <span class="comment">//以下是变化的部分</span></div><div class="line">        <span class="keyword">if</span> (type.equals(<span class="string">"chesss"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> ChessPizza();</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"clam"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> CalmPizza();</div><div class="line">        &#125;</div><div class="line">        pizza.bake();</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>以上代码的问题在于我们要增加种类的时候，需要打开这段代码进行修改。这样造成系统难以维护，也更容易犯错。<br>我们对拓展开放，对修改关闭。通常这种情况下，应该抽象出变化的部分。<br><a id="more"></a></p>
-<h4 id="2-如何实现工厂模式。"><a href="#2-如何实现工厂模式。" class="headerlink" title="2.如何实现工厂模式。"></a>2.如何实现工厂模式。</h4><ol>
-<li>我们首先实现一个简单工厂模式</li>
-</ol>
-<ul>
-<li><p>抽象出变化的部分，就是工厂</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimplePIizzaFactory</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (type.equals(<span class="string">"ChessPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> ChessPizza();</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"CalmPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> CalmPizza();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>调用的时候只需要用简单工厂生成就行</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PizzaStroe</span> </span>&#123;</div><div class="line">    SimplePIizzaFactory simplePIizzaFactory;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PizzaStroe</span><span class="params">(SimplePIizzaFactory simplePIizzaFactory)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.simplePIizzaFactory = simplePIizzaFactory;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">orderPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza =simplePIizzaFactory.createPizza(type);</div><div class="line">        pizza.bake();</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>上面这样做的好处在于抽象出变化的部分，供其他部分调用 。另外，当我们需要修改的时候，只需要修改工厂类，其他的部分就不需要变动。</p>
-<ol>
-<li>工厂模式（真正意义上的工厂模式）<blockquote>
-<p>工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类。</p>
-</blockquote>
-</li>
-</ol>
-<ul>
-<li>定义一个基本的工厂基类和它的子工厂类<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义抽象的Pizza类</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Pizza</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> String name;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> ArrayList&lt;String&gt; ingredent=<span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">prepare</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"Prepare: "</span>+name);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;ingredent.size();i++)&#123;</div><div class="line">            System.out.print(ingredent.get(i)+<span class="string">" "</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bake</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"Pizza is baking"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">getIngredent</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> ingredent;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIngredent</span><span class="params">(ArrayList&lt;String&gt; ingredent)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.ingredent = ingredent;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">PizzaStroe</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">orderPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        <span class="comment">//不用管子类是什么</span></div><div class="line">        Pizza pizza = createPizza(type);</div><div class="line">        pizza.bake();</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//定义抽象方法，由子类来实现</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//武汉的工厂类，生产出武汉style的Pizza</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuhanPizzaStore</span> <span class="keyword">extends</span> <span class="title">PizzaStroe</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (type.equals(<span class="string">"CalmPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> CalmPizza();</div><div class="line">            pizza.ingredent.add(<span class="string">"WuhanStyle"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"ChessPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> ChessPizza();</div><div class="line">            pizza.ingredent.add(<span class="string">"WuhanStyle"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//北京的工厂类，生产出北京style的Pizza</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeijingPizzaStore</span> <span class="keyword">extends</span> <span class="title">PizzaStroe</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line">        Pizza pizza = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (type.equals(<span class="string">"CalmPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> CalmPizza();</div><div class="line">            pizza.ingredent.add(<span class="string">"BeijingStyle"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"ChessPizza"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> ChessPizza();</div><div class="line">            pizza.ingredent.add(<span class="string">"BeijingStyle"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>当我们需要Pizza的时候，只需要用那个工厂类就可以构造出那种风格的Pizza<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PizzaTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        PizzaStroe beijingPizzaStore=<span class="keyword">new</span> BeijingPizzaStore();</div><div class="line">        PizzaStroe wuhanPizzaStore=<span class="keyword">new</span> WuhanPizzaStore();</div><div class="line">        Pizza pizza1=beijingPizzaStore.orderPizza(<span class="string">"CalmPizza"</span>);</div><div class="line">        Pizza pizza2=wuhanPizzaStore.orderPizza(<span class="string">"CalmPizza"</span>);</div><div class="line">        System.out.println(pizza1.getName());</div><div class="line">        System.out.println(pizza2.getName());</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>来看下类图的关系</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-70ad434a82b9a781.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="factorypattern.png"></p>
+        <p>我在想了解HTTP/2的时候，查阅了很多资料，发现这篇很好，是外国的文章．我翻译过来，加入自己的一点理解．</p>
+<p>HTTP/2 更简单,高效,强大.它在传输层解决了以前我们HTTP1.x中一直存在的问题.使用它可以优化我们的应用.HTTP/2 的首要目标是通过完全的请求,响应多路复用,头部的压缩头部域来减小头部的体积,添加了请求优先级,服务端推送.为了支持这些特性,他需要大量的协议增加头部字段来支持,例如新的流量控制,差错处理,升级机制.而这些是每个web开发者都应该在他们的应用中用到的.<br><a id="more"></a><br>HTTP/2并没有在应用中改变HTTP的语义,而是通过在客户端和服务端传输的数据格式(frame)和传输.它通过在新的二进制帧层控制整个过程以及隐藏复杂性,而这不需要改变原来有的东西就可以实现.</p>
+<h5 id="1-设计和技术目标"><a href="#1-设计和技术目标" class="headerlink" title="1. 设计和技术目标"></a>1. 设计和技术目标</h5><p>HTTP是因特网广泛普及和采纳的应用层协议.它的易于实现性同样有了对应用性能方面的影响.HTTP/1.x 需要开启多个连接来实现并发和减少潜在影响.HTTP/1.x 的头部没有压缩,造成不必要的网络拥塞.HTTP/1.x没有应用资源优先级,导致重要Tcp连接的糟糕使用.<br>它的好处如下;</p>
 <blockquote>
-<p>&emsp;&emsp;简单工厂与工厂方法的区别：简单工厂把全部的事情在一个地方都处理完了，然而工厂方法却是创建一个框架，让子类决定如何实现。<br>简单工厂的做法，可以将对象的创建封装起来，但是简单工厂不具备工厂方法的弹性，因为简单工厂不能变更正在创建的产品。</p>
+<p>HTTP/2 enables a more efficient use of network resources and a reduced perception of latency by introducing header field compression and allowing multiple concurrent exchanges on the same connection… Specifically, it allows interleaving of request and response messages on the same connection and uses an efficient coding for HTTP header fields. It also allows prioritization of requests, letting more important requests complete more quickly, further improving performance.<br>The resulting protocol is more friendly to the network, because fewer TCP connections can be used in comparison to HTTP/1.x. This means less competition with other flows, and longer-lived connections, which in turn leads to better utilization of available network capacity. Finally, HTTP/2 also enables more efficient processing of messages through use of binary message framing.<br>HTTP2.0并没有改变之前HTTP的语义,也就是说高层的Api并没有改变,它是在底层通过二进制frame来改变性能的.</p>
 </blockquote>
-<ol>
-<li>抽象工厂模式<br>首先给出定义<blockquote>
-<p>抽象工厂模式 提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类</p>
-</blockquote>
-</li>
-</ol>
+<h5 id="2-二进制帧层"><a href="#2-二进制帧层" class="headerlink" title="2. 二进制帧层"></a>2. 二进制帧层</h5><p>性能提升的核心在于二进制帧层.它指HTTP消息在客户端和服务端如何封装和传输.<br><img src="https://upload-images.jianshu.io/upload_images/5281821-5e2e23de6cbbc698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>这一层指一个设计选择，它在socket接口之间采用一种更好的编码机制，而高层的Api提供给我们的应用。与HTTP1.x的采用的换行符分隔文本不同，HTTP/2 消息被分成很小的消息和frame,然后每个消息和frame用二进制编码。客户端和服务端都采用二进制编码和解码。HTTP/1.x 的客户端不能与只有HTTP/2的服务端通信。幸运的是，我们的应用还没意识到这些改变。客户端和服务端能够很好的处理这些帧。</p>
+<blockquote>
+<p>ASCII 协议能够很容易的看出来和开始使用。然而它们是没有效率的，且很难正确设计：可选的空白，改变终止序列和其他的毛病使得协议很难区别出payload。虽然二进制协议用起来需要做很多工作，但是它们能表现出更好的性能。</p>
+<h5 id="3-流-消息，帧"><a href="#3-流-消息，帧" class="headerlink" title="3. 流,消息，帧"></a>3. 流,消息，帧</h5><p>接下来介绍二进制帧机制来明白数据如何在客户端和服务端交换的。<br><strong>流</strong>：已经建立的连接之间双向流动的字节，它能携带一个至多个消息。<br><strong>消息</strong>：一个完整的帧序列，它映射到逻辑的请求和响应消息。<br><strong>帧</strong>：在HTTP/2通信的最小单元。每个桢包括一个帧头，里面有个很小标志，来区别是属于哪个流。</p>
 <ul>
-<li>首先我们定义抽象接口<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PropertyFactory</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">getIngredent</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>所有的通信都建立在一个TCP连接上，可以传递大量的双向流通的流。</li>
+<li>每个流都有独一无二的标志和优先级。</li>
+<li>每个消息都是逻辑上的请求和相应消息。由一个或者多个帧组成。</li>
+<li>来自不同流的帧可以通过帧头的标志来关联和组装起来。</li>
+</ul>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/5281821-7b0c2aa12ccc6d42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>这是 HTTP/2 协议提供高性能的基础。</p>
+<h5 id="4-请求和响应的多路复用"><a href="#4-请求和响应的多路复用" class="headerlink" title="4. 请求和响应的多路复用"></a>4. 请求和响应的多路复用</h5><p>在HTTP/1.x中,用户想要多个并行的请求来提高性能,但是这样必须得使用多个TCP连接.这样的操作是属于HTTP/1.x 发送模型的直接序列.它能保证在每次连接中在一个时间点只有一个响应被发送出去.更糟糕的是,它使得队头阻塞和重要TCP连接的低效使用.<br>在HTTP/2中,新的二进制帧层,解除了这个限制.使得所有的请求和响应多路复用.通过允许客户端和服务端把HTTP消息分解成独立的帧,交错传输,然后在另一端组装.<br><img src="https://upload-images.jianshu.io/upload_images/5281821-ce9d374b7d0adf09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>图12-3显示了在一次连接中的多个流.客户端传输数据帧到服务端(Stream5).服务端传输交错的帧序列(Stream1,Stream3)到客户端.此时,同时存在并行的3个流.<br>能够把HTTP消息分解成交错的帧,并在另一端组装它们是HTTP/2中一个非常重要的提高.事实上,它引起了一种波浪效应使得web技术的全栈在性能上有很大的提升.它有以下作用:</p>
+<ol>
+<li>交错的多个并行的请求或者,而不需要阻塞.</li>
+<li>使用一个连接传递所有的并行的请求和响应.</li>
+<li>移除了HTTP/1.x中没有的必要的解决方法.例如级联文件,域分片.</li>
+<li>淘汰没必要的潜在因素来降低页面载入的时间.提升可用网络容积的使用率.</li>
+</ol>
+<p>新的二进制帧层解决了HTTP/1.X中头部阻塞的问题.在并行处理和传输的请求和响应不再需要多个连接.这使得我们的应用更简单,快捷和便宜.</p>
+<h5 id="5-流的优先级"><a href="#5-流的优先级" class="headerlink" title="5. 流的优先级."></a>5. 流的优先级.</h5><p>为了能方便流的传输顺序,HTTP/2.0提出,使每个流都有一个权重和依赖.</p>
+<ul>
+<li>每个流的权重值在1~256之间</li>
+<li>每个流可以详细给出对其他流的依赖</li>
+</ul>
+<p>流权重和依赖的结合使客户端可以构造和通信一个优先级二叉树来表达它更想得到哪种响应.然后服务端可以按权重分配硬件资源(CPU,内存).<br><img src="https://upload-images.jianshu.io/upload_images/5281821-a424cc207432cde0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>在HTTP/2 ,一个流的依赖可以显式用其他流的标志来表达,如果省略了标志,则说明它的依赖是根流.一般来说,父流应该在它的依赖流之前分配资源,例如D应该是C之前被发送.依赖于同一父节点的应该按照他们的权重分配资源.例如A结点的权重为12,它的兄弟结点B的结点的权重为4.然后按比例分资源,A占12/16,B占4/16.如上面所述,流的依赖和权重提供了一种很好的表达式语言来表达资源的优先级.但是我们应该明白,,流的依赖和权重只是提供了一种传输偏好,而不是说一定是这样的比例.</p>
+<p>#####　5.每个源一个连接<br>HTTP/2.0的连接是持久的,每个源仅仅需要一个连接.大部分HTTP的传输是短的,并且突然的.然而TCP连接却适合长期存活的,批量的数据传输.通过利用相同的HTTP/2 连接,既能够充分利用TCP连接,也能减小整体协议的头部.更进一步来说,更少的连接内存的占用以及全连接路径的处理过程.向HTTP/2的转移不仅减少了网络潜在因素,更减少了操作代价.</p>
+<blockquote>
+<p>Tips:减少连接,同时也提高了HTTPS的性能,因为仅需要更少的TLS层的握手.</p>
+</blockquote>
+<h5 id="5-流量控制"><a href="#5-流量控制" class="headerlink" title="5. 流量控制"></a>5. 流量控制</h5><p>流量控制是一种机制,用来阻止发送者发送大量的接收者不需要,或者没能力处理的数据.接收者可能会在重负下很繁忙,或者只愿意分配固定的资源给特定的流.例如,客户端可能以高的优先级请求大量的视频数据,然后用户暂停了视频,那么客户端现在想要停止或者减少服务端的传输来避免取和缓存没必要的数据.或者一个代理服务器连接有很快的下流,很慢的上流,同样的也要控制以多大的流速传输数据,从而匹配上流的速度,从而控制资源的使用.</p>
+<p>这些需求可能让你想起了TCP流量控制,由于HTTP/2的那些流是在一个TCP的连接上.那么TCP连接不够细粒度,也没能提供应用级的API来控制单个流的传输.为了应对这种情况,HTTP/2提供了一系列的简单修筑块,来允许客户端和服务端实现他们自己的流级别的,连接级别的流量控制.</p>
+<ul>
+<li>流量控制是有方向的.对于每个流和连接,每个接收者可以设置它想要窗口大小.</li>
+<li>流量控制是基于信用的。每个接收者通告其初始连接和流量控制窗口（以字节为单位），只要发送者发送数据帧并通过接受者发送的WINDOW_UPDATE帧递增，该窗口就会减少。</li>
+<li>流量控制不能禁用.当建立HTTP / 2连接时，客户端和服务器交换SETTINGS帧，这些帧设置双向流量控制窗口的大小。流量控制窗口的默认值设置为65,535字节，但接收方可以设置更大的最大窗口大小（2的31次方-1<br>字节），并通过在接收到任何数据时发送WINDOW_UPDATE帧来维护它。</li>
+<li>流量控制是逐跳的,而不是端到端的.也就是说,一个中介可以使用它控制资源的使用,从而根据自己的标准和启发式实现资源分配机制.</li>
+</ul>
+<p>HTTP / 2没有规定用于实现流量控制的任何特定算法。相反，它提供了简单的构建模块并将实现推迟到客户端和服务器，这可以用它来实现自定义策略来调节资源使用和分配，以及实现新的传输功能，这可能有助于提高Web应用程序真实性和感知性。</p>
+<p>例如，应用程序层流控量制允许浏览器仅提取特定资源的一部分，通过将流量控制窗口降至零来暂停提取，然后稍后恢复 - 例如，获取预览或第一次浏览图像，显示图像并允许进行其他高优先级操作取来操作，并在关键资源完成加载后又开始取。</p>
+<h4 id="6-服务端推送"><a href="#6-服务端推送" class="headerlink" title="6.服务端推送"></a>6.服务端推送</h4><p>HTTP / 2的另一个强大的新功能是服务器为单个客户端请求发送多个响应的能力。也就是说，除了对原始请求的响应之外，服务器还可以向客户端推送额外的资源（图12-5），而不需要客户端明确请求每一个资源！<br><img src="https://upload-images.jianshu.io/upload_images/5281821-d97e0c65b1491baa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<blockquote>
+<p>HTTP / 2脱离了严格的请求 - 响应语义，并支持一对多和服务器启动的推送工作流程，在浏览器内部和外部打开全新的交互可能性。这是一个启动功能，对于我们如何考虑协议以及在何处以及如何使用协议，都会产生重要的长期影响。</p>
+</blockquote>
+<p>为什么我们需要在浏览器中使用这种机制？一个典型的Web应用程序由几十个资源组成，所有这些资源都是客户端通过检查服务器提供的文档发现的。因此，为什么不消除额外的延迟并让服务器提前推送相关资源？服务器已经知道客户端需要哪些资源;这是服务器推动。<br>事实上，如果您曾经通过数据URI将CSS，JavaScript或任何其他资产内联到一起（请参阅资源内联），那么您已经有了服务器推送的实践经验！通过手动将资源内联到文档中，实际上，我们将该资源推送到客户端，而无需等待客户端请求。通过HTTP / 2，我们可以获得相同的结果，但是具有额外的性能优势：</p>
+<ul>
+<li>推送的资源可以由客户端缓存</li>
+<li><p>推送的资源可以在不同的页面上重复使用</p>
+<ul>
+<li><p>推送的资源可以与其他资源一起复用</p>
+</li>
+<li><p>推送的资源可以由服务器优先</p>
 </li>
 </ul>
-<p>在实际的场合中，<em>抽象接口里面的抽象方法都是返回某个想要创建的抽象类</em>，我这里比较简单，直接返回字符串和集合。之所以称为抽象工厂，我们从这里就可以看出来。通过抽象的方法，返回你希望得到的类的基类。</p>
-<ul>
-<li>我们构造抽象工厂类的实现类<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalmPropertyFactory</span> <span class="keyword">implements</span> <span class="title">PropertyFactory</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"NewCalmPizza"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">getIngredent</span><span class="params">()</span> </span>&#123;</div><div class="line">        ArrayList&lt;String&gt; arrayList=<span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        arrayList.add(<span class="string">"Newcalm"</span>);</div><div class="line">        <span class="keyword">return</span> arrayList;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChessPropertyFactory</span> <span class="keyword">implements</span> <span class="title">PropertyFactory</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"NewChessPizza"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">getIngredent</span><span class="params">()</span> </span>&#123;</div><div class="line">        ArrayList&lt;String&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        arrayList.add(<span class="string">"Newchess"</span>);</div><div class="line">        <span class="keyword">return</span> arrayList;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>推送的资源可以被客户拒绝</p>
 </li>
 </ul>
-<p>那么此时的Pizza的子类应该如此构造<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalmPizza</span> <span class="keyword">extends</span> <span class="title">Pizza</span> </span>&#123;</div><div class="line">    PropertyFactory propertyFactory;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CalmPizza</span><span class="params">(PropertyFactory propertyFactory)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.propertyFactory=propertyFactory;</div><div class="line">        name=propertyFactory.getName();</div><div class="line">        ingredent=propertyFactory.getIngredent();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>直接用对应的原料工厂来构造。<br>来看下类图。<br><img src="http://upload-images.jianshu.io/upload_images/5281821-84808132effa0f88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="abstractFactory.png"></p>
-<ol>
-<li>个人总结（conclusion)<br>&emsp;&emsp;通过以上的描述，我们很容易明白工厂模式，也很容易区分简单工厂和工厂模式的区别（即构造类是在一个工厂类里面统一构造，还是通过子类的工厂方法来构造）。但是令人迷惑的是工厂模式与抽象工厂模式有什么区别。区别如下：<blockquote>
-<p>抽象工厂的每个方法实际上看起来都像是工厂方法，每个方法都被声明成抽象。而子类的方法来覆盖这些方法来创建某些对象。注意到，这里的子类是想要构造类的成分，就像我上面的写的name和ingredent成员。Pizza的子类只需要依赖依赖这些成分工厂类，例如ChessPropertyFactory ，就能构造出对象。重点突出抽象，是因为它有一个总的抽象接口，实现它的子类负责构造对象的成分，总而构成对象。</p>
+<p>每个推送的资源都是一个流，与内联资源不同，它允许客户端对其进行单独复用，优先化和处理。由浏览器执行的唯一安全限制是推送资源必须遵守同源策略：服务器必须对提供的内容具有权限。</p>
+<h5 id="7-头部压缩"><a href="#7-头部压缩" class="headerlink" title="7. 头部压缩"></a>7. 头部压缩</h5><p>每个HTTP传输都包含一组描述传输资源及其属性的标题。在HTTP / 1.x中，此元数据始终以纯文本形式发送，并且每次传输的开销都会在任何位置增加500-800字节，如果使用HTTP Cookie，则会增加数千字节。为了减少这种开销并提高性能，HTTP / 2使用两种简单但强大的技术使用HPACK压缩格式(要了解这个算法,可以参考这篇文章<a href="https://imququ.com/post/header-compression-in-http2.html)来压缩请求和响应头元数据：" target="_blank" rel="external">https://imququ.com/post/header-compression-in-http2.html)来压缩请求和响应头元数据：</a></p>
+<ul>
+<li><p>它允许通过静态霍夫曼编码对传输的头部字段进行编码，从而减少它们各自的传输大小。</p>
+</li>
+<li><p>它要求客户端和服务器都维护和更新先前看到的标题字段的索引列表（即，建立共享压缩上下文），然后将其用作参考以高效编码先前传输的值。</p>
+</li>
+</ul>
+<p>霍夫曼编码允许单个值在传输时被压缩，并且先前传输值的索引列表允许我们通过传输索引值来编码重复值（图12-6），索引值可用于有效地查找和重建完整头部键和值。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-38055e8dde4b4436.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>作为进一步优化，HPACK压缩上下文由静态和动态表组成：静态表在规范中定义，并提供所有连接可能使用的常见HTTP头字段的列表（例如，有效头名称）;动态表最初是空的，并基于特定连接内的交换值进行更新。因此，通过对以前未见过的值使用静态霍夫曼编码，并将索引替换为已存在于客户端和服务端静态或动态表中的值的索引，可以减少每个请求的大小。</p>
+<h5 id="8-二进制帧的简短介绍"><a href="#8-二进制帧的简短介绍" class="headerlink" title="8. 二进制帧的简短介绍"></a>8. 二进制帧的简短介绍</h5><p>所有HTTP / 2改进的核心是新的二进制长度前缀成帧层。与以换行符分隔的纯文本HTTP / 1.x协议相比，二进制框架提供了更紧凑的表示形式，可以更高效地处理并更容易正确实现。<br>一旦建立了HTTP / 2连接，客户端和服务器就通过交换帧来进行通信，这些帧用作协议内最小的通信单元。所有帧共享一个共同的9字节头（图12-7），其中包含帧的长度，类型，标志位字段和31位流标识符。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-d8687e8eed1e6823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li><p>24位长度字段允许一个帧携带2的24次方数据字节。</p>
+<ul>
+<li>8位类型字段确定帧的格式和语义。</li>
+<li><p>8位标志字段传递帧类型特定的布尔标志。</p>
+</li>
+<li><p>1位保留字段始终设置为0。</p>
+</li>
+</ul>
+</li>
+<li><p>31位流标识符唯一标识HTTP / 2流。</p>
+<blockquote>
+<p>从技术上讲，长度字段允许每帧高达字节（〜16MB）的有效载荷。但是，HTTP / 2标准将DATA帧的默认最大有效负载大小设置为每帧字节（〜16KB），并允许客户端和服务器协商较高的值。更大并不总是更好：较小的帧大小能够实现高效的多路复用并将头部阻塞降至最低。</p>
 </blockquote>
 </li>
-</ol>
+</ul>
+<h5 id="9-分析二进制帧数据流"><a href="#9-分析二进制帧数据流" class="headerlink" title="9. 分析二进制帧数据流"></a>9. 分析二进制帧数据流</h5><p>掌握了不同帧类型的知识后，我们现在可以重新看下我们前面在请求和响应复用中遇到的图（图12-10）并分析HTTP / 2交换：<br><img src="https://upload-images.jianshu.io/upload_images/5281821-b28c3451bc8fc3fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li><p>有三个流，ID设置为1,3和5。</p>
+</li>
+<li><p>所有三个流ID都是奇数;所有这三个都是客户端启动的流。(即发起方是客户端)</p>
+<ul>
+<li><p>在这个交换中没有服务器启动（“推送”）流。(即服务端推送)</p>
+</li>
+<li><p>服务器正在为流1发送交错数据帧，这些数据帧携带应用程序响应客户端先前的请求。</p>
+</li>
+<li><p>服务器已经在数据帧之间为流3交错了HEADERS和DATA帧，以便实现流1响应多路复用！</p>
+</li>
+<li><p>客户端正在传输数据流5的数据帧，这表明HEADERS帧已在先传输。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>当然，上述分析基于实际HTTP / 2交换的简化表示，但它仍然说明了新协议的许多优点和特点.</p>
+<p>参考文章:<br><a href="https://imququ.com/post/header-compression-in-http2.html" target="_blank" rel="external">https://imququ.com/post/header-compression-in-http2.html</a><br><a href="https://hpbn.co/http2/#header-compression" target="_blank" rel="external">https://hpbn.co/http2/#header-compression</a></p>
 
       
 
@@ -295,11 +354,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">HTTP/2</a>
         		</li>
       		
 		</ul>
@@ -311,7 +366,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
+        			<a href="/categories/计算机网络//" class="article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -366,7 +421,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/11/03/HeadFirst设计模式4-工厂模式/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/03/19/HTTP-2-新特性总结/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -380,18 +435,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/11/04/Spring-boot构建自定义的starter/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Spring boot构建自定义的starter
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/10/15/HeadFirst设计模式3-装饰者模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">HeadFirst设计模式3-装饰者模式</div>
+    <a href="/2018/01/13/Netty权威指南读书笔记1：Java的I-O演进之路/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Netty权威指南读书笔记1：Java的I/O演进之路</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -421,7 +467,7 @@
   
 
   
-  <div id="SOHUCS" sid="HeadFirst设计模式4-工厂模式" ></div> 
+  <div id="SOHUCS" sid="HTTP-2-新特性总结" ></div> 
 <script type="text/javascript"> 
 window.YiliaChangyanWrap = function() {
     var appid = "cytiAQ2fR"; 
