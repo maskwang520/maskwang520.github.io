@@ -6,23 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>HeadFirst设计模式2---观察者模式 | Maskwang blogs</title>
+  <title>深入理解HTTPS协议 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;emsp;&amp;emsp;在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。">
-<meta name="keywords" content="设计模式,java">
+  <meta name="description" content="HTTS协议实际就是标准的HTTP协议加上SSL/TLS层.它能防止我们的信息被窃取,暴露出不安全.或者进入钓鱼网址.通过下面这个讲解,我希望能明白SSL/TLS层到底为我们做了哪些事情,才能保证我们的信息安全.">
+<meta name="keywords" content="HTTP&#x2F;2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HeadFirst设计模式2---观察者模式">
-<meta property="og:url" content="http://yoursite.com/2017/10/07/HeadFirst设计模式2-观察者模式/index.html">
+<meta property="og:title" content="深入理解HTTPS协议">
+<meta property="og:url" content="http://yoursite.com/2018/03/24/深入理解HTTPS协议/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。">
+<meta property="og:description" content="HTTS协议实际就是标准的HTTP协议加上SSL/TLS层.它能防止我们的信息被窃取,暴露出不安全.或者进入钓鱼网址.通过下面这个讲解,我希望能明白SSL/TLS层到底为我们做了哪些事情,才能保证我们的信息安全.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-1f068ed6fa057888.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-d2012e80caf3ce4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-10-08T02:25:46.149Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-ffbc5130891ca4b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-3151b5a6eedbedca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-24T15:06:14.217Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HeadFirst设计模式2---观察者模式">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-1f068ed6fa057888.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="深入理解HTTPS协议">
+<meta name="twitter:description" content="HTTS协议实际就是标准的HTTP协议加上SSL/TLS层.它能防止我们的信息被窃取,暴露出不安全.或者进入钓鱼网址.通过下面这个讲解,我希望能明白SSL/TLS层到底为我们做了哪些事情,才能保证我们的信息安全.">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5281821-ffbc5130891ca4b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -174,43 +174,59 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-HeadFirst设计模式2-观察者模式" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-深入理解HTTPS协议" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      HeadFirst设计模式2---观察者模式
+      深入理解HTTPS协议
     </h1>
   
 
         
-        <a href="/2017/10/07/HeadFirst设计模式2-观察者模式/" class="archive-article-date">
-  	<time datetime="2017-10-07T14:47:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-07</time>
+        <a href="/2018/03/24/深入理解HTTPS协议/" class="archive-article-date">
+  	<time datetime="2018-03-24T15:04:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&emsp;&emsp;在我们的开发工作中，经常会遇到这样的问题。例如：对于A，对象B，C在原来引用了A。现在对象A的属性发生了变化，我们的需求是B，C能够同时感应到这种变化。且新增的对象D，也要引用A对象，那如何在不改变原来代码的基础上，如何做到呢。此时，观察者模式就能够很好的解决这个问题。<br><a id="more"></a></p>
-<h6 id="1-为何需要观察者模式（why"><a href="#1-为何需要观察者模式（why" class="headerlink" title="1. 为何需要观察者模式（why)"></a>1. 为何需要观察者模式（why)</h6><blockquote>
-<p>  Defidition:<em>观察者模式定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。</em></p>
+        <p>HTTS协议实际就是标准的HTTP协议加上SSL/TLS层.它能防止我们的信息被窃取,暴露出不安全.或者进入钓鱼网址.通过下面这个讲解,我希望能明白SSL/TLS层到底为我们做了哪些事情,才能保证我们的信息安全.<br><a id="more"></a></p>
+<h5 id="1-HTTPS到底做了哪些事情"><a href="#1-HTTPS到底做了哪些事情" class="headerlink" title="1. HTTPS到底做了哪些事情"></a>1. HTTPS到底做了哪些事情</h5><p>HTTPS采用众所周知和理解的HTTP协议，并简单地将SSL / TLS加密层层叠在其上。服务器和客户端仍然使用相同的HTTP，但通过安全的SSL连接来加密和解密他们的请求和响应。 SSL层有两个主要目的：</p>
+<ul>
+<li>保证你是在跟真正的服务器通信,而不是伪装的服务器.</li>
+<li>保证只有真正的服务器才能解密你发送的信息.同时,也只有你才能解密服务器跟你发送消息.就是保证是你跟真正的服务器在通信,这过程中没有第三者.</li>
+</ul>
+<p><strong>在这过程中,其他人还是可以中途截取到你发送的信息,但是是加密的,它们拿到也无法解密.</strong></p>
+<h5 id="2-SSL-TLS是如何建立连接的"><a href="#2-SSL-TLS是如何建立连接的" class="headerlink" title="2. SSL/TLS是如何建立连接的"></a>2. SSL/TLS是如何建立连接的</h5><p>客户端和服务器端通过握手来建立连接的，目的有以下3点。</p>
+<ul>
+<li>保证客户端正在和正确的服务器通信（反之亦然）</li>
+<li>有关各方已就“密码套件”达成一致，该密码套件包括将用于交换数据的加密算法</li>
+<li>对密匙达成一致，双方使用相同的密匙</li>
+</ul>
+<p>一旦建立连接，双方就可以使用商定的算法和密钥将消息安全地发送给对方。我们将握手分为三个主要阶段 - Hello，证书交换和密钥交换。</p>
+<ol>
+<li>Hello - 握手从客户端发送ClientHello消息开始。这包含服务器通过SSL/TLS连接到客户端所需的所有信息，包括它支持的各种密码套件和最大SSL/TLS版本。服务器响应ServerHello，其中包含客户端所需的类似信息，包括基于客户端有关哪个密码套件和SSL/TLS版本将被使用的偏好的决定。</li>
+<li>证书交换 - 现在联系已建立，服务器必须向客户证明其身份。这是通过使用SSL证书来实现的，该证书与其护照非常相似。 SSL证书包含各种数据，包括所有者的名称，所连接的属性（例如域），证书的公钥，数字签名以及有关证书有效日期的信息。客户端检查它是隐式信任证书，还是验证它是否被其隐含信任的几个证书颁发机构（CA）之一验证和信任。请注意，服务器也可以要求证书来证明客户的身份，但这通常只发生在非常敏感的应用程序中。</li>
+<li>密钥交换 - 客户端和服务器交换的实际消息数据的加密将使用对称加密算法完成，其确切性质在Hello阶段已经达成一致。对称算法使用单个密钥进行加密和解密，与需要公钥/私钥对的非对称算法相反。双方需要就这个单一的对称密钥达成一致，这个安全使用非对称加密和服务器的公钥/私钥完成的过程。<strong>客户端先用非对称加密算法的公钥把通信过程中需要的私钥传给服务端，服务端用私钥解读出以后通信过程中的私钥。</strong></li>
+</ol>
+<p>客户端生成一个用于对称加密算法的随机密钥。它使用在Hello阶段同意的算法和服务器的公钥（在其SSL证书上找到）对其进行加密。它将这个加密的密钥发送到服务器，在那里使用服务器的私钥解密，并且握手的有趣部分已完成。双方都非常高兴，他们正在与正确的人交谈，并秘密地同意了一个密钥，以对称加密的方式加密他们将要发送的数据。 HTTP请求和响应现在可以通过形成明文消息然后加密并发送来发送。另一方是唯一知道如何解密此消息的人，因此中间人攻击者无法读取或修改他们可能拦截的任何请求。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-ffbc5130891ca4b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="3-证书"><a href="#3-证书" class="headerlink" title="3. 证书"></a>3. 证书</h5><p>对于请求方来说，它怎么能确定它所得到的公钥一定是从目标主机那里发布的，而且没有被篡改过呢？亦或者请求的目标主机本本身就从事窃取用户信息的不正当行为呢？这时候，我们需要有一个权威的值得信赖的第三方机构(一般是由政府审核并授权的机构)来统一对外发放主机机构的公钥，只要请求方这种机构获取公钥，就避免了上述问题的发生。<br>用户首先产生自己的密钥对，并将公共密钥及部分个人身份信息传送给认证中心。认证中心在核实身份后，将执行一些必要的步骤，以确信请求确实由用户发送而来，然后，认证中心将发给用户一个数字证书，该证书内包含用户的个人信息和他的公钥信息，同时还附有认证中心的签名信息(根证书私钥签名)。用户就可以使用自己的数字证书进行相关的各种活动。数字证书由独立的证书发行机构发布，数字证书各不相同，每种证书可提供不同级别的可信度。<br>证书的验证是通过验证证书的数字签名(CA的公钥来解开签名,并与原文hash之后的摘要做对比).</p>
+<h5 id="4-数字签名"><a href="#4-数字签名" class="headerlink" title="4. 数字签名"></a>4. 数字签名</h5><p>数字签名技术就是对“非对称密钥加解密”和“数字摘要“两项技术的应用，它将摘要信息用发送者的私钥加密，与原文一起传送给接收者。 接收者只有用发送者的<strong>公钥</strong>才能解密被加密的摘要信息，然后用HASH函数对收到的原文产生一个<strong>摘要信息</strong>，与解密的摘要信息对比。 如果相同，则说明收到的信息是完整的，在传输过程中没有被修改，否则说明信息被修改过，因此数字签名能够验证信息的完整性。<br>数字签名的过程如下：</p>
+<blockquote>
+<p>明文 –&gt; hash运算 –&gt; 摘要 –&gt; 私钥加密 –&gt; 数字签名</p>
 </blockquote>
-<p>下面通过一个和实例逐步弄清楚什么是观察者模式。</p>
-<h6 id="2-如何实现观察者模式（通过实例来讲解how）"><a href="#2-如何实现观察者模式（通过实例来讲解how）" class="headerlink" title="2. 如何实现观察者模式（通过实例来讲解how）"></a>2. 如何实现观察者模式（通过实例来讲解how）</h6><p>  某气象站有这样一个应用：它实时检测当地温度，适度，压强。并让第一号布告板，第二号布告板，第三号布告板或者其他第三方接入Api都能实时更新相应的数据。气象站提供的数据结构如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeatherData</span> </span>&#123;</div><div class="line">    <span class="keyword">float</span> temp;</div><div class="line">    <span class="keyword">float</span> humidity;</div><div class="line">    <span class="keyword">float</span> pressture;</div><div class="line"><span class="comment">//省略get,set方法</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我们想到的办法就是让第一号布告板，第二号布告板，第三号布告板或者其他第三方接入Api都成为气象站的观察者，他们只需要在气象站注册，当气象站的数据发生变化的时候，会遍历每个观察者，调用update（）实现更新操作。<br>step1:定义抽象接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Subject</span> </span>&#123;  <span class="comment">//主题，即气象站的抽象接口</span></div><div class="line">    <span class="comment">//注册观察者</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerObserver</span><span class="params">(Observer o)</span></span>;</div><div class="line">    <span class="comment">//取消观察者</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(Observer o)</span></span>;</div><div class="line">    <span class="comment">//通知观察者执行更新操作</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObservers</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Observer</span> </span>&#123;</div><div class="line">    <span class="comment">//更新操作，等待Subject调用就实现了通知</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">float</span> temp,<span class="keyword">float</span> humidy,<span class="keyword">float</span> pressure)</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DisplayElement</span> </span>&#123;</div><div class="line">    <span class="comment">//对更新进行展示</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><em>上述是接口，便于代码重用和面向接口编程，而不是面向实现编程。</em><br>step2:实现具体的类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeatherData</span> <span class="keyword">implements</span> <span class="title">Subject</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> ArrayList&lt;Observer&gt; observers;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> temperature;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> humidity;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> pressture;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeatherData</span><span class="params">()</span></span>&#123;</div><div class="line">        observers=<span class="keyword">new</span> ArrayList();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerObserver</span><span class="params">(Observer o)</span> </span>&#123;</div><div class="line">        observers.add(o);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(Observer o)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> i=observers.indexOf(o);</div><div class="line">        <span class="keyword">if</span>(i&gt;=<span class="number">0</span>)</div><div class="line">            observers.remove(i);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObservers</span><span class="params">()</span> </span>&#123;</div><div class="line">        observers.stream().forEach((observer)-&gt;observer.update(temperature,humidity,pressture));</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">measurementsChanged</span><span class="params">()</span></span>&#123;<span class="comment">//通知</span></div><div class="line">        notifyObservers();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//属性改变了</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMeasurements</span><span class="params">(<span class="keyword">float</span> temperature,<span class="keyword">float</span> humidity,<span class="keyword">float</span> pressture)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.temperature=temperature;</div><div class="line">        <span class="keyword">this</span>.humidity=humidity;</div><div class="line">        <span class="keyword">this</span>.pressture=pressture;</div><div class="line">        measurementsChanged();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>step3:Observer这里只提供一种实现，剩下的可以同样生成。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">**</div><div class="line"> * Created by maskwang on <span class="number">2017</span>/<span class="number">10</span>/<span class="number">5</span> <span class="number">0005</span>.</div><div class="line"> * 时间原因这里只提供一种实现</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CurrentConditionsDisplay</span> <span class="keyword">implements</span> <span class="title">Observer</span>,<span class="title">DisplayElement</span> </span>&#123;</div><div class="line">    <span class="comment">//这个观察者只在乎以下两个属性</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> temperature;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> humidity;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Subject weatherData;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CurrentConditionsDisplay</span><span class="params">(Subject weatherData)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.weatherData = weatherData;</div><div class="line">        weatherData.registerObserver(<span class="keyword">this</span>);<span class="comment">//注册</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(temperature+<span class="string">"**"</span>+humidity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">float</span> temp, <span class="keyword">float</span> humidy, <span class="keyword">float</span> pressure)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.humidity=humidy;</div><div class="line">        <span class="keyword">this</span>.temperature=temp;</div><div class="line">        display();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>step4:测试类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeatherStation</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        WeatherData weatherData=<span class="keyword">new</span> WeatherData();</div><div class="line">        <span class="comment">//订阅那个Object</span></div><div class="line">        CurrentConditionsDisplay currentConditionsDisplay=<span class="keyword">new</span> CurrentConditionsDisplay(weatherData);</div><div class="line"></div><div class="line">        weatherData.setMeasurements(<span class="number">80</span>,<span class="number">65</span>,<span class="number">30.2f</span>);</div><div class="line"></div><div class="line">        weatherData.setMeasurements(<span class="number">82</span>,<span class="number">70</span>,<span class="number">28.4f</span>);</div><div class="line"></div><div class="line">        weatherData.setMeasurements(<span class="number">83</span>,<span class="number">72</span>,<span class="number">27.5f</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Uml类图如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-1f068ed6fa057888.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="observer.png"></p>
-<p>结果如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-d2012e80caf3ce4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>可以看到每次Subject变化，Observer跟着变化。</p>
-<h6 id="3-观察者模式总结（conclusion）"><a href="#3-观察者模式总结（conclusion）" class="headerlink" title="3. 观察者模式总结（conclusion）"></a>3. 观察者模式总结（conclusion）</h6><p>  以上实例可以看出来，观察者模式实现了Obseerver和Subject的解耦，Subject可以增删任意Observer,而Observer可以订阅任意的Subject。很好的满足了这种需求。这让我activemq，它其中就有一种发布订阅模式，在这里面生产者产生的消息，都能理解被消费者立即订阅到。可以看的出来这种思想应用的还是很广的。<br>附上对应的github地址：</p>
-<p><a href="https://github.com/maskwang520/designpattern.git" target="_blank" rel="external">https://github.com/maskwang520/designpattern.git</a></p>
+<p>数字签名有两种功效：</p>
+<ul>
+<li>能确定消息确实是由发送方签名并发出来的，因为别人假冒不了发送方的签名。</li>
+<li>数字签名能确定消息的完整性。</li>
+</ul>
+<p>真个HTTPS的握手过程如下<br><img src="https://upload-images.jianshu.io/upload_images/5281821-3151b5a6eedbedca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h5><p>HTTPS不是不可破解的，并且SSL协议必须随着新攻击被发现和压制而不断发展。但它仍然是一种传递秘密数据的的方式，无需关心谁看到您的消息。当然，这里没有提到许多实现细节，例如握手消息的确切格式和顺序，在不需要重新协商密钥和密码套件的情况下选择最近会话的简短握手，以及在每个阶段可用的众多不同的加密选项。关键要记住的是，虽然HTTPS可以保证数据安全地连接到目的地，但它绝不会保护您（作为用户或开发人员）抵御XSS或数据库泄漏或任何其他事情 。看看威尔史密斯，“Walk in shadow, move in silence, guard against extra-terrestrial violence”。</p>
+<p>参考文章:<br><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html</a><br><a href="https://robertheaton.com/2014/03/27/how-does-https-actually-work/" target="_blank" rel="external">https://robertheaton.com/2014/03/27/how-does-https-actually-work/</a><br><a href="http://www.wxtlife.com/2016/03/27/%E8%AF%A6%E8%A7%A3https%E6%98%AF%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E5%AE%89%E5%85%A8%E7%9A%84%EF%BC%9F/#u6570_u5B57_u8BC1_u4E66" target="_blank" rel="external">http://www.wxtlife.com/2016/03/27/%E8%AF%A6%E8%A7%A3https%E6%98%AF%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E5%AE%89%E5%85%A8%E7%9A%84%EF%BC%9F/#u6570_u5B57_u8BC1_u4E66</a></p>
 
       
 
@@ -255,11 +271,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">HTTP/2</a>
         		</li>
       		
 		</ul>
@@ -271,7 +283,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/DesignPattern//" class="article-tag-list-link color4">DesignPattern</a>
+        			<a href="/categories/计算机网络//" class="article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -326,7 +338,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/07/HeadFirst设计模式2-观察者模式/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/03/24/深入理解HTTPS协议/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -340,18 +352,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/10/08/弄懂Fail-Safe-Fail-First/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          弄懂Fail-Safe,Fail-First
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/10/07/HeadFirst设计模式1-策略模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">HeadFirst设计模式1-策略模式</div>
+    <a href="/2018/03/20/重拾jdk源码重点系列-8-ThreadLocal源码分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">重拾jdk源码重点系列-8:ThreadLocal源码分析</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -381,7 +384,7 @@
   
 
   
-  <div id="SOHUCS" sid="HeadFirst设计模式2-观察者模式" ></div> 
+  <div id="SOHUCS" sid="深入理解HTTPS协议" ></div> 
 <script type="text/javascript"> 
 window.YiliaChangyanWrap = function() {
     var appid = "cytiAQ2fR"; 
