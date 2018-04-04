@@ -6,18 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: springboot | Maskwang blogs</title>
+  <title>flink watermark的原理和实践 | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="偶尔要回头看看，否则永远都在追寻，而不知道自己失去了什么。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Maskwang blogs">
-<meta property="og:url" content="http://yoursite.com/tags/springboot/index.html">
+  <meta name="description" content="1. Watermark概念watermark是一种衡量Event Time进展的机制，它是数据本身的一个隐藏属性。通常基于Event Time的数据，自身都包含一个timestamp.watermark是用于处理乱序事件的，而正确的处理乱序事件，通常用watermark机制结合window来实现。我们知道，流处理从事件产生，到流经source，再到operator，中间是有一个过程和时间的。虽然">
+<meta name="keywords" content="flink">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flink watermark的原理和实践">
+<meta property="og:url" content="http://yoursite.com/2018/04/04/flink-watermark的原理和实践/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="偶尔要回头看看，否则永远都在追寻，而不知道自己失去了什么。">
+<meta property="og:description" content="1. Watermark概念watermark是一种衡量Event Time进展的机制，它是数据本身的一个隐藏属性。通常基于Event Time的数据，自身都包含一个timestamp.watermark是用于处理乱序事件的，而正确的处理乱序事件，通常用watermark机制结合window来实现。我们知道，流处理从事件产生，到流经source，再到operator，中间是有一个过程和时间的。虽然">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-a6d664f88a0c90c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-dc3f34b5ae9eccc5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-dd163a61c2a568f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-b9d41c8e2825e0da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-738f771259724b31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-04-04T15:02:41.580Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Maskwang blogs">
-<meta name="twitter:description" content="偶尔要回头看看，否则永远都在追寻，而不知道自己失去了什么。">
+<meta name="twitter:title" content="flink watermark的原理和实践">
+<meta name="twitter:description" content="1. Watermark概念watermark是一种衡量Event Time进展的机制，它是数据本身的一个隐藏属性。通常基于Event Time的数据，自身都包含一个timestamp.watermark是用于处理乱序事件的，而正确的处理乱序事件，通常用watermark机制结合window来实现。我们知道，流处理从事件产生，到流经source，再到operator，中间是有一个过程和时间的。虽然">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5281821-a6d664f88a0c90c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -169,80 +177,219 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-flink-watermark的原理和实践" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/12/Springboot用WebSocket构建交互式的web应用/" class="archive-article-date">
-  	<time datetime="2017-10-12T11:04:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/12/Springboot用WebSocket构建交互式的web应用/">Springboot用WebSocket构建交互式的web应用</a>
+    <h1 class="article-title" itemprop="name">
+      flink watermark的原理和实践
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/04/04/flink-watermark的原理和实践/" class="archive-article-date">
+  	<time datetime="2018-04-04T15:01:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="1-Watermark概念"><a href="#1-Watermark概念" class="headerlink" title="1. Watermark概念"></a>1. Watermark概念</h5><p>watermark是一种衡量Event Time进展的机制，它是数据本身的一个隐藏属性。通常基于Event Time的数据，自身都包含一个timestamp.watermark是用于处理乱序事件的，而正确的处理乱序事件，通常用watermark机制结合window来实现。我们知道，流处理从事件产生，到流经source，再到operator，中间是有一个过程和时间的。虽然大部分情况下，流到operator的数据都是按照事件产生的时间顺序来的，但是也不排除由于网络、背压等原因，导致乱序的产生（out-of-order或者说late element）。但是对于late element，我们又不能无限期的等下去，必须要有个机制来保证一个特定的时间后，必须触发window去进行计算了。此时就是watermark发挥作用了,它表示当达到watermark到达之后,在watermark之前的数据已经全部达到(即使后面还有延迟的数据).watermark的示意图如下.<br><a id="more"></a><br><img src="https://upload-images.jianshu.io/upload_images/5281821-a6d664f88a0c90c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="2-生成EventTime和Watermark"><a href="#2-生成EventTime和Watermark" class="headerlink" title="2. 生成EventTime和Watermark"></a>2. 生成EventTime和Watermark</h5><p>以下这个程序的功能是实现计算相同时间窗口出现相同单词的统计.在这个过程中,自定义实现了时间戳和Watermark.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataStreamDemo</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();</div><div class="line">        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);  <span class="comment">//设置时间分配器</span></div><div class="line"></div><div class="line">        env.setParallelism(<span class="number">1</span>);  <span class="comment">//设置并行度</span></div><div class="line">        env.getConfig().setAutoWatermarkInterval(<span class="number">9000</span>);<span class="comment">//每9秒发出一个watermark</span></div><div class="line"></div><div class="line">        DataStream&lt;String&gt; text = env.socketTextStream(<span class="string">"localhost"</span>, <span class="number">9900</span>);</div><div class="line"></div><div class="line">        DataStream&lt;Tuple3&lt;String, Long, Integer&gt;&gt; counts = text.filter(<span class="keyword">new</span> FilterClass()).map(<span class="keyword">new</span> LineSplitter())</div><div class="line">                .assignTimestampsAndWatermarks(<span class="keyword">new</span> AssignerWithPeriodicWatermarks&lt;Tuple3&lt;String, Long, Integer&gt;&gt;() &#123;</div><div class="line"></div><div class="line">                    <span class="keyword">private</span> <span class="keyword">long</span> currentMaxTimestamp = <span class="number">0l</span>;</div><div class="line"></div><div class="line">                    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> maxOutOfOrderness = <span class="number">10000l</span>;   <span class="comment">//这个控制失序已经延迟的度量</span></div><div class="line">                    <span class="comment">//获取EventTime</span></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">extractTimestamp</span><span class="params">(Tuple3&lt;String, Long, Integer&gt; element, <span class="keyword">long</span> previousElementTimestamp)</span> </span>&#123;</div><div class="line">                        <span class="keyword">long</span> timestamp = element.f1;</div><div class="line">                        currentMaxTimestamp = Math.max(timestamp, currentMaxTimestamp);</div><div class="line">                        System.out.println(</div><div class="line">                                <span class="string">"get timestamp is "</span> + timestamp + <span class="string">" currentMaxTimestamp "</span> + currentMaxTimestamp);</div><div class="line">                        <span class="keyword">return</span> timestamp;</div><div class="line">                    &#125;</div><div class="line">                    <span class="comment">//获取Watermark</span></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> Watermark <span class="title">getCurrentWatermark</span><span class="params">()</span> </span>&#123;</div><div class="line">                        System.out.println(<span class="string">"wall clock is "</span> + System.currentTimeMillis() + <span class="string">" new watermark "</span></div><div class="line">                                + (currentMaxTimestamp - maxOutOfOrderness));</div><div class="line">                        <span class="keyword">return</span> <span class="keyword">new</span> Watermark(currentMaxTimestamp - maxOutOfOrderness);</div><div class="line">                    &#125;</div><div class="line">                &#125;).keyBy(<span class="number">0</span>).timeWindow(Time.seconds(<span class="number">20</span>))</div><div class="line">                <span class="comment">// .allowedLateness(Time.seconds(10))   </span></div><div class="line">                .sum(<span class="number">2</span>);</div><div class="line"></div><div class="line">        counts.print();</div><div class="line">        env.execute(<span class="string">"Window WordCount"</span>);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="comment">//    自定义获取timesStamp</span></div><div class="line"><span class="comment">//    private static class MyTimestamp extends AscendingTimestampExtractor&lt;Tuple3&lt;String, Long, Integer&gt;&gt; &#123;</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//        private static final long serialVersionUID = 1L;</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//        public long extractAscendingTimestamp(Tuple3&lt;String, Long, Integer&gt; element) &#123;</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//            return element.f1;</span></div><div class="line"><span class="comment">//        &#125;</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//    &#125;</span></div><div class="line"></div><div class="line">    <span class="comment">//构造出element以及它的event time.然后把次数赋值为1</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">LineSplitter</span> <span class="keyword">implements</span> <span class="title">MapFunction</span>&lt;<span class="title">String</span>, <span class="title">Tuple3</span>&lt;<span class="title">String</span>, <span class="title">Long</span>, <span class="title">Integer</span>&gt;&gt; </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Tuple3&lt;String, Long, Integer&gt; <span class="title">map</span><span class="params">(String value)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">            String[] tokens = value.toLowerCase().split(<span class="string">"\\W+"</span>);</div><div class="line"></div><div class="line">            <span class="keyword">long</span> eventtime = Long.parseLong(tokens[<span class="number">1</span>]);</div><div class="line"></div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Tuple3&lt;String, Long, Integer&gt;(tokens[<span class="number">0</span>], eventtime, <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//过滤掉为null和whitespace的字符串</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FilterClass</span> <span class="keyword">implements</span> <span class="title">FilterFunction</span>&lt;<span class="title">String</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">filter</span><span class="params">(String value)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (StringUtils.isNullOrWhitespaceOnly(value)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>maxOutOfOrderness 这个参数在设置的时候往往根据经验来.MaxOutOfOrderness设置的太小，而自身数据发送时由于网络等原因导致乱序或者late太多，那么最终的结果就是会有很多单条的数据在window中被触发，数据的正确性影响太大。如果设置太大,导致设置的Watermark太小,使得Watermark没有用,因为原本在很短的时间内,一个窗口的所有的数据都到达了,但是不得不等Watermark一点点变大, 才能触发计算.</li>
+</ul>
+<h5 id="3-EventTime按顺序的情况"><a href="#3-EventTime按顺序的情况" class="headerlink" title="3. EventTime按顺序的情况"></a>3. EventTime按顺序的情况</h5><p>运行上述程序.初始化的时候,由于没有输入,watermark为-10000<br><img src="https://upload-images.jianshu.io/upload_images/5281821-dc3f34b5ae9eccc5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>在9900监听端口,输入aa 1522827199000(2018-04-04 15:33:19),重复3次.得到如下图所示结果.现在的watermark是1522827189000(2018-04-04 15:33:09),即为最大的currentMaxTimestamp-10000.在这里生命下,aa 的时间2018-04-04 15:33:19在2018-04-04 15:33:0-2018-04-04 15:33:20这个窗口中.因为我设置的窗口为20s.不管怎样怎样,窗口是确定的.初始化设置后,就一直不会变.而且窗口是左闭右开的区间.<br><img src="https://upload-images.jianshu.io/upload_images/5281821-dd163a61c2a568f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>接着输入bb 1522827299000(2018-04-04 15:34:59),此时的watermark为1522827289000(2018-04-04 15:34:49),此时的watermark超过了aa所在窗口的endtime(2018-04-04 15:33:20).那么会触发计算,从而会有下面的输出.在这里强调下,触发计算的时间点是</p>
+<ul>
+<li>watermark超过了window的endtime.</li>
+<li>在该window中有数据.</li>
+</ul>
+<p>只有同时满足这两个条件,就会触发计算.<br><img src="https://upload-images.jianshu.io/upload_images/5281821-b9d41c8e2825e0da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="4-EventTime不按顺序的情况"><a href="#4-EventTime不按顺序的情况" class="headerlink" title="4. EventTime不按顺序的情况"></a>4. EventTime不按顺序的情况</h5><p>输入如下数据:</p>
+<blockquote>
+<p>aa 1522827261000(2018-04-04 15:34:21)<br>aa 1522827251000(2018-04-04 15:34:11)<br>aa 1522827252000(2018-04-04 15:34:12)<br>ee 1522827291000(2018-04-04 15:34:51)</p>
+</blockquote>
+<p>由于最后一个ee的输入,改变了watermark,使得当前的时间戳为2018-04-04 15:34:41.那么此时会触发前面两个窗口的计算.计算结果如下.<br><img src="https://upload-images.jianshu.io/upload_images/5281821-738f771259724b31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<blockquote>
+<p>Note:此时,如果还输入之前的时间窗口的aa 1522827261000.是不会触发计算的,它会丢弃掉数据,这在后面会引入allowedLateness参数.原窗口中的内容不会立即被删除，而是会再次等待一段时间，即watermark小于end-time + allowedLateness时，后续的该窗口的数据到达时会纳入到原窗口，再次触发计算.而watermark &gt;= end_time + allowedLateness,后续的还有属于该窗口的数据到达时，那么这种数据只能被删除了，因为系统不会无限制的等下去，这既会增加window buffer的大小，也会引起不必要的性能下降.</p>
+</blockquote>
+<h5 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h5><p>通过以上例子,我们可以看到如何通过watermark对顺序以及乱序数据的处理.以及如何在watermark触发之后还能通过 allowedLateness对延迟做一些补偿.watermark的设计思想和用途很光,我也只是浅尝辄止.</p>
+<p>参考文章:<br><a href="http://www.cnblogs.com/dongxiao-yang/p/7610412.html" target="_blank" rel="external">flink watermark介绍</a><br><a href="https://blog.csdn.net/lmalds/article/details/52704170" target="_blank" rel="external">Flink流计算编程–watermark（水位线）简介</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://onmo6k247.bkt.clouddn.com/zhifubao">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://onmo6k247.bkt.clouddn.com/mmqrcode1507380613282.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">websocket</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">springboot</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">flink</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Springboot//" class="article-tag-list-link color1">Springboot</a>
+        			<a href="/categories/flink//" class="article-tag-list-link color1">flink</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/04/04/flink-watermark的原理和实践/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/03/28/flink整合kafka实现消费和生产/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">flink整合kafka实现消费和生产</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+  <div id="SOHUCS" sid="flink-watermark的原理和实践" ></div> 
+<script type="text/javascript"> 
+window.YiliaChangyanWrap = function() {
+    var appid = "cytiAQ2fR"; 
+    var conf = "6911a8fffc93fa9586598ea5a9d0daf9"; 
+    var width = window.innerWidth || document.documentElement.clientWidth; 
+    if (width < 960) { 
+    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); }
+}
+</script>
+  
 
+  
 
           </div>
         </div>
@@ -264,9 +411,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
