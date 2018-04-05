@@ -171,6 +171,111 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Netty读书笔记5-使用LengthFieldBasedFrameDecoder解码器自定义协议" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/05/Netty读书笔记5-使用LengthFieldBasedFrameDecoder解码器自定义协议/">Netty读书笔记5: 使用LengthFieldBasedFrameDecoder解码器自定义协议</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/05/Netty读书笔记5-使用LengthFieldBasedFrameDecoder解码器自定义协议/" class="archive-article-date">
+  	<time datetime="2018-04-05T15:16:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在之前的文章中,介绍了<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">![image.png](https://upload-images.jianshu.io/upload_images/5281821-2bb139011db459fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line">&lt;!-- more --&gt;</div><div class="line">通常来说,使用```ByteToMessageDocoder```这个编码器,我们要分别解析出Header,length,body这几个字段.而使用```LengthFieldBasedFrameDecoder```,我们就可以直接接收想要的一部分,相当于在原来的基础上包上了一层,有了这层之后,我们可以控制我们每次只要读想读的字段,这对于自定义协议来说十分方便.</div><div class="line">##### 1. ```LengthFieldBasedFrameDecoder```的定义</div><div class="line">```java</div><div class="line">public class MyProtocolDecoder extends LengthFieldBasedFrameDecoder &#123;</div><div class="line"></div><div class="line">    private static final int HEADER_SIZE = 6;</div><div class="line"></div><div class="line">    /**</div><div class="line">     *</div><div class="line">     * @param maxFrameLength  帧的最大长度</div><div class="line">     * @param lengthFieldOffset length字段偏移的地址</div><div class="line">     * @param lengthFieldLength length字段所占的字节长</div><div class="line">     * @param lengthAdjustment 修改帧数据长度字段中定义的值，可以为负数 因为有时候我们习惯把头部记入长度,若为负数,则说明要推后多少个字段</div><div class="line">     * @param initialBytesToStrip 解析时候跳过多少个长度</div><div class="line">     * @param failFast 为true，当frame长度超过maxFrameLength时立即报TooLongFrameException异常，为false，读取完整个帧再报异</div><div class="line">     */</div><div class="line"></div><div class="line">    public MyProtocolDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength, int lengthAdjustment, int initialBytesToStrip, boolean failFast) &#123;</div><div class="line"></div><div class="line">        super(maxFrameLength, lengthFieldOffset, lengthFieldLength, lengthAdjustment, initialBytesToStrip, failFast);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception &#123;</div><div class="line">        //在这里调用父类的方法,实现指得到想要的部分,我在这里全部都要,也可以只要body部分</div><div class="line">        in = (ByteBuf) super.decode(ctx,in);  </div><div class="line"></div><div class="line">        if(in == null)&#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        if(in.readableBytes()&lt;HEADER_SIZE)&#123;</div><div class="line">            throw new Exception(&quot;字节数不足&quot;);</div><div class="line">        &#125;</div><div class="line">        //读取type字段</div><div class="line">        byte type = in.readByte();</div><div class="line">        //读取flag字段</div><div class="line">        byte flag = in.readByte();</div><div class="line">        //读取length字段</div><div class="line">        int length = in.readInt();</div><div class="line">        </div><div class="line">        if(in.readableBytes()!=length)&#123;</div><div class="line">            throw new Exception(&quot;标记的长度不符合实际长度&quot;);</div><div class="line">        &#125;</div><div class="line">        //读取body</div><div class="line">        byte []bytes = new byte[in.readableBytes()];</div><div class="line">        in.readBytes(bytes);</div><div class="line"></div><div class="line">        return new MyProtocolBean(type,flag,length,new String(bytes,&quot;UTF-8&quot;));</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>在上述的代码中,调用父类的方法,实现截取到自己想要的字段.</li>
+</ul>
+<h5 id="2-协议实体的定义"><a href="#2-协议实体的定义" class="headerlink" title="2. 协议实体的定义"></a>2. 协议实体的定义</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyProtocolBean</span> </span>&#123;</div><div class="line">    <span class="comment">//类型  系统编号 0xA 表示A系统，0xB 表示B系统</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">byte</span> type;</div><div class="line"></div><div class="line">    <span class="comment">//信息标志  0xA 表示心跳包    0xC 表示超时包  0xC 业务信息包</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">byte</span> flag;</div><div class="line"></div><div class="line">    <span class="comment">//内容长度</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> length;</div><div class="line"></div><div class="line">    <span class="comment">//内容</span></div><div class="line">    <span class="keyword">private</span> String content;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">byte</span> <span class="title">getType</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> type;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setType</span><span class="params">(<span class="keyword">byte</span> type)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.type = type;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">byte</span> <span class="title">getFlag</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> flag;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlag</span><span class="params">(<span class="keyword">byte</span> flag)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.flag = flag;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getLength</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> length;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLength</span><span class="params">(<span class="keyword">int</span> length)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.length = length;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getContent</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> content;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContent</span><span class="params">(String content)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.content = content;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyProtocolBean</span><span class="params">(<span class="keyword">byte</span> flag, <span class="keyword">byte</span> type, <span class="keyword">int</span> length, String content)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.flag = flag;</div><div class="line">        <span class="keyword">this</span>.type = type;</div><div class="line">        <span class="keyword">this</span>.length = length;</div><div class="line">        <span class="keyword">this</span>.content = content;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"MyProtocolBean&#123;"</span> +</div><div class="line">                <span class="string">"type="</span> + type +</div><div class="line">                <span class="string">", flag="</span> + flag +</div><div class="line">                <span class="string">", length="</span> + length +</div><div class="line">                <span class="string">", content='"</span> + content + <span class="string">'\''</span> +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="3-服务端的实现"><a href="#3-服务端的实现" class="headerlink" title="3.服务端的实现"></a>3.服务端的实现</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_FRAME_LENGTH = <span class="number">1024</span> * <span class="number">1024</span>;  <span class="comment">//最大长度</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_FIELD_LENGTH = <span class="number">4</span>;  <span class="comment">//长度字段所占的字节数</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_FIELD_OFFSET = <span class="number">2</span>;  <span class="comment">//长度偏移</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_ADJUSTMENT = <span class="number">0</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INITIAL_BYTES_TO_STRIP = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> port;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Server</span><span class="params">(<span class="keyword">int</span> port)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.port = port;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>&#123;</div><div class="line">        EventLoopGroup bossGroup = <span class="keyword">new</span> NioEventLoopGroup(<span class="number">1</span>);</div><div class="line">        EventLoopGroup workerGroup = <span class="keyword">new</span> NioEventLoopGroup();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            ServerBootstrap sbs = <span class="keyword">new</span> ServerBootstrap().group(bossGroup,workerGroup).channel(NioServerSocketChannel.class).localAddress(<span class="keyword">new</span> InetSocketAddress(port))</div><div class="line">                    .childHandler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</div><div class="line"></div><div class="line">                        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                            ch.pipeline().addLast(<span class="keyword">new</span> MyProtocolDecoder(MAX_FRAME_LENGTH,LENGTH_FIELD_OFFSET,LENGTH_FIELD_LENGTH,LENGTH_ADJUSTMENT,INITIAL_BYTES_TO_STRIP,<span class="keyword">false</span>));</div><div class="line">                            ch.pipeline().addLast(<span class="keyword">new</span> ServerHandler());</div><div class="line">                        &#125;;</div><div class="line"></div><div class="line">                    &#125;).option(ChannelOption.SO_BACKLOG, <span class="number">128</span>)</div><div class="line">                    .childOption(ChannelOption.SO_KEEPALIVE, <span class="keyword">true</span>);</div><div class="line">            <span class="comment">// 绑定端口，开始接收进来的连接</span></div><div class="line">            ChannelFuture future = sbs.bind(port).sync();</div><div class="line"></div><div class="line">            System.out.println(<span class="string">"Server start listen at "</span> + port );</div><div class="line">            future.channel().closeFuture().sync();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            bossGroup.shutdownGracefully();</div><div class="line">            workerGroup.shutdownGracefully();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">int</span> port;</div><div class="line">        <span class="keyword">if</span> (args.length &gt; <span class="number">0</span>) &#123;</div><div class="line">            port = Integer.parseInt(args[<span class="number">0</span>]);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            port = <span class="number">8080</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">new</span> Server(port).start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>关于<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">`</div><div class="line"> &gt;maxFrameLength:     帧的最大长度</div><div class="line">lengthFieldOffset length:       字段偏移的地址</div><div class="line">lengthFieldLength length;字段所占的字节长</div><div class="line">lengthAdjustment: 修改帧数据长度字段中定义的值，可以为负数 因为有时候我们习惯把头部记入长度,若为负数,则说明要推后多少个字段</div><div class="line">initialBytesToStrip: 解析时候跳过多少个长度</div><div class="line">failFast; 为true，当frame长度超过maxFrameLength时立即报TooLongFrameException异常，为false，读取完整个帧再报异</div><div class="line">* 只需要把``` MyProtocolDecoder```加入pipeline中就可以.但是得在Handler之前.</div><div class="line"></div><div class="line"></div><div class="line">4. 服务端Hanlder</div><div class="line">```java</div><div class="line">public class ServerHandler extends ChannelInboundHandlerAdapter &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception &#123;</div><div class="line">        MyProtocolBean myProtocolBean = (MyProtocolBean)msg;  //直接转化成协议消息实体</div><div class="line">        System.out.println(myProtocolBean.getContent());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void channelActive(ChannelHandlerContext ctx) throws Exception &#123;</div><div class="line">        super.channelActive(ctx);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">* 服务端Handler没什么特别的地方,只是输出接收到的消息</div></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="5-客户端和客户端Handler"><a href="#5-客户端和客户端Handler" class="headerlink" title="5.  客户端和客户端Handler"></a>5.  客户端和客户端Handler</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String HOST = System.getProperty(<span class="string">"host"</span>, <span class="string">"127.0.0.1"</span>);</div><div class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PORT = Integer.parseInt(System.getProperty(<span class="string">"port"</span>, <span class="string">"8080"</span>));</div><div class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SIZE = Integer.parseInt(System.getProperty(<span class="string">"size"</span>, <span class="string">"256"</span>));</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// Configure the client.</span></div><div class="line">        EventLoopGroup group = <span class="keyword">new</span> NioEventLoopGroup();</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Bootstrap b = <span class="keyword">new</span> Bootstrap();</div><div class="line">            b.group(group)</div><div class="line">                    .channel(NioSocketChannel.class)</div><div class="line">                    .option(ChannelOption.TCP_NODELAY, <span class="keyword">true</span>)</div><div class="line">                    .handler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</div><div class="line">                        <span class="meta">@Override</span></div><div class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                            ch.pipeline().addLast(<span class="keyword">new</span> MyProtocolEncoder());</div><div class="line">                            ch.pipeline().addLast(<span class="keyword">new</span> ClientHandler());</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line"></div><div class="line">            ChannelFuture future = b.connect(HOST, PORT).sync();</div><div class="line">            future.channel().writeAndFlush(<span class="string">"Hello Netty Server ,I am a common client"</span>);</div><div class="line">            future.channel().closeFuture().sync();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            group.shutdownGracefully();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="客户端Handler"><a href="#客户端Handler" class="headerlink" title="客户端Handler"></a>客户端Handler</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">super</span>.channelRead(ctx, msg);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelActive</span><span class="params">(ChannelHandlerContext ctx)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">        MyProtocolBean myProtocolBean = <span class="keyword">new</span> MyProtocolBean((<span class="keyword">byte</span>)<span class="number">0xA</span>, (<span class="keyword">byte</span>)<span class="number">0xC</span>, <span class="string">"Hello,Netty"</span>.length(), <span class="string">"Hello,Netty"</span>);</div><div class="line">        ctx.writeAndFlush(myProtocolBean);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>客户端Handler实现发送消息.</li>
+</ul>
+<h6 id="客户端编码器"><a href="#客户端编码器" class="headerlink" title="客户端编码器"></a>客户端编码器</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyProtocolEncoder</span> <span class="keyword">extends</span> <span class="title">MessageToByteEncoder</span>&lt;<span class="title">MyProtocolBean</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">encode</span><span class="params">(ChannelHandlerContext ctx, MyProtocolBean msg, ByteBuf out)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">if</span>(msg == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"msg is null"</span>);</div><div class="line">        &#125;</div><div class="line">        out.writeByte(msg.getType());</div><div class="line">        out.writeByte(msg.getFlag());</div><div class="line">        out.writeInt(msg.getLength());</div><div class="line">        out.writeBytes(msg.getContent().getBytes(Charset.forName(<span class="string">"UTF-8"</span>)));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>编码的时候,只需要按照定义的顺序依次写入到ByteBuf中.</li>
+</ul>
+<h5 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h5><p>通过以上的消息,我们能够在客户端和服务端实现自定义协议的交互.其实,在以上的过程中,如果我们把<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ch.pipeline().addLast(<span class="keyword">new</span> MyProtocolDecoder(MAX_FRAME_LENGTH,LENGTH_FIELD_OFFSET,LENGTH_FIELD_LENGTH,LENGTH_ADJUSTMENT,INITIAL_BYTES_TO_STRIP,<span class="keyword">false</span>));</div></pre></td></tr></table></figure></p>
+<p>改成<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ch.pipeline().addLast(<span class="keyword">new</span> MyProtocolDecoder(MAX_FRAME_LENGTH,LENGTH_FIELD_OFFSET,LENGTH_FIELD_LENGTH,LENGTH_ADJUSTMENT,<span class="number">6</span>,<span class="keyword">false</span>));</div></pre></td></tr></table></figure></p>
+<p>那么我们就可以直接跳过Header和length字段,从而解码的时候,就只需要对body字段解码就行.其他字段跳过就忽略了.这也就是调用父类的方法的原因(使最后拿到的ByteBuf只有body部分,而没有其他部分).<br>上面的代码github地址:<a href="https://github.com/maskwang520/nettyinaction" target="_blank" rel="external">https://github.com/maskwang520/nettyinaction</a></p>
+<p>参考文章<br><a href="https://blog.csdn.net/z69183787/article/details/52980699" target="_blank" rel="external">一起学Netty（九）之LengthFieldBasedFrameDecoder</a><br><a href="http://www.voidcn.com/article/p-gzqzzsyz-bqy.html" target="_blank" rel="external">Netty的LengthFieldBasedFrameDecoder使用</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">netty</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/netty//" class="article-tag-list-link color1">netty</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/05/Netty读书笔记5-使用LengthFieldBasedFrameDecoder解码器自定义协议/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
     <article id="post-Netty读书笔记4-编码器解码器详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -950,92 +1055,6 @@
 
 
   
-    <article id="post-Jdk1-8-HashMap源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/12/Jdk1-8-HashMap源码分析/">Jdk1.8 HashMap源码分析</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/12/Jdk1-8-HashMap源码分析/" class="archive-article-date">
-  	<time datetime="2018-01-12T15:15:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h5><p>平常我们开发中，可能用的最多的容器就是HashMap。我们来看下HashMap的结构如下图。<br><img src="http://upload-images.jianshu.io/upload_images/5281821-56b15454daf300bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>它是由一个Node数组，每个数组元素又是有一个链表构成。接下来我们结合源码来分析下put(),get(),resize()者三个常见的操作。<br>
-        
-          <a class="article-more-a" href="/2018/01/12/Jdk1-8-HashMap源码分析/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">HashMap</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java源码分析//" class="article-tag-list-link color4">Java源码分析</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/12/Jdk1-8-HashMap源码分析/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1178,7 +1197,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Springboot</a>
+                <a href="javascript:void(0)" class="js-tag color1">flink</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1194,7 +1217,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flink</a>
+                <a href="javascript:void(0)" class="js-tag color1">Lambada表达式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1206,19 +1229,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Lambada表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">红黑树</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Springboot</a>
               </li>
             
             <div class="clearfix"></div>
