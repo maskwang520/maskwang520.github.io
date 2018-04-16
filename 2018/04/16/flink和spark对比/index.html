@@ -6,30 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Netty权威指南读书笔记1：Java的I/O演进之路 | Maskwang blogs</title>
+  <title>flink和spark对比(译) | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.1 用户空间以及内核空间概念针对linux操作系统而言，将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为内核空间，而将较低的3G字节（从虚拟地址0x00000000到0xBFFFFFFF），供各个进程使用，称为用户空间。有了用户空间和内核空间，整个linux内部结构可以分为三部分，从最底层到最上层依次是：硬件–&amp;gt;内核空间–&amp;gt;用户空间。">
-<meta name="keywords" content="Netty">
+  <meta name="description" content="AbstractSpark不管是流数据(DStream) 还是批数据，底层都是相同的数据表示RDD.Flink中，DataSet表示批数据，DataStream表示流数据。   Dataset代表runtime的执行计划。在Spark中，RDD代表运行时的java 对象。但是Apache flink Dataset表示一个逻辑的执行计划。这与Spark中的dataframes很相似。因此你可以优">
+<meta name="keywords" content="flink">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Netty权威指南读书笔记1：Java的I&#x2F;O演进之路">
-<meta property="og:url" content="http://yoursite.com/2018/01/13/Netty权威指南读书笔记1：Java的I-O演进之路/index.html">
+<meta property="og:title" content="flink和spark对比(译)">
+<meta property="og:url" content="http://yoursite.com/2018/04/16/flink和spark对比/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="1.1 用户空间以及内核空间概念针对linux操作系统而言，将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为内核空间，而将较低的3G字节（从虚拟地址0x00000000到0xBFFFFFFF），供各个进程使用，称为用户空间。有了用户空间和内核空间，整个linux内部结构可以分为三部分，从最底层到最上层依次是：硬件–&amp;gt;内核空间–&amp;gt;用户空间。">
+<meta property="og:description" content="AbstractSpark不管是流数据(DStream) 还是批数据，底层都是相同的数据表示RDD.Flink中，DataSet表示批数据，DataStream表示流数据。   Dataset代表runtime的执行计划。在Spark中，RDD代表运行时的java 对象。但是Apache flink Dataset表示一个逻辑的执行计划。这与Spark中的dataframes很相似。因此你可以优">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-c81d60e971235455.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-a68ee8fdcfe4f80d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-7b267e8f33355ab6?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-cd379c9254f37f46?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-e6ee030e33dcd847?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-7024bb072b20ba7d?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-4cb3ce66e6510e25?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-e6b01265976f91f7?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5281821-651516609e6e7111?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-13T15:42:44.099Z">
+<meta property="og:updated_time" content="2018-04-16T15:32:32.627Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Netty权威指南读书笔记1：Java的I&#x2F;O演进之路">
-<meta name="twitter:description" content="1.1 用户空间以及内核空间概念针对linux操作系统而言，将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为内核空间，而将较低的3G字节（从虚拟地址0x00000000到0xBFFFFFFF），供各个进程使用，称为用户空间。有了用户空间和内核空间，整个linux内部结构可以分为三部分，从最底层到最上层依次是：硬件–&amp;gt;内核空间–&amp;gt;用户空间。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5281821-c81d60e971235455.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="flink和spark对比(译)">
+<meta name="twitter:description" content="AbstractSpark不管是流数据(DStream) 还是批数据，底层都是相同的数据表示RDD.Flink中，DataSet表示批数据，DataStream表示流数据。   Dataset代表runtime的执行计划。在Spark中，RDD代表运行时的java 对象。但是Apache flink Dataset表示一个逻辑的执行计划。这与Spark中的dataframes很相似。因此你可以优">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -181,77 +171,56 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Netty权威指南读书笔记1：Java的I-O演进之路" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-flink和spark对比" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Netty权威指南读书笔记1：Java的I/O演进之路
+      flink和spark对比(译)
     </h1>
   
 
         
-        <a href="/2018/01/13/Netty权威指南读书笔记1：Java的I-O演进之路/" class="archive-article-date">
-  	<time datetime="2018-01-13T15:41:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-13</time>
+        <a href="/2018/04/16/flink和spark对比/" class="archive-article-date">
+  	<time datetime="2018-04-16T15:23:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>1.1 用户空间以及内核空间概念</strong><br>针对linux操作系统而言，将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为内核空间，而将较低的3G字节（从虚拟地址0x00000000到0xBFFFFFFF），供各个进程使用，称为用户空间。<br><img src="http://upload-images.jianshu.io/upload_images/5281821-c81d60e971235455.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><strong>有了用户空间和内核空间，整个linux内部结构可以分为三部分，从最底层到最上层依次是：硬件–&gt;内核空间–&gt;用户空间。</strong><br><a id="more"></a><br>我们都知道，为了OS的安全性等的考虑，<strong>进程是无法直接操作I/O设备的，其必须通过系统调用请求内核来协助完成I/O动作，而内核会为每个I/O设备维护一个buffer</strong>。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-a68ee8fdcfe4f80d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><strong>整个请求过程为： 用户进程发起请求，内核接受到请求后，从I/O设备中获取数据到buffer中，再将buffer中的数据copy到用户进程的地址空间，该用户进程获取到数据后再响应客户端。</strong></p>
+        <ol>
+<li>Abstract<br>Spark不管是流数据(DStream) 还是批数据，底层都是相同的数据表示RDD.Flink中，DataSet表示批数据，DataStream表示流数据。</li>
+</ol>
 <ul>
-<li><p>在整个请求过程中，数据输入至buffer需要时间，而从buffer复制数据至进程也需要时间。因此根据在这两段时间内等待方式的不同，I/O动作可以分为以下五种模式：</p>
-<ul>
-<li><p>阻塞I/O (Blocking I/O)</p>
-</li>
-<li><p>非阻塞I/O (Non-Blocking I/O)</p>
-</li>
-<li><p>I/O复用（I/O Multiplexing)</p>
-</li>
-<li><p>信号驱动的I/O (Signal Driven I/O)</p>
-</li>
-<li><p>异步I/O (Asynchrnous I/O)</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-1-阻塞I-O-Blocking-I-O"><a href="#2-1-阻塞I-O-Blocking-I-O" class="headerlink" title="2.1 阻塞I/O (Blocking I/O)"></a>2.1 阻塞I/O (Blocking I/O)</h3><p>&emsp;&emsp;在linux中，默认情况下所有的socket都是blocking，一个典型的读操作流程大概是这样：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-7b267e8f33355ab6?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"> </p>
-<p>&emsp;&emsp;当用户进程调用了recvfrom这个系统调用，内核就开始了IO的第一个阶段：等待数据准备。对于network io来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候内核就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞。当内核一直等到数据准备好了，它就会将数据从内核中拷贝到用户内存，然后内核返回结果，用户进程才解除block的状态，重新运行起来。 所以，blocking IO的特点就是<strong>在IO执行的两个阶段都被block了。（整个过程一直是阻塞的）</strong></p>
-<h3 id="2-2-非阻塞I-O-Non-Blocking-I-O"><a href="#2-2-非阻塞I-O-Non-Blocking-I-O" class="headerlink" title="2.2 非阻塞I/O (Non-Blocking I/O)"></a>2.2 非阻塞I/O (Non-Blocking I/O)</h3><p>&emsp;&emsp;linux下，可以通过设置socket使其变为non-blocking。当对一个non-blocking socket执行读操作时，流程是这个样子：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-cd379c9254f37f46?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p>&emsp;&emsp;当用户进程调用recvfrom时，系统不会阻塞用户进程，而是立刻返回一个ewouldblock错误，从用户进程角度讲 ，并不需要等待，而是马上就得到了一个结果（这个结果就是ewouldblock ）。用户进程判断标志是ewouldblock时，就知道数据还没准备好，于是它就可以去做其他的事了，于是它可以再次发送recvfrom，一旦内核中的数据准备好了。并且又再次收到了用户进程的system call，那么它马上就将数据拷贝到了用户内存，然后返回。 当一个应用程序在一个循环里对一个非阻塞调用recvfrom，我们称为轮询。应用程序不断轮询内核，看看是否已经准备好了某些操作。这通常是<strong>浪费CPU时间</strong>，但这种模式偶尔会遇到。</p>
-<h3 id="2-3-I-O复用（I-O-Multiplexing"><a href="#2-3-I-O复用（I-O-Multiplexing" class="headerlink" title="2.3 I/O复用（I/O Multiplexing)"></a>2.3 I/O复用（I/O Multiplexing)</h3><p>&emsp;&emsp;IO multiplexing这个词可能有点陌生，但是如果我说select，epoll，大概就都能明白了。有些地方也称这种IO方式为event driven IO。我们都知道，select/epoll的好处就在于单个process就可以同时处理多个网络连接的IO。它的基本原理就是select/epoll这个function会不断的轮询所负责的所有socket，当某个socket有数据到达了，就通知用户进程。它的流程如图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-e6ee030e33dcd847?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p>&emsp;&emsp;当用户进程调用了select，那么整个进程会被block，而同时，内核会“监视”所有select负责的socket，当任何一个socket中的数据准备好了，select就会返回。这个时候用户进程再调用read操作，将数据从内核拷贝到用户进程。 这个图和blocking IO的图其实并没有太大的不同，事实上，还更差一些。因为这里需要使用两个system call (select 和 recvfrom)，而blocking IO只调用了一个system call (recvfrom)。但是，用select的优势在于它可以同时处理多个connection。（多说一句。所以，如果处理的连接数不是很高的话，使用select/epoll的web server不一定比使用multi-threading + blocking IO的web server性能更好，可能延迟还更大。select/epoll的优势并不是对于单个连接能处理得更快，而是在于能处理更多的连接。） 在IO multiplexing Model中，实际中，对于每一个socket，一般都设置成为non-blocking，但是，如上图所示，整个用户的process其实是一直被block的。只不过process是被select这个函数block，而不是被socket IO给block。</p>
-<h4 id="文件描述符fd"><a href="#文件描述符fd" class="headerlink" title="文件描述符fd"></a>文件描述符fd</h4><p>Linux的内核将所有外部设备都可以看做一个文件来操作。那么我们对与外部设备的操作都可以看做对文件进行操作。我们对一个文件的读写，都通过调用内核提供的系统调用；内核给我们返回一个filede scriptor（fd,文件描述符）。而对一个socket的读写也会有相应的描述符，称为socketfd(socket描述符）。描述符就是一个数字，指向内核中一个结构体（文件路径，数据区，等一些属性）。那么我们的应用程序对文件的读写就通过对描述符的读写完成。</p>
-<h4 id="select"><a href="#select" class="headerlink" title="select"></a>select</h4><p><strong>基本原理：</strong>select 函数监视的文件描述符分3类，分别是writefds、readfds、和exceptfds。调用后select函数会阻塞，直到有描述符就绪（有数据 可读、可写、或者有except），或者超时（timeout指定等待时间，如果立即返回设为null即可），函数返回。当select函数返回后，可以通过遍历fdset，来找到就绪的描述符。</p>
-<p>缺点: 1、select最大的缺陷就是单个进程所打开的FD是有一定限制的，它由FDSETSIZE设置，32位机默认是1024个，64位机默认是2048。 一般来说这个数目和系统内存关系很大，”具体数目可以cat /proc/sys/fs/file-max察看”。32位机默认是1024个。64位机默认是2048. 2、对socket进行扫描时是线性扫描，即采用轮询的方法，效率较低。 当套接字比较多的时候，每次select()都要通过遍历FDSETSIZE个Socket来完成调度，不管哪个Socket是活跃的，都遍历一遍。这会浪费很多CPU时间。”如果能给套接字注册某个回调函数，当他们活跃时，自动完成相关操作，那就避免了轮询”，这正是epoll与kqueue做的。 3、需要维护一个用来存放大量fd的数据结构，这样会使得用户空间和内核空间在传递该结构时复制开销大。</p>
-<h4 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h4><p><strong>基本原理：</strong>poll本质上和select没有区别，它将用户传入的数组拷贝到内核空间，然后查询每个fd对应的设备状态，如果设备就绪则在设备等待队列中加入一项并继续遍历，如果遍历完所有fd后没有发现就绪设备，则挂起当前进程，直到设备就绪或者主动超时，被唤醒后它又要再次遍历fd。这个过程经历了多次无谓的遍历。</p>
-<p><strong>它没有最大连接数的限制，原因是它是基于链表来存储的，但是同样有一个缺点：</strong>1、大量的fd的数组被整体复制于用户态和内核地址空间之间，而不管这样的复制是不是有意义。 2 、poll还有一个特点是“水平触发”，如果报告了fd后，没有被处理，那么下次poll时会再次报告该fd。</p>
-<p><strong>注意：</strong>从上面看，select和poll都需要在返回后，通过遍历文件描述符来获取已经就绪的socket。事实上，同时连接的大量客户端在一时刻可能只有很少的处于就绪状态，因此随着监视的描述符数量的增长，其效率也会线性下降。</p>
-<h4 id="epoll-事件驱动）"><a href="#epoll-事件驱动）" class="headerlink" title="epoll(事件驱动）"></a>epoll(事件驱动）</h4><p>epoll是在2.6内核中提出的，是之前的select和poll的增强版本。相对于select和poll来说，epoll更加灵活，没有描述符限制。epoll使用一个文件描述符管理多个描述符，将用户关系的文件描述符的事件存放到内核的一个事件表中，这样在用户空间和内核空间的copy只需一次。</p>
-<p><strong>基本原理：</strong>epoll支持水平触发和边缘触发，最大的特点在于边缘触发，它只告诉进程哪些fd刚刚变为就绪态，并且只会通知一次。还有一个特点是，epoll使用“事件”的就绪通知方式，通过epollctl注册fd，一旦该fd就绪，内核就会采用类似callback的回调机制来激活该fd，epollwait便可以收到通知。</p>
-<p><strong>epoll的优点：</strong>1、没有最大并发连接的限制，能打开的FD的上限远大于1024（1G的内存上能监听约10万个端口）。 2、效率提升，不是轮询的方式，不会随着FD数目的增加效率下降。 只有活跃可用的FD才会调用callback函数；即Epoll最大的优点就在于它只管你“活跃”的连接，而跟连接总数无关，因此在实际的网络环境中，Epoll的效率就会远远高于select和poll。 3、内存拷贝，利用mmap()文件映射内存加速与内核空间的消息传递；即epoll使用mmap减少复制开销。</p>
-<p><strong>JDK1.5_update10版本使用epoll替代了传统的select/poll，极大的提升了NIO通信的性能。</strong></p>
-<blockquote>
-<p><strong>备注：</strong>JDK NIO的BUG，例如臭名昭著的epoll bug，它会导致Selector空轮询，最终导致CPU 100%。官方声称在JDK1.6版本的update18修复了该问题，但是直到JDK1.7版本该问题仍旧存在，只不过该BUG发生概率降低了一些而已，它并没有被根本解决。<strong>这个可以在后续netty系列里面进行说明下。</strong></p>
+<li>Dataset代表runtime的执行计划。在Spark中，RDD代表运行时的java 对象。但是Apache flink Dataset表示一个逻辑的执行计划。这与Spark中的dataframes很相似。因此你可以优化DataSet。而RDD不能进行优化。<a id="more"></a>
+Flink中的Dataset 更像Spark中的Dataframe API ，并且DataSet是在执行之前经过优化之后的。在Spark1.6中，引入dataset API 。它有可能最后取代RDD的抽象。<br>在Spark中所有的抽象例如DStream, Dataframe 都是建立在RDD抽象上。但是在flink中，我们不能像合并DStream, Dataframe这样合并DataStream和DataSet这样的抽象。<blockquote>
+<p>We cannot combine DataSet and DataStreams like RDD and DStreams.</p>
 </blockquote>
-<h3 id="信号驱动的I-O-Signal-Driven-I-O"><a href="#信号驱动的I-O-Signal-Driven-I-O" class="headerlink" title="信号驱动的I/O (Signal Driven I/O)"></a>信号驱动的I/O (Signal Driven I/O)</h3><p><img src="http://upload-images.jianshu.io/upload_images/5281821-7024bb072b20ba7d?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p>很明显可以看出用户进程不是阻塞的。首先用户进程建立SIGIO信号处理程序，并通过系统调用sigaction执行一个信号处理函数，这时用户进程便可以做其他的事了，一旦数据准备好，系统便为该进程生成一个SIGIO信号，去通知它数据已经准备好了，于是用户进程便调用recvfrom把数据从内核拷贝出来，并返回结果。</p>
-<h3 id="3-5-异步I-O"><a href="#3-5-异步I-O" class="headerlink" title="3.5 异步I/O"></a>3.5 异步I/O</h3><p>一般来说，这些函数通过告诉内核启动操作并在整个操作（包括内核的数据到缓冲区的副本）完成时通知我们。这个模型和前面的信号驱动I/O模型的主要区别是，在信号驱动的I/O中，内核告诉我们何时可以启动I/O操作，但是异步I/O时，内核告诉我们何时I/O<strong>操作完成</strong>。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-4cb3ce66e6510e25?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p>当用户进程向内核发起某个操作后，会立刻得到返回，并把所有的任务都交给内核去完成（包括将数据从内核拷贝到用户自己的缓冲区），内核完成之后，只需返回一个信号告诉用户进程已经完成就可以了。</p>
-<h3 id="5中I-O模型的对比"><a href="#5中I-O模型的对比" class="headerlink" title="5中I/O模型的对比"></a>5中I/O模型的对比</h3><p><img src="http://upload-images.jianshu.io/upload_images/5281821-e6b01265976f91f7?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p><strong>结果表明：</strong>前四个模型之间的主要区别是第一阶段，四个模型的第二阶段是一样的：过程受阻在调用recvfrom当数据从内核拷贝到用户缓冲区。然而，异步I/O处理两个阶段，与前四个不同。</p>
-<p><strong>从同步、异步，以及阻塞、非阻塞两个维度来划分来看：</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5281821-651516609e6e7111?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
-<p>参考文档<br><a href="https://mp.weixin.qq.com/s?__biz=MzU2NjIzNDk5NQ==&amp;mid=2247483891&amp;idx=1&amp;sn=9bc7472bbfca5dc9903f9133c8544fae&amp;chksm=fcaedbefcbd952f946a2a13f35415bbbfbc633430abebd01ee065396432546de2a2c260c8f20&amp;mpshare=1&amp;scene=23&amp;srcid=12267A9mUH5TixdNiowpFUfg#rd" target="_blank" rel="external">匠心零度的公众号</a><br><a href="">Netty权威指南第一章</a></p>
+</li>
+</ul>
+<p>所以flink和spark虽然有相似的抽象，但是他们的实现是不同的。</p>
+<ol>
+<li><p>内存管理<br>Spark1.5之前，用java 堆来管理缓存数据(存在OOM问题，和gc暂停的问题）。从1.5开始，spark开始了自己实现的内存管理project tungsten。Flink从一开始就是自己管理内存，Flink不仅有存储二进制的框架，而且还可以直接处理二进制。spark在1.5之后也可以直接处理tungsten binary data 。<br>自定义的内存管理能够更有效的利用资源和和更好的性能。</p>
+</li>
+<li><p>语言<br>spark支持java,python,scala.而flink现在也都支持了。他们的api风格很相近</p>
+</li>
+<li><p>Streaming<br>spark把流当做特殊批处理。flink把批处理看做是特殊的流处理。这两种方式有以下区别</p>
+</li>
+</ol>
+<ul>
+<li>Realtime vs Near Realtime<br>Apache flink 提供时间级别的处理，被称作是一种Realtime 的流。<br>Spark里面你进行一个微 批操作是不会提供一个事件级的粒度。他只是一种近乎real-time。<br>对于少数实时性要求很高的应用，storm和flink是更好的选择。</li>
+</ul>
+<ol>
+<li><p>把历史数据与流结合的能力<br>flink相对与spark来说，处理流的能力比处理批的速度更快一点。Spark对批和流的结合做的很好的原因在于它底层统一的RDD抽象。<br>在flink里面，批处理和流处理没有统一的抽象，虽然也有办法把stream和batch结合起来，但是还是不如spark来的方便。</p>
+</li>
+<li><p>Flexible windowing<br>由于window级别的微处理在spark。所以你只能根据处理时间来把窗口当做批处理。而Flink提供了非常灵活的窗口相比于其他系统。窗口主要用于流处理上。它允许窗口能够根据处理时间，时间时间等。这样的灵活性使得flink相比于spark来用于流处理会更强大。</p>
+</li>
+<li><p>Iterative processing<br>Spark 人们讨论最大的还是它对于机器学习的支持。216/5000<br>虽然ML算法是一个循环数据流，但它表示为spark内部的直接非循环图。 通常没有分布式处理系统鼓励循环数据流，因为它们变得棘手。<br>但flink采取了与他人稍有不同的方法。 它们在运行时支持受控循环依赖关系图。 与DAG表示相比，这使得它们以非常有效的方式表示ML算法。 因此，Flink支持本地平台的迭代，与DAG方法相比，可实现卓越的可扩展性和性能。</p>
+</li>
+</ol>
 
       
 
@@ -296,24 +265,13 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Netty</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">flink</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Netty//" class="article-tag-list-link color1">Netty</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -363,7 +321,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/01/13/Netty权威指南读书笔记1：Java的I-O演进之路/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/04/16/flink和spark对比/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -377,18 +335,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/19/HTTP-2-新特性总结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          HTTP/2 新特性总结
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/01/13/红黑树的原理和常见操作/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">红黑树的原理和常见操作</div>
+    <a href="/2018/04/16/Transaction必知必会/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">@Transaction必知必会</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -418,7 +367,7 @@
   
 
   
-  <div id="SOHUCS" sid="Netty权威指南读书笔记1：Java的I-O演进之路" ></div> 
+  <div id="SOHUCS" sid="flink和spark对比" ></div> 
 <script type="text/javascript"> 
 window.YiliaChangyanWrap = function() {
     var appid = "cytiAQ2fR"; 
