@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Maskwang blogs">
 <meta property="og:description" content="AbstractSpark不管是流数据(DStream) 还是批数据，底层都是相同的数据表示RDD.Flink中，DataSet表示批数据，DataStream表示流数据。   Dataset代表runtime的执行计划。在Spark中，RDD代表运行时的java 对象。但是Apache flink Dataset表示一个逻辑的执行计划。这与Spark中的dataframes很相似。因此你可以优">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T15:32:32.627Z">
+<meta property="og:updated_time" content="2018-04-16T15:37:28.975Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flink和spark对比(译)">
 <meta name="twitter:description" content="AbstractSpark不管是流数据(DStream) 还是批数据，底层都是相同的数据表示RDD.Flink中，DataSet表示批数据，DataStream表示流数据。   Dataset代表runtime的执行计划。在Spark中，RDD代表运行时的java 对象。但是Apache flink Dataset表示一个逻辑的执行计划。这与Spark中的dataframes很相似。因此你可以优">
@@ -195,12 +195,13 @@
 <li>Abstract<br>Spark不管是流数据(DStream) 还是批数据，底层都是相同的数据表示RDD.Flink中，DataSet表示批数据，DataStream表示流数据。</li>
 </ol>
 <ul>
-<li>Dataset代表runtime的执行计划。在Spark中，RDD代表运行时的java 对象。但是Apache flink Dataset表示一个逻辑的执行计划。这与Spark中的dataframes很相似。因此你可以优化DataSet。而RDD不能进行优化。<a id="more"></a>
-Flink中的Dataset 更像Spark中的Dataframe API ，并且DataSet是在执行之前经过优化之后的。在Spark1.6中，引入dataset API 。它有可能最后取代RDD的抽象。<br>在Spark中所有的抽象例如DStream, Dataframe 都是建立在RDD抽象上。但是在flink中，我们不能像合并DStream, Dataframe这样合并DataStream和DataSet这样的抽象。<blockquote>
+<li>Dataset代表runtime的执行计划。在Spark中，RDD代表运行时的java 对象。但是Apache flink Dataset表示一个逻辑的执行计划。这与Spark中的dataframes很相似。因此你可以优化DataSet。而RDD不能进行优化。</li>
+</ul>
+<a id="more"></a>
+<p>Flink中的Dataset 更像Spark中的Dataframe API ，并且DataSet是在执行之前经过优化之后的。在Spark1.6中，引入dataset API 。它有可能最后取代RDD的抽象。<br>在Spark中所有的抽象例如DStream, Dataframe 都是建立在RDD抽象上。但是在flink中，我们不能像合并DStream, Dataframe这样合并DataStream和DataSet这样的抽象。</p>
+<blockquote>
 <p>We cannot combine DataSet and DataStreams like RDD and DStreams.</p>
 </blockquote>
-</li>
-</ul>
 <p>所以flink和spark虽然有相似的抽象，但是他们的实现是不同的。</p>
 <ol>
 <li><p>内存管理<br>Spark1.5之前，用java 堆来管理缓存数据(存在OOM问题，和gc暂停的问题）。从1.5开始，spark开始了自己实现的内存管理project tungsten。Flink从一开始就是自己管理内存，Flink不仅有存储二进制的框架，而且还可以直接处理二进制。spark在1.5之后也可以直接处理tungsten binary data 。<br>自定义的内存管理能够更有效的利用资源和和更好的性能。</p>
