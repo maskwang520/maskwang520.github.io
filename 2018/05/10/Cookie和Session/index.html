@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-3e0c3b86209d3456.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-26fe10de07d66ebe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-895721288aba0ded.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-10T15:24:23.787Z">
+<meta property="og:updated_time" content="2018-05-10T15:36:53.009Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cookie和Session">
 <meta name="twitter:description" content="1. Cookie概述HTTP cookie（网络cookie，浏览器cookie）是服务器发送给用户网络浏览器的一小部分数据。 浏览器可以存储它，并将下一个请求发回给同一台服务器。 通常，它用于判断两个请求是否来自同一浏览器 - 例如，保持用户登录。 它记住无状态HTTP协议的有状态信息。Cookie的用途:  回话管理记录登录，购物车，游戏分数或服务器应记住的任何其他内容 个性化用户偏好，主题">
@@ -203,10 +203,10 @@
 <ul>
 <li>回话管理<br>记录登录，购物车，游戏分数或服务器应记住的任何其他内容</li>
 <li>个性化<br>用户偏好，主题和其他设置</li>
-<li>追踪<br>记录和分析用户行为<a id="more"></a>
-<h5 id="2-如何创建Cookie"><a href="#2-如何创建Cookie" class="headerlink" title="2. 如何创建Cookie"></a>2. 如何创建Cookie</h5></li>
+<li>追踪<br>记录和分析用户行为</li>
 </ul>
-<p>当收到一个HTTP请求时，服务器可以发送带响应的Set-Cookie头。 Cookie通常由浏览器存储，然后将cookie发送到Cookie HTTP标头中的同一服务器。 可以指定到期日期或持续时间，之后不再发送cookie。 此外，可以设置对特定域和路径的限制，限制cookie的发送位置。</p>
+<a id="more"></a>
+<h5 id="2-如何创建Cookie"><a href="#2-如何创建Cookie" class="headerlink" title="2. 如何创建Cookie"></a>2. 如何创建Cookie</h5><p>当收到一个HTTP请求时，服务器可以发送带响应的Set-Cookie头。 Cookie通常由浏览器存储，然后将cookie发送到Cookie HTTP标头中的同一服务器。 可以指定到期日期或持续时间，之后不再发送cookie。 此外，可以设置对特定域和路径的限制，限制cookie的发送位置。</p>
 <p>Set-Cookie HTTP响应头将来自服务器的cookie发送给用户代理。 一个简单的cookie就像下面这样设置：<br><img src="https://upload-images.jianshu.io/upload_images/5281821-9f79ddbe090a7597.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>完整的响应头如下<br><img src="https://upload-images.jianshu.io/upload_images/5281821-9c6d6336f83392de.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>设置Cookie后,每次请求都会带上设置的Cookie,请求如下:<br><img src="https://upload-images.jianshu.io/upload_images/5281821-599ca8dba3c276f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <h5 id="3-会话Cookie和持久性Cookie"><a href="#3-会话Cookie和持久性Cookie" class="headerlink" title="3. 会话Cookie和持久性Cookie"></a>3. 会话Cookie和持久性Cookie</h5><ul>
