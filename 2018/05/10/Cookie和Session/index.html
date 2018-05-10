@@ -6,20 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>弄懂Fail-Safe,Fail-First | Maskwang blogs</title>
+  <title>Cookie和Session | Maskwang blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;emsp;&amp;emsp;今天在做算法题的时候，碰到的如下问题，记录下来加深记忆。很多时候我们都有这样一个需求，在迭代的时候（满足某个给定的条件）添加或者删除元素。结果却是等来了java.util.ConcurrentModificationException这个异常，追踪其原因，就是有些容器是Fail-Safe，Fail-First的">
-<meta name="keywords" content="集合,Java基础">
+  <meta name="description" content="1. Cookie概述HTTP cookie（网络cookie，浏览器cookie）是服务器发送给用户网络浏览器的一小部分数据。 浏览器可以存储它，并将下一个请求发回给同一台服务器。 通常，它用于判断两个请求是否来自同一浏览器 - 例如，保持用户登录。 它记住无状态HTTP协议的有状态信息。Cookie的用途:  回话管理记录登录，购物车，游戏分数或服务器应记住的任何其他内容 个性化用户偏好，主题">
+<meta name="keywords" content="Cookie&amp;Session">
 <meta property="og:type" content="article">
-<meta property="og:title" content="弄懂Fail-Safe,Fail-First">
-<meta property="og:url" content="http://yoursite.com/2017/10/08/弄懂Fail-Safe-Fail-First/index.html">
+<meta property="og:title" content="Cookie和Session">
+<meta property="og:url" content="http://yoursite.com/2018/05/10/Cookie和Session/index.html">
 <meta property="og:site_name" content="Maskwang blogs">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;今天在做算法题的时候，碰到的如下问题，记录下来加深记忆。很多时候我们都有这样一个需求，在迭代的时候（满足某个给定的条件）添加或者删除元素。结果却是等来了java.util.ConcurrentModificationException这个异常，追踪其原因，就是有些容器是Fail-Safe，Fail-First的">
+<meta property="og:description" content="1. Cookie概述HTTP cookie（网络cookie，浏览器cookie）是服务器发送给用户网络浏览器的一小部分数据。 浏览器可以存储它，并将下一个请求发回给同一台服务器。 通常，它用于判断两个请求是否来自同一浏览器 - 例如，保持用户登录。 它记住无状态HTTP协议的有状态信息。Cookie的用途:  回话管理记录登录，购物车，游戏分数或服务器应记住的任何其他内容 个性化用户偏好，主题">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-04T13:34:30.605Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-9f79ddbe090a7597.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-9c6d6336f83392de.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-599ca8dba3c276f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-bac0f4f3c7284d96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-3e0c3b86209d3456.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-26fe10de07d66ebe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-895721288aba0ded.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-10T15:24:23.787Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="弄懂Fail-Safe,Fail-First">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;今天在做算法题的时候，碰到的如下问题，记录下来加深记忆。很多时候我们都有这样一个需求，在迭代的时候（满足某个给定的条件）添加或者删除元素。结果却是等来了java.util.ConcurrentModificationException这个异常，追踪其原因，就是有些容器是Fail-Safe，Fail-First的">
+<meta name="twitter:title" content="Cookie和Session">
+<meta name="twitter:description" content="1. Cookie概述HTTP cookie（网络cookie，浏览器cookie）是服务器发送给用户网络浏览器的一小部分数据。 浏览器可以存储它，并将下一个请求发回给同一台服务器。 通常，它用于判断两个请求是否来自同一浏览器 - 例如，保持用户登录。 它记住无状态HTTP协议的有状态信息。Cookie的用途:  回话管理记录登录，购物车，游戏分数或服务器应记住的任何其他内容 个性化用户偏好，主题">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5281821-9f79ddbe090a7597.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
   
@@ -171,39 +179,59 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-弄懂Fail-Safe-Fail-First" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Cookie和Session" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      弄懂Fail-Safe,Fail-First
+      Cookie和Session
     </h1>
   
 
         
-        <a href="/2017/10/08/弄懂Fail-Safe-Fail-First/" class="archive-article-date">
-  	<time datetime="2017-10-08T00:15:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-08</time>
+        <a href="/2018/05/10/Cookie和Session/" class="archive-article-date">
+  	<time datetime="2018-05-10T15:22:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&emsp;&emsp;今天在做算法题的时候，碰到的如下问题，记录下来加深记忆。很多时候我们都有这样一个需求，在迭代的时候（满足某个给定的条件）添加或者删除元素。结果却是等来了java.util.ConcurrentModificationException这个异常，追踪其原因，就是有些容器是Fail-Safe，Fail-First的<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CollectionTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        ArrayList&lt;Integer&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        arrayList.add(<span class="number">1</span>);</div><div class="line">        arrayList.add(<span class="number">2</span>);</div><div class="line">        arrayList.add(<span class="number">3</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> a : arrayList) &#123;</div><div class="line">            <span class="keyword">if</span> (a == <span class="number">1</span>)</div><div class="line">                arrayList.remove(a);</div><div class="line">        &#125;</div><div class="line">        System.out.println(arrayList);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h6 id="1-Fail-Safe-Fail-First概念。"><a href="#1-Fail-Safe-Fail-First概念。" class="headerlink" title="1. Fail-Safe,Fail-First概念。"></a>1. Fail-Safe,Fail-First概念。</h6><p>    在ArrayList的里面有个内部类Itr。当我们获取到迭代器的时候，就会对这个类进行初始化，来看下这个类的源码，分析初始化做了些什么。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">        <span class="keyword">int</span> cursor;       <span class="comment">// index of next element to return</span></div><div class="line">        <span class="keyword">int</span> lastRet = -<span class="number">1</span>; <span class="comment">// index of last element returned; -1 if no such</span></div><div class="line">        <span class="keyword">int</span> expectedModCount = modCount;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> cursor != size;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">        <span class="function"><span class="keyword">public</span> E <span class="title">next</span><span class="params">()</span> </span>&#123;</div><div class="line">            checkForComodification();</div><div class="line">            <span class="keyword">int</span> i = cursor;</div><div class="line">            <span class="keyword">if</span> (i &gt;= size)</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</div><div class="line">            Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</div><div class="line">            <span class="keyword">if</span> (i &gt;= elementData.length)</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">            cursor = i + <span class="number">1</span>;</div><div class="line">            <span class="keyword">return</span> (E) elementData[lastRet = i];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> (lastRet &lt; <span class="number">0</span>)</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</div><div class="line">            checkForComodification();</div><div class="line"></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                ArrayList.<span class="keyword">this</span>.remove(lastRet);</div><div class="line">                cursor = lastRet;</div><div class="line">                lastRet = -<span class="number">1</span>;</div><div class="line">                expectedModCount = modCount;</div><div class="line">            &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException ex) &#123;</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> (modCount != expectedModCount)</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>    在初始化的时候，它会让expectedModCount = modCount，modCount在AbstractList，每次对ArrayList的结构性改变（remove,add）都会使得modCount相应的减1或者加1。来分析下我们刚开始出现问题的代码。当我们获取到迭代器的时候，此时expectedModCount = modCount。当remove的时候，modCount会加1，但是expectedModCount却不变，当执行Itr的next()操作时候，会执行上述源码中的checkForComodification()来检查expectedModCount = modCount，若不相等，则会throw ConcurrentModificationException。<br>所以就不难分析出上述问题。</p>
-<blockquote>
-<p>    FailFirst:当我们在迭代获取集合元素的时候，<strong>在迭代器创建之后，对集合做一些结构性的改变（remove,add操作)</strong>，那么FailFirst容器首先会抛出 ConcurrentModificationException。</p>
-</blockquote>
-<h6 id="2-如何解决上述问题。"><a href="#2-如何解决上述问题。" class="headerlink" title="2. 如何解决上述问题。"></a>2. 如何解决上述问题。</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">       ArrayList&lt;Integer&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">       arrayList.add(<span class="number">1</span>);</div><div class="line">       arrayList.add(<span class="number">2</span>);</div><div class="line">       arrayList.add(<span class="number">3</span>);</div><div class="line">       ArrayList sub=<span class="keyword">new</span> ArrayList();</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> a:arrayList)&#123;</div><div class="line">           <span class="keyword">if</span>(a==<span class="number">1</span>)</div><div class="line">               sub.add(a);</div><div class="line">       &#125;</div><div class="line">       arrayList.removeAll(sub);</div><div class="line">       System.out.println(arrayList);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>  上述这个办法好，但是却占额外空间。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        ArrayList&lt;Integer&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        arrayList.add(<span class="number">1</span>);</div><div class="line">        arrayList.add(<span class="number">2</span>);</div><div class="line">        arrayList.add(<span class="number">3</span>);</div><div class="line">        Iterator&lt;Integer&gt; iterator = arrayList.iterator();</div><div class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</div><div class="line">            <span class="keyword">int</span> a = iterator.next();</div><div class="line">            <span class="keyword">if</span> (a == <span class="number">1</span>)</div><div class="line">                iterator.remove();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(arrayList);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>  这样就不占额外的空间，是更好的办法。 iterator.remove()为啥不会抛异常，看看源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> (lastRet &lt; <span class="number">0</span>)</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</div><div class="line">            checkForComodification();</div><div class="line"></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                ArrayList.<span class="keyword">this</span>.remove(lastRet);</div><div class="line">                cursor = lastRet;</div><div class="line">                lastRet = -<span class="number">1</span>;</div><div class="line">                expectedModCount = modCount;</div><div class="line">            &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException ex) &#123;</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
-<p>   expectedModCount = modCount;这句起作用，它删除元素后它会强制满足条件。所以不会抛异常。</p>
-<h6 id="3-Fail-Safe的出场-。"><a href="#3-Fail-Safe的出场-。" class="headerlink" title="3. Fail-Safe的出场 。"></a>3. Fail-Safe的出场 。</h6><p>  将刚开始的代码换成如下的形式,问题迎刃而解。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        CopyOnWriteArrayList&lt;Integer&gt; arrayList = <span class="keyword">new</span> CopyOnWriteArrayList&lt;&gt;();</div><div class="line">        arrayList.add(<span class="number">1</span>);</div><div class="line">        arrayList.add(<span class="number">2</span>);</div><div class="line">        arrayList.add(<span class="number">3</span>);</div><div class="line">        Iterator&lt;Integer&gt; iterator = arrayList.iterator();</div><div class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</div><div class="line">            <span class="keyword">int</span> a = iterator.next();</div><div class="line">            <span class="keyword">if</span> (a == <span class="number">1</span>)</div><div class="line">               arrayList.remove(a);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(arrayList);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>   像CopyOnWriteArrayList这类容器就属于Fail-Safe容器。当集合结构改变的时候不会抛出异常，这是因为他们只是原始集合的复制，它用snapshot这个数组来保存集合。<strong>所以你原始集合的修改只会让原来的引用指向新的数组，而旧的引用还是被迭代器的snapshot所引用</strong>。因而他们属于Fail-Safe容器。看看其源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</div><div class="line">        lock.lock();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Object[] elements = getArray();</div><div class="line">            <span class="keyword">int</span> len = elements.length;</div><div class="line">            Object[] newElements = Arrays.copyOf(elements, len + <span class="number">1</span>);</div><div class="line">            newElements[len] = e;</div><div class="line">            setArray(newElements);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o, Object[] snapshot, <span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</div><div class="line">        lock.lock();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Object[] current = getArray();</div><div class="line">            <span class="keyword">int</span> len = current.length;</div><div class="line">            <span class="keyword">if</span> (snapshot != current) findIndex: &#123;</div><div class="line">                <span class="keyword">int</span> prefix = Math.min(index, len);</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prefix; i++) &#123;</div><div class="line">                    <span class="keyword">if</span> (current[i] != snapshot[i] &amp;&amp; eq(o, current[i])) &#123;</div><div class="line">                        index = i;</div><div class="line">                        <span class="keyword">break</span> findIndex;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (index &gt;= len)</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                <span class="keyword">if</span> (current[index] == o)</div><div class="line">                    <span class="keyword">break</span> findIndex;</div><div class="line">                index = indexOf(o, current, index, len);</div><div class="line">                <span class="keyword">if</span> (index &lt; <span class="number">0</span>)</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            Object[] newElements = <span class="keyword">new</span> Object[len - <span class="number">1</span>];</div><div class="line">            System.arraycopy(current, <span class="number">0</span>, newElements, <span class="number">0</span>, index);</div><div class="line">            System.arraycopy(current, index + <span class="number">1</span>,</div><div class="line">                             newElements, index,</div><div class="line">                             len - index - <span class="number">1</span>);</div><div class="line">            setArray(newElements);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>  从上面可以看出每次添加元素都是线程安全的，因为加了锁。另外，每添加一个元素，都会把原来的引用指向一个新的数组。所以对他进行操作没问题。所以使用Fail-Safe容器也是一种很好的解决办法。</p>
+        <h5 id="1-Cookie概述"><a href="#1-Cookie概述" class="headerlink" title="1. Cookie概述"></a>1. Cookie概述</h5><p>HTTP cookie（网络cookie，浏览器cookie）是服务器发送给用户网络浏览器的一小部分数据。 浏览器可以存储它，并将下一个请求发回给同一台服务器。 通常，它用于判断两个请求是否来自同一浏览器 - 例如，保持用户登录。 它记住无状态HTTP协议的有状态信息。<br>Cookie的用途:</p>
+<ul>
+<li>回话管理<br>记录登录，购物车，游戏分数或服务器应记住的任何其他内容</li>
+<li>个性化<br>用户偏好，主题和其他设置</li>
+<li>追踪<br>记录和分析用户行为<a id="more"></a>
+<h5 id="2-如何创建Cookie"><a href="#2-如何创建Cookie" class="headerlink" title="2. 如何创建Cookie"></a>2. 如何创建Cookie</h5></li>
+</ul>
+<p>当收到一个HTTP请求时，服务器可以发送带响应的Set-Cookie头。 Cookie通常由浏览器存储，然后将cookie发送到Cookie HTTP标头中的同一服务器。 可以指定到期日期或持续时间，之后不再发送cookie。 此外，可以设置对特定域和路径的限制，限制cookie的发送位置。</p>
+<p>Set-Cookie HTTP响应头将来自服务器的cookie发送给用户代理。 一个简单的cookie就像下面这样设置：<br><img src="https://upload-images.jianshu.io/upload_images/5281821-9f79ddbe090a7597.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>完整的响应头如下<br><img src="https://upload-images.jianshu.io/upload_images/5281821-9c6d6336f83392de.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>设置Cookie后,每次请求都会带上设置的Cookie,请求如下:<br><img src="https://upload-images.jianshu.io/upload_images/5281821-599ca8dba3c276f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="3-会话Cookie和持久性Cookie"><a href="#3-会话Cookie和持久性Cookie" class="headerlink" title="3. 会话Cookie和持久性Cookie"></a>3. 会话Cookie和持久性Cookie</h5><ul>
+<li>没有设置<code>Expires</code> 或者<code>Max-Age</code>,当Client关闭后,Cookie也会消失,不会持久化.</li>
+<li>当我们设置<code>Expires</code> 或者<code>Max-Age</code>后,就会被持久化到客户端文件中.通常设置如下</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5281821-bac0f4f3c7284d96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="4-Cookie的访问控制"><a href="#4-Cookie的访问控制" class="headerlink" title="4. Cookie的访问控制"></a>4. Cookie的访问控制</h5><p>安全Cookie只能通过HTTPS协议通过加密请求发送到服务器。 即使在安全的情况下，敏感信息也不应该存储在cookie中，因为它们本身就不安全，并且该标志不能提供真正的保护。 从Chrome 52和Firefox 52开始，不安全的网站（http：）无法使用Secure指令设置Cookie。<br>为了避免被XSS攻击,我们可以通过设置<code>HttpOnly</code> 头来减轻这种攻击,<code>HttpOnly</code>表明不能通过JavaScript 的Document.cookie API来获取Cookie,而仅仅的发送给服务器.通常设置如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5281821-3e0c3b86209d3456.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>控制Cookie的访问范围通过Domain和Path来控制<br><code>Domain=mozilla.org</code> 即表明<code>*.mozilla.org</code>可以访问Cookie<br><code>Path=/docs</code>即表明只能访问<code>/docs/*</code></p>
+<h5 id="5-Cookie的安全性"><a href="#5-Cookie的安全性" class="headerlink" title="5. Cookie的安全性"></a>5. Cookie的安全性</h5><p>Cookie通常用于Web应用程序中以识别用户及其已验证的会话，因此窃取cookie可能会导致劫持经过验证的用户会话。窃取cookie的常见方式包括社交工程或利用应用程序中的XSS漏洞。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-26fe10de07d66ebe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>当其他用户打开带有这个脚本的页面，就会运行这段程序，造成问题。<br>可以采用如下方式解决：</p>
+<ul>
+<li><code>HttpOnly</code>来禁止使用js获取到Cookie.</li>
+<li>对用户的一些比较重要的操作进行验证</li>
+<li>对输入进行验证，把用户的输入都文本化</li>
+</ul>
+<p><strong>另外一种常见的攻击就是CSRF(跨站域请求伪造)</strong><br>试想下这样一种场景，当你登陆某个银行的网站之后，然后有个黑客放了个钓鱼地址，把你诱导到一个新的地址，接下来，页面就会发送下面这个请求，把你的钱转走了。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-895721288aba0ded.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>防止CSRF的手段有如下几种</p>
+<ul>
+<li>和XSS一样，对输入进行过滤</li>
+<li>对于用户的重要行为一定要进行验证</li>
+<li>尽量对重要的cookie信息缩短Cookie的生存时间<h5 id="6-Session"><a href="#6-Session" class="headerlink" title="6. Session"></a>6. Session</h5></li>
+</ul>
+<p>Session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中；通常借助 cookie 本身和后端存储实现的，一种更高级的会话状态实现。session 的运行依赖 session id，而 session id 是存在 cookie 中的，也就是说，如果浏览器禁用了 cookie ，同时 session 也会失效（但是可以通过其它方式实现，比如在 url 中传递 session_id）</p>
+<p>服务器会为每一个访问服务器的用户创建一个session对象，并且把session对象的id保存在本地cookie上，只要用户再次访问服务器时，带着session的id，服务器就会匹配用户在服务器上的session，根据session中的数据，还原用户上次的浏览状态或提供其他人性化服务。</p>
+<p>通常来说，Session是一种更安全的方式，把信息保存时服务器端。但是它会占用服务器的内存，Session的信息一多，就会对服务器造成压力。</p>
+<p><strong>Session的生命周期是服务端设置的时间长短，一段时间没有active，就会失效。</strong></p>
 
       
 
@@ -248,28 +276,13 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">集合</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Cookie&Session</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -319,7 +332,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/08/弄懂Fail-Safe-Fail-First/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/05/10/Cookie和Session/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -333,18 +346,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/10/12/Springboot用WebSocket构建交互式的web应用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Springboot用WebSocket构建交互式的web应用
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/10/07/HeadFirst设计模式2-观察者模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">HeadFirst设计模式2---观察者模式</div>
+    <a href="/2018/04/16/flink和spark对比/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">flink和spark对比(译)</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -374,7 +378,7 @@
   
 
   
-  <div id="SOHUCS" sid="弄懂Fail-Safe-Fail-First" ></div> 
+  <div id="SOHUCS" sid="Cookie和Session" ></div> 
 <script type="text/javascript"> 
 window.YiliaChangyanWrap = function() {
     var appid = "cytiAQ2fR"; 
