@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>HTTP/2 新特性总结 | Maskwang blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我在想了解HTTP/2的时候，查阅了很多资料，发现这篇很好，是外国的文章．我翻译过来，加入自己的一点理解． HTTP/2 更简单,高效,强大.它在传输层解决了以前我们HTTP1.x中一直存在的问题.使用它可以优化我们的应用.HTTP/2 的首要目标是通过完全的请求,响应多路复用,头部的压缩头部域来减小头部的体积,添加了请求优先级,服务端推送.为了支持这些特性,他需要大量的协议增加头部字段来支持,例">
+<meta name="keywords" content="HTTP&#x2F;2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP&#x2F;2 新特性总结">
+<meta property="og:url" content="http://yoursite.com/2018/03/19/HTTP-2-新特性总结/index.html">
+<meta property="og:site_name" content="Maskwang blogs">
+<meta property="og:description" content="我在想了解HTTP/2的时候，查阅了很多资料，发现这篇很好，是外国的文章．我翻译过来，加入自己的一点理解． HTTP/2 更简单,高效,强大.它在传输层解决了以前我们HTTP1.x中一直存在的问题.使用它可以优化我们的应用.HTTP/2 的首要目标是通过完全的请求,响应多路复用,头部的压缩头部域来减小头部的体积,添加了请求优先级,服务端推送.为了支持这些特性,他需要大量的协议增加头部字段来支持,例">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-5e2e23de6cbbc698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-7b0c2aa12ccc6d42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-ce9d374b7d0adf09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-a424cc207432cde0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-d97e0c65b1491baa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-38055e8dde4b4436.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-d8687e8eed1e6823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-b28c3451bc8fc3fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-19T15:35:12.180Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP&#x2F;2 新特性总结">
+<meta name="twitter:description" content="我在想了解HTTP/2的时候，查阅了很多资料，发现这篇很好，是外国的文章．我翻译过来，加入自己的一点理解． HTTP/2 更简单,高效,强大.它在传输层解决了以前我们HTTP1.x中一直存在的问题.使用它可以优化我们的应用.HTTP/2 的首要目标是通过完全的请求,响应多路复用,头部的压缩头部域来减小头部的体积,添加了请求优先级,服务端推送.为了支持这些特性,他需要大量的协议增加头部字段来支持,例">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5281821-5e2e23de6cbbc698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Maskwang blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Talk is nothing,Show me the code</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-HTTP-2-新特性总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/19/HTTP-2-新特性总结/" class="article-date">
+  <time datetime="2018-03-19T15:32:49.000Z" itemprop="datePublished">2018-03-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机网络/">计算机网络</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HTTP/2 新特性总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我在想了解HTTP/2的时候，查阅了很多资料，发现这篇很好，是外国的文章．我翻译过来，加入自己的一点理解．</p>
+<p>HTTP/2 更简单,高效,强大.它在传输层解决了以前我们HTTP1.x中一直存在的问题.使用它可以优化我们的应用.HTTP/2 的首要目标是通过完全的请求,响应多路复用,头部的压缩头部域来减小头部的体积,添加了请求优先级,服务端推送.为了支持这些特性,他需要大量的协议增加头部字段来支持,例如新的流量控制,差错处理,升级机制.而这些是每个web开发者都应该在他们的应用中用到的.<br><a id="more"></a><br>HTTP/2并没有在应用中改变HTTP的语义,而是通过在客户端和服务端传输的数据格式(frame)和传输.它通过在新的二进制帧层控制整个过程以及隐藏复杂性,而这不需要改变原来有的东西就可以实现.</p>
+<h5 id="1-设计和技术目标"><a href="#1-设计和技术目标" class="headerlink" title="1. 设计和技术目标"></a>1. 设计和技术目标</h5><p>HTTP是因特网广泛普及和采纳的应用层协议.它的易于实现性同样有了对应用性能方面的影响.HTTP/1.x 需要开启多个连接来实现并发和减少潜在影响.HTTP/1.x 的头部没有压缩,造成不必要的网络拥塞.HTTP/1.x没有应用资源优先级,导致重要Tcp连接的糟糕使用.<br>它的好处如下;</p>
+<blockquote>
+<p>HTTP/2 enables a more efficient use of network resources and a reduced perception of latency by introducing header field compression and allowing multiple concurrent exchanges on the same connection… Specifically, it allows interleaving of request and response messages on the same connection and uses an efficient coding for HTTP header fields. It also allows prioritization of requests, letting more important requests complete more quickly, further improving performance.<br>The resulting protocol is more friendly to the network, because fewer TCP connections can be used in comparison to HTTP/1.x. This means less competition with other flows, and longer-lived connections, which in turn leads to better utilization of available network capacity. Finally, HTTP/2 also enables more efficient processing of messages through use of binary message framing.<br>HTTP2.0并没有改变之前HTTP的语义,也就是说高层的Api并没有改变,它是在底层通过二进制frame来改变性能的.</p>
+</blockquote>
+<h5 id="2-二进制帧层"><a href="#2-二进制帧层" class="headerlink" title="2. 二进制帧层"></a>2. 二进制帧层</h5><p>性能提升的核心在于二进制帧层.它指HTTP消息在客户端和服务端如何封装和传输.<br><img src="https://upload-images.jianshu.io/upload_images/5281821-5e2e23de6cbbc698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>这一层指一个设计选择，它在socket接口之间采用一种更好的编码机制，而高层的Api提供给我们的应用。与HTTP1.x的采用的换行符分隔文本不同，HTTP/2 消息被分成很小的消息和frame,然后每个消息和frame用二进制编码。客户端和服务端都采用二进制编码和解码。HTTP/1.x 的客户端不能与只有HTTP/2的服务端通信。幸运的是，我们的应用还没意识到这些改变。客户端和服务端能够很好的处理这些帧。</p>
+<blockquote>
+<p>ASCII 协议能够很容易的看出来和开始使用。然而它们是没有效率的，且很难正确设计：可选的空白，改变终止序列和其他的毛病使得协议很难区别出payload。虽然二进制协议用起来需要做很多工作，但是它们能表现出更好的性能。</p>
+<h5 id="3-流-消息，帧"><a href="#3-流-消息，帧" class="headerlink" title="3. 流,消息，帧"></a>3. 流,消息，帧</h5><p>接下来介绍二进制帧机制来明白数据如何在客户端和服务端交换的。<br><strong>流</strong>：已经建立的连接之间双向流动的字节，它能携带一个至多个消息。<br><strong>消息</strong>：一个完整的帧序列，它映射到逻辑的请求和响应消息。<br><strong>帧</strong>：在HTTP/2通信的最小单元。每个桢包括一个帧头，里面有个很小标志，来区别是属于哪个流。</p>
+<ul>
+<li>所有的通信都建立在一个TCP连接上，可以传递大量的双向流通的流。</li>
+<li>每个流都有独一无二的标志和优先级。</li>
+<li>每个消息都是逻辑上的请求和相应消息。由一个或者多个帧组成。</li>
+<li>来自不同流的帧可以通过帧头的标志来关联和组装起来。</li>
+</ul>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/5281821-7b0c2aa12ccc6d42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>这是 HTTP/2 协议提供高性能的基础。</p>
+<h5 id="4-请求和响应的多路复用"><a href="#4-请求和响应的多路复用" class="headerlink" title="4. 请求和响应的多路复用"></a>4. 请求和响应的多路复用</h5><p>在HTTP/1.x中,用户想要多个并行的请求来提高性能,但是这样必须得使用多个TCP连接.这样的操作是属于HTTP/1.x 发送模型的直接序列.它能保证在每次连接中在一个时间点只有一个响应被发送出去.更糟糕的是,它使得队头阻塞和重要TCP连接的低效使用.<br>在HTTP/2中,新的二进制帧层,解除了这个限制.使得所有的请求和响应多路复用.通过允许客户端和服务端把HTTP消息分解成独立的帧,交错传输,然后在另一端组装.<br><img src="https://upload-images.jianshu.io/upload_images/5281821-ce9d374b7d0adf09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>图12-3显示了在一次连接中的多个流.客户端传输数据帧到服务端(Stream5).服务端传输交错的帧序列(Stream1,Stream3)到客户端.此时,同时存在并行的3个流.<br>能够把HTTP消息分解成交错的帧,并在另一端组装它们是HTTP/2中一个非常重要的提高.事实上,它引起了一种波浪效应使得web技术的全栈在性能上有很大的提升.它有以下作用:</p>
+<ol>
+<li>交错的多个并行的请求或者,而不需要阻塞.</li>
+<li>使用一个连接传递所有的并行的请求和响应.</li>
+<li>移除了HTTP/1.x中没有的必要的解决方法.例如级联文件,域分片.</li>
+<li>淘汰没必要的潜在因素来降低页面载入的时间.提升可用网络容积的使用率.</li>
+</ol>
+<p>新的二进制帧层解决了HTTP/1.X中头部阻塞的问题.在并行处理和传输的请求和响应不再需要多个连接.这使得我们的应用更简单,快捷和便宜.</p>
+<h5 id="5-流的优先级"><a href="#5-流的优先级" class="headerlink" title="5. 流的优先级."></a>5. 流的优先级.</h5><p>为了能方便流的传输顺序,HTTP/2.0提出,使每个流都有一个权重和依赖.</p>
+<ul>
+<li>每个流的权重值在1~256之间</li>
+<li>每个流可以详细给出对其他流的依赖</li>
+</ul>
+<p>流权重和依赖的结合使客户端可以构造和通信一个优先级二叉树来表达它更想得到哪种响应.然后服务端可以按权重分配硬件资源(CPU,内存).<br><img src="https://upload-images.jianshu.io/upload_images/5281821-a424cc207432cde0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>在HTTP/2 ,一个流的依赖可以显式用其他流的标志来表达,如果省略了标志,则说明它的依赖是根流.一般来说,父流应该在它的依赖流之前分配资源,例如D应该是C之前被发送.依赖于同一父节点的应该按照他们的权重分配资源.例如A结点的权重为12,它的兄弟结点B的结点的权重为4.然后按比例分资源,A占12/16,B占4/16.如上面所述,流的依赖和权重提供了一种很好的表达式语言来表达资源的优先级.但是我们应该明白,,流的依赖和权重只是提供了一种传输偏好,而不是说一定是这样的比例.</p>
+<p>#####　5.每个源一个连接<br>HTTP/2.0的连接是持久的,每个源仅仅需要一个连接.大部分HTTP的传输是短的,并且突然的.然而TCP连接却适合长期存活的,批量的数据传输.通过利用相同的HTTP/2 连接,既能够充分利用TCP连接,也能减小整体协议的头部.更进一步来说,更少的连接内存的占用以及全连接路径的处理过程.向HTTP/2的转移不仅减少了网络潜在因素,更减少了操作代价.</p>
+<blockquote>
+<p>Tips:减少连接,同时也提高了HTTPS的性能,因为仅需要更少的TLS层的握手.</p>
+</blockquote>
+<h5 id="5-流量控制"><a href="#5-流量控制" class="headerlink" title="5. 流量控制"></a>5. 流量控制</h5><p>流量控制是一种机制,用来阻止发送者发送大量的接收者不需要,或者没能力处理的数据.接收者可能会在重负下很繁忙,或者只愿意分配固定的资源给特定的流.例如,客户端可能以高的优先级请求大量的视频数据,然后用户暂停了视频,那么客户端现在想要停止或者减少服务端的传输来避免取和缓存没必要的数据.或者一个代理服务器连接有很快的下流,很慢的上流,同样的也要控制以多大的流速传输数据,从而匹配上流的速度,从而控制资源的使用.</p>
+<p>这些需求可能让你想起了TCP流量控制,由于HTTP/2的那些流是在一个TCP的连接上.那么TCP连接不够细粒度,也没能提供应用级的API来控制单个流的传输.为了应对这种情况,HTTP/2提供了一系列的简单修筑块,来允许客户端和服务端实现他们自己的流级别的,连接级别的流量控制.</p>
+<ul>
+<li>流量控制是有方向的.对于每个流和连接,每个接收者可以设置它想要窗口大小.</li>
+<li>流量控制是基于信用的。每个接收者通告其初始连接和流量控制窗口（以字节为单位），只要发送者发送数据帧并通过接受者发送的WINDOW_UPDATE帧递增，该窗口就会减少。</li>
+<li>流量控制不能禁用.当建立HTTP / 2连接时，客户端和服务器交换SETTINGS帧，这些帧设置双向流量控制窗口的大小。流量控制窗口的默认值设置为65,535字节，但接收方可以设置更大的最大窗口大小（2的31次方-1<br>字节），并通过在接收到任何数据时发送WINDOW_UPDATE帧来维护它。</li>
+<li>流量控制是逐跳的,而不是端到端的.也就是说,一个中介可以使用它控制资源的使用,从而根据自己的标准和启发式实现资源分配机制.</li>
+</ul>
+<p>HTTP / 2没有规定用于实现流量控制的任何特定算法。相反，它提供了简单的构建模块并将实现推迟到客户端和服务器，这可以用它来实现自定义策略来调节资源使用和分配，以及实现新的传输功能，这可能有助于提高Web应用程序真实性和感知性。</p>
+<p>例如，应用程序层流控量制允许浏览器仅提取特定资源的一部分，通过将流量控制窗口降至零来暂停提取，然后稍后恢复 - 例如，获取预览或第一次浏览图像，显示图像并允许进行其他高优先级操作取来操作，并在关键资源完成加载后又开始取。</p>
+<h4 id="6-服务端推送"><a href="#6-服务端推送" class="headerlink" title="6.服务端推送"></a>6.服务端推送</h4><p>HTTP / 2的另一个强大的新功能是服务器为单个客户端请求发送多个响应的能力。也就是说，除了对原始请求的响应之外，服务器还可以向客户端推送额外的资源（图12-5），而不需要客户端明确请求每一个资源！<br><img src="https://upload-images.jianshu.io/upload_images/5281821-d97e0c65b1491baa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<blockquote>
+<p>HTTP / 2脱离了严格的请求 - 响应语义，并支持一对多和服务器启动的推送工作流程，在浏览器内部和外部打开全新的交互可能性。这是一个启动功能，对于我们如何考虑协议以及在何处以及如何使用协议，都会产生重要的长期影响。</p>
+</blockquote>
+<p>为什么我们需要在浏览器中使用这种机制？一个典型的Web应用程序由几十个资源组成，所有这些资源都是客户端通过检查服务器提供的文档发现的。因此，为什么不消除额外的延迟并让服务器提前推送相关资源？服务器已经知道客户端需要哪些资源;这是服务器推动。<br>事实上，如果您曾经通过数据URI将CSS，JavaScript或任何其他资产内联到一起（请参阅资源内联），那么您已经有了服务器推送的实践经验！通过手动将资源内联到文档中，实际上，我们将该资源推送到客户端，而无需等待客户端请求。通过HTTP / 2，我们可以获得相同的结果，但是具有额外的性能优势：</p>
+<ul>
+<li>推送的资源可以由客户端缓存</li>
+<li><p>推送的资源可以在不同的页面上重复使用</p>
+<ul>
+<li><p>推送的资源可以与其他资源一起复用</p>
+</li>
+<li><p>推送的资源可以由服务器优先</p>
+</li>
+</ul>
+</li>
+<li><p>推送的资源可以被客户拒绝</p>
+</li>
+</ul>
+<p>每个推送的资源都是一个流，与内联资源不同，它允许客户端对其进行单独复用，优先化和处理。由浏览器执行的唯一安全限制是推送资源必须遵守同源策略：服务器必须对提供的内容具有权限。</p>
+<h5 id="7-头部压缩"><a href="#7-头部压缩" class="headerlink" title="7. 头部压缩"></a>7. 头部压缩</h5><p>每个HTTP传输都包含一组描述传输资源及其属性的标题。在HTTP / 1.x中，此元数据始终以纯文本形式发送，并且每次传输的开销都会在任何位置增加500-800字节，如果使用HTTP Cookie，则会增加数千字节。为了减少这种开销并提高性能，HTTP / 2使用两种简单但强大的技术使用HPACK压缩格式(要了解这个算法,可以参考这篇文章<a href="https://imququ.com/post/header-compression-in-http2.html)来压缩请求和响应头元数据：" target="_blank" rel="external">https://imququ.com/post/header-compression-in-http2.html)来压缩请求和响应头元数据：</a></p>
+<ul>
+<li><p>它允许通过静态霍夫曼编码对传输的头部字段进行编码，从而减少它们各自的传输大小。</p>
+</li>
+<li><p>它要求客户端和服务器都维护和更新先前看到的标题字段的索引列表（即，建立共享压缩上下文），然后将其用作参考以高效编码先前传输的值。</p>
+</li>
+</ul>
+<p>霍夫曼编码允许单个值在传输时被压缩，并且先前传输值的索引列表允许我们通过传输索引值来编码重复值（图12-6），索引值可用于有效地查找和重建完整头部键和值。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-38055e8dde4b4436.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>作为进一步优化，HPACK压缩上下文由静态和动态表组成：静态表在规范中定义，并提供所有连接可能使用的常见HTTP头字段的列表（例如，有效头名称）;动态表最初是空的，并基于特定连接内的交换值进行更新。因此，通过对以前未见过的值使用静态霍夫曼编码，并将索引替换为已存在于客户端和服务端静态或动态表中的值的索引，可以减少每个请求的大小。</p>
+<h5 id="8-二进制帧的简短介绍"><a href="#8-二进制帧的简短介绍" class="headerlink" title="8. 二进制帧的简短介绍"></a>8. 二进制帧的简短介绍</h5><p>所有HTTP / 2改进的核心是新的二进制长度前缀成帧层。与以换行符分隔的纯文本HTTP / 1.x协议相比，二进制框架提供了更紧凑的表示形式，可以更高效地处理并更容易正确实现。<br>一旦建立了HTTP / 2连接，客户端和服务器就通过交换帧来进行通信，这些帧用作协议内最小的通信单元。所有帧共享一个共同的9字节头（图12-7），其中包含帧的长度，类型，标志位字段和31位流标识符。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-d8687e8eed1e6823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li><p>24位长度字段允许一个帧携带2的24次方数据字节。</p>
+<ul>
+<li>8位类型字段确定帧的格式和语义。</li>
+<li><p>8位标志字段传递帧类型特定的布尔标志。</p>
+</li>
+<li><p>1位保留字段始终设置为0。</p>
+</li>
+</ul>
+</li>
+<li><p>31位流标识符唯一标识HTTP / 2流。</p>
+<blockquote>
+<p>从技术上讲，长度字段允许每帧高达字节（〜16MB）的有效载荷。但是，HTTP / 2标准将DATA帧的默认最大有效负载大小设置为每帧字节（〜16KB），并允许客户端和服务器协商较高的值。更大并不总是更好：较小的帧大小能够实现高效的多路复用并将头部阻塞降至最低。</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="9-分析二进制帧数据流"><a href="#9-分析二进制帧数据流" class="headerlink" title="9. 分析二进制帧数据流"></a>9. 分析二进制帧数据流</h5><p>掌握了不同帧类型的知识后，我们现在可以重新看下我们前面在请求和响应复用中遇到的图（图12-10）并分析HTTP / 2交换：<br><img src="https://upload-images.jianshu.io/upload_images/5281821-b28c3451bc8fc3fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li><p>有三个流，ID设置为1,3和5。</p>
+</li>
+<li><p>所有三个流ID都是奇数;所有这三个都是客户端启动的流。(即发起方是客户端)</p>
+<ul>
+<li><p>在这个交换中没有服务器启动（“推送”）流。(即服务端推送)</p>
+</li>
+<li><p>服务器正在为流1发送交错数据帧，这些数据帧携带应用程序响应客户端先前的请求。</p>
+</li>
+<li><p>服务器已经在数据帧之间为流3交错了HEADERS和DATA帧，以便实现流1响应多路复用！</p>
+</li>
+<li><p>客户端正在传输数据流5的数据帧，这表明HEADERS帧已在先传输。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>当然，上述分析基于实际HTTP / 2交换的简化表示，但它仍然说明了新协议的许多优点和特点.</p>
+<p>参考文章:<br><a href="https://imququ.com/post/header-compression-in-http2.html" target="_blank" rel="external">https://imququ.com/post/header-compression-in-http2.html</a><br><a href="https://hpbn.co/http2/#header-compression" target="_blank" rel="external">https://hpbn.co/http2/#header-compression</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/19/HTTP-2-新特性总结/" data-id="cjmw6phcf0002lgorer5lews4" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP-2/">HTTP/2</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/20/重拾jdk源码重点系列-8-ThreadLocal源码分析/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          重拾jdk源码重点系列-8:ThreadLocal源码分析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/13/Netty权威指南读书笔记1：Java的I-O演进之路/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">Netty权威指南读书笔记1：Java的I/O演进之路</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categorieën</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DesignPattern/">DesignPattern</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java基础/">Java基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java源码分析/">Java源码分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Springboot/">Springboot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flink/">flink</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件比赛/">中间件比赛</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构与算法/">数据结构与算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Labels</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cookie-Session/">Cookie&Session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-2/">HTTP/2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java基础/">Java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambada表达式/">Lambada表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springboot/">Springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件比赛/">中间件比赛</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/红黑树/">红黑树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Cookie-Session/" style="font-size: 10px;">Cookie&Session</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-2/" style="font-size: 12.5px;">HTTP/2</a> <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/Java基础/" style="font-size: 12.5px;">Java基础</a> <a href="/tags/Lambada表达式/" style="font-size: 10px;">Lambada表达式</a> <a href="/tags/LeetCode/" style="font-size: 12.5px;">LeetCode</a> <a href="/tags/Netty/" style="font-size: 12.5px;">Netty</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 12.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/flink/" style="font-size: 15px;">flink</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/netty/" style="font-size: 12.5px;">netty</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/中间件比赛/" style="font-size: 10px;">中间件比赛</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/设计模式/" style="font-size: 17.5px;">设计模式</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/28/第四届阿里中间件性能挑战赛总结和思考/">第四届阿里中间件性能挑战赛总结和思考</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/28/Redis面试必备知识点/">Redis面试必备知识点</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/Leetcode-Permutations-II/">Leetcode:Permutations II</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/LeetCode53-Maximum-Subarray/">LeetCode53. Maximum Subarray</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/13/Netty源码分析系列1-BootStrap的分析/">Netty源码分析系列1:BootStrap的分析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Maskwang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>自定义注解实现Restful接口版本管理 | Maskwang blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="&amp;emsp;&amp;emsp;在我们的日常开发中，需求总是变化的。对于某个接口，随着需求的升级，也面临里面逻辑的变化。例如，对于/v1/hello,/v2/hello 两个请求，若存在相应的映射，则对应入座。否则都映射到最新的接口上。则映射到最新的接口上。此时，我们又想保持以前的接口还保留，那么我们此时需要做的事，把对接口的请求都映射到最新的接口上，而原来的接口请求还是映射原来的接口上。我在这里介绍用">
+<meta name="keywords" content="java,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义注解实现Restful接口版本管理">
+<meta property="og:url" content="http://yoursite.com/2017/12/02/自定义注解实现Restful接口版本管理/index.html">
+<meta property="og:site_name" content="Maskwang blogs">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;在我们的日常开发中，需求总是变化的。对于某个接口，随着需求的升级，也面临里面逻辑的变化。例如，对于/v1/hello,/v2/hello 两个请求，若存在相应的映射，则对应入座。否则都映射到最新的接口上。则映射到最新的接口上。此时，我们又想保持以前的接口还保留，那么我们此时需要做的事，把对接口的请求都映射到最新的接口上，而原来的接口请求还是映射原来的接口上。我在这里介绍用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-02T14:19:05.068Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义注解实现Restful接口版本管理">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;在我们的日常开发中，需求总是变化的。对于某个接口，随着需求的升级，也面临里面逻辑的变化。例如，对于/v1/hello,/v2/hello 两个请求，若存在相应的映射，则对应入座。否则都映射到最新的接口上。则映射到最新的接口上。此时，我们又想保持以前的接口还保留，那么我们此时需要做的事，把对接口的请求都映射到最新的接口上，而原来的接口请求还是映射原来的接口上。我在这里介绍用">
+  
+    <link rel="alternate" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Maskwang blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Talk is nothing,Show me the code</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-自定义注解实现Restful接口版本管理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/02/自定义注解实现Restful接口版本管理/" class="article-date">
+  <time datetime="2017-12-02T14:14:42.000Z" itemprop="datePublished">2017-12-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      自定义注解实现Restful接口版本管理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> &emsp;&emsp;在我们的日常开发中，需求总是变化的。对于某个接口，随着需求的升级，也面临里面逻辑的变化。例如，对于<code>/v1/hello</code>,<code>/v2/hello</code> 两个请求，若存在相应的映射，则对应入座。否则都映射到最新的接口上。则映射到最新的接口上。此时，我们又想保持以前的接口还保留，那么我们此时需要做的事，把对接口的请求都映射到最新的接口上，而原来的接口请求还是映射原来的接口上。我在这里介绍用自定义注解的形式，在<code>@RequestMapping()</code>的映射原理上做文章。<br><a id="more"></a></p>
+<ol>
+<li>自定义注解<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="meta">@Mapping</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ApiVersion &#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">value</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;&emsp;就是定义一个简单的注解@ApiVersion，这个注解可以在类上和方法上都可以应用。</p>
+<ol>
+<li>注解的识别<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomRequestMappingHandlerMapping</span> <span class="keyword">extends</span> <span class="title">RequestMappingHandlerMapping</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span>   <span class="comment">// ①</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> RequestCondition&lt;ApiVesrsionCondition&gt; <span class="title">getCustomTypeCondition</span><span class="params">(Class&lt;?&gt; handlerType)</span> </span>&#123;</div><div class="line">        ApiVersion apiVersion = AnnotationUtils.findAnnotation(handlerType, ApiVersion.class);</div><div class="line">        <span class="keyword">return</span> createCondition(apiVersion);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span>  <span class="comment">//②</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> RequestCondition&lt;ApiVesrsionCondition&gt; <span class="title">getCustomMethodCondition</span><span class="params">(Method method)</span> </span>&#123;</div><div class="line">        ApiVersion apiVersion = AnnotationUtils.findAnnotation(method, ApiVersion.class);</div><div class="line">        <span class="keyword">return</span> createCondition(apiVersion);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//③  实例化RequestCondition</span></div><div class="line">    <span class="function"><span class="keyword">private</span> RequestCondition&lt;ApiVesrsionCondition&gt; <span class="title">createCondition</span><span class="params">(ApiVersion apiVersion)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> apiVersion == <span class="keyword">null</span> ? <span class="keyword">null</span> : <span class="keyword">new</span> ApiVesrsionCondition(apiVersion.value());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;&emsp;我们知道，光定义注解是没什么用的，重要的是我们识别到注解，做相应的事。<code>RequestMappingHandlerMapping</code>类是与 <code>@RequestMapping</code>相关的，它定义映射的规则。即满足怎样的条件则映射到那个接口上。</p>
+<p>&emsp;&emsp;①处构建类级的映射要求，<code>AnnotationUtils.findAnnotation</code>根据在类上面的注解实例化一个注解类。然后构造RequestCondition。</p>
+<p>&emsp;&emsp;②处构建类级的映射要求，<code>AnnotationUtils.findAnnotation</code>根据在方法上面的注解实例化一个注解类。然后构造RequestCondition。<br><code>AnnotationUtils.findAnnotation</code>是用到Spring的工具类，根据标注的注解识别注解。很方便，比通过反射的方式来找到注解要方便。</p>
+<ol>
+<li>自定义条件类<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiVesrsionCondition</span> <span class="keyword">implements</span> <span class="title">RequestCondition</span>&lt;<span class="title">ApiVesrsionCondition</span>&gt; </span>&#123;</div><div class="line">    <span class="comment">// 路径中版本的前缀， 这里用 /v[1-9]/的形式</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Pattern VERSION_PREFIX_PATTERN = Pattern.compile(<span class="string">"v(\\d+)/"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> apiVersion;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ApiVesrsionCondition</span><span class="params">(<span class="keyword">int</span> apiVersion)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.apiVersion = apiVersion;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//将不同的筛选条件合并,这里采用的覆盖，即后来的规则生效</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ApiVesrsionCondition <span class="title">combine</span><span class="params">(ApiVesrsionCondition other)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiVesrsionCondition(other.getApiVersion());</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//根据request查找匹配到的筛选条件</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ApiVesrsionCondition <span class="title">getMatchingCondition</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</div><div class="line">        System.out.println(request.getRequestURI());</div><div class="line">        Matcher m = VERSION_PREFIX_PATTERN.matcher(request.getRequestURI());</div><div class="line">        <span class="keyword">if</span>(m.find())&#123;</div><div class="line">            Integer version = Integer.valueOf(m.group(<span class="number">1</span>));</div><div class="line">            <span class="keyword">if</span>(version &gt;= <span class="keyword">this</span>.apiVersion) <span class="comment">// 如果请求的版本号大于配置版本号， 则满足，即与请求的</span></div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//实现不同条件类的比较，从而实现优先级排序</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(ApiVesrsionCondition other, HttpServletRequest request)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> other.getApiVersion() - <span class="keyword">this</span>.apiVersion;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getApiVersion</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> apiVersion;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;&emsp;<code>getMatchingCondition()</code>利用正则表达式把请求路径中的<code>/v1/hello</code>中的1（版本号）找出来，然后返回与大于等于1的条件类。那么<code>@RequestMapping</code>则路由到产生该条件类的方法下。</p>
+<ol>
+<li>测试<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/&#123;version&#125;/"</span>)</div><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VersionController</span> </span>&#123;</div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"hello"</span>)</div><div class="line">    <span class="meta">@ApiVersion</span>(<span class="number">1</span>)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"haha1.........."</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="string">"hello version1"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"hello"</span>)</div><div class="line">    <span class="meta">@ApiVersion</span>(<span class="number">2</span>)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello2</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"haha2........."</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="string">"hello version2"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"hello"</span>)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@ApiVersion</span>(<span class="number">5</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello5</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"haha5........."</span>);</div><div class="line">        <span class="keyword">return</span> <span class="string">"hello version5"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"test"</span>)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"test"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;&emsp;每个方法上都用  <code>@ApiVersion()</code>注解啦。当在浏览器输入<code>http://localhost:8761/v2/hello</code> 则跳到<code>hello2()</code>方法中执行。当在浏览器输入<code>http://localhost:8761/v5/hello</code> 则跳到<code>hello5()</code>中执行，因为比5大的都调到最新<code>hello5()</code>执行。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/02/自定义注解实现Restful接口版本管理/" data-id="cjmw6phhh002rlgordo07ogj8" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/12/Jdk1-8-HashMap源码分析/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          Jdk1.8 HashMap源码分析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/04/Spring-boot构建自定义的starter/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">Spring boot构建自定义的starter</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categorieën</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DesignPattern/">DesignPattern</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java基础/">Java基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java源码分析/">Java源码分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Springboot/">Springboot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flink/">flink</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件比赛/">中间件比赛</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构与算法/">数据结构与算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Labels</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cookie-Session/">Cookie&Session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-2/">HTTP/2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java基础/">Java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambada表达式/">Lambada表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springboot/">Springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件比赛/">中间件比赛</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/红黑树/">红黑树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Cookie-Session/" style="font-size: 10px;">Cookie&Session</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-2/" style="font-size: 12.5px;">HTTP/2</a> <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/Java基础/" style="font-size: 12.5px;">Java基础</a> <a href="/tags/Lambada表达式/" style="font-size: 10px;">Lambada表达式</a> <a href="/tags/LeetCode/" style="font-size: 12.5px;">LeetCode</a> <a href="/tags/Netty/" style="font-size: 12.5px;">Netty</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 12.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/flink/" style="font-size: 15px;">flink</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/netty/" style="font-size: 12.5px;">netty</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/中间件比赛/" style="font-size: 10px;">中间件比赛</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/设计模式/" style="font-size: 17.5px;">设计模式</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/28/第四届阿里中间件性能挑战赛总结和思考/">第四届阿里中间件性能挑战赛总结和思考</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/28/Redis面试必备知识点/">Redis面试必备知识点</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/Leetcode-Permutations-II/">Leetcode:Permutations II</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/LeetCode53-Maximum-Subarray/">LeetCode53. Maximum Subarray</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/13/Netty源码分析系列1-BootStrap的分析/">Netty源码分析系列1:BootStrap的分析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Maskwang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

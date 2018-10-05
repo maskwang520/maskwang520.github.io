@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>@Transaction必知必会 | Maskwang blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="事务管理是应用系统开发中必不可少的一部分。Spring 为事务管理提供了丰富的功能支持。Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP,将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="@Transaction必知必会">
+<meta property="og:url" content="http://yoursite.com/2018/04/16/Transaction必知必会/index.html">
+<meta property="og:site_name" content="Maskwang blogs">
+<meta property="og:description" content="事务管理是应用系统开发中必不可少的一部分。Spring 为事务管理提供了丰富的功能支持。Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP,将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-51bcc971dd9f9374.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-753c25c5309dec2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-fecd22fffdc8d181.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-04-16T15:10:01.157Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="@Transaction必知必会">
+<meta name="twitter:description" content="事务管理是应用系统开发中必不可少的一部分。Spring 为事务管理提供了丰富的功能支持。Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP,将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5281821-51bcc971dd9f9374.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Maskwang blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Talk is nothing,Show me the code</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Transaction必知必会" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/16/Transaction必知必会/" class="article-date">
+  <time datetime="2018-04-16T14:59:42.000Z" itemprop="datePublished">2018-04-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spring/">Spring</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      @Transaction必知必会
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>事务管理是应用系统开发中必不可少的一部分。Spring 为事务管理提供了丰富的功能支持。Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP,将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。<br><a id="more"></a><br>声明式事务有两种方式，一种是在配置文件（xml）中做相关的事务规则声明，另一种是基于@Transactional 注解的方式。注释配置是目前流行的使用方式，因此本文将着重介绍基于@Transactional 注解的事务管理。<br>使用@Transactional的相比传统的我们需要手动开启事务，然后提交事务来说。它提供如下方便</p>
+<ul>
+<li>根据你的配置，设置是否自动开启事务</li>
+<li>自动提交事务或者遇到异常自动回滚</li>
+</ul>
+<p>声明式事务（@Transactional)基本原理如下：</p>
+<ol>
+<li>配置文件开启注解驱动，在相关的类和方法上通过注解@Transactional标识。</li>
+<li>spring 在启动的时候会去解析生成相关的bean，这时候会查看拥有相关注解的类和方法，并且为这些类和方法生成代理，并根据@Transaction的相关参数进行相关配置注入，这样就在代理中为我们把相关的事务处理掉了（开启正常提交事务，异常回滚事务）。</li>
+<li>真正的数据库层的事务提交和回滚是通过binlog或者redo log实现的。</li>
+</ol>
+<h5 id="2-Transactional基本配置解析"><a href="#2-Transactional基本配置解析" class="headerlink" title="2. @Transactional基本配置解析"></a>2. @Transactional基本配置解析</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Transactional</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveUser</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">        User user = <span class="keyword">new</span> User();</div><div class="line">        user.setAge(<span class="number">22</span>);</div><div class="line">        user.setName(<span class="string">"maskwang"</span>);</div><div class="line">        logger.info(<span class="string">"save the user&#123;&#125;"</span>,user);</div><div class="line">        userRepository.save(user);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>如上面这个例子一样，很轻松的就能应用事务。只需要在方法上加入@Transactional注解。当@Transactional加在方法上，表示对该方法应用事务。当加在类上，表示对该类里面所有的方法都应用相同配置的事务。接下来对@Transactional的参数解析。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Transactional &#123;</div><div class="line">    <span class="meta">@AliasFor</span>(<span class="string">"transactionManager"</span>)</div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</div><div class="line"></div><div class="line">    <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</div><div class="line">    <span class="function">String <span class="title">transactionManager</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</div><div class="line"></div><div class="line">    <span class="function">Propagation <span class="title">propagation</span><span class="params">()</span> <span class="keyword">default</span> Propagation.REQUIRED</span>;</div><div class="line"></div><div class="line">    <span class="function">Isolation <span class="title">isolation</span><span class="params">()</span> <span class="keyword">default</span> Isolation.DEFAULT</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">timeout</span><span class="params">()</span> <span class="keyword">default</span> -1</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">readOnly</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</div><div class="line"></div><div class="line">    Class&lt;? extends Throwable&gt;[] rollbackFor() <span class="keyword">default</span> &#123;&#125;;</div><div class="line"></div><div class="line">    String[] rollbackForClassName() <span class="keyword">default</span> &#123;&#125;;</div><div class="line"></div><div class="line">    Class&lt;? extends Throwable&gt;[] noRollbackFor() <span class="keyword">default</span> &#123;&#125;;</div><div class="line"></div><div class="line">    String[] noRollbackForClassName() <span class="keyword">default</span> &#123;&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><code>transactionManager()</code>表示应用那个应用那个<code>TransactionManager</code>.常用的有如下的事务管理器</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5281821-51bcc971dd9f9374.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li><code>isolation()</code>表示隔离级别</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5281821-753c25c5309dec2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<blockquote>
+<p>脏读：一事务对数据进行了增删改，但未提交，另一事务可以读取到未提交的数据。如果第一个事务这时候回滚了，那么第二个事务就读到了脏数据。<br>不可重复读：一个事务中发生了两次读操作，第一次读操作和第二次操作之间，另外一个事务对数据进行了修改，这时候两次读取的数据是不一致的。<br>幻读：第一个事务对一定范围的数据进行批量修改，第二个事务在这个范围增加一条数据，这时候第一个事务就会丢失对新增数据的修改。</p>
+</blockquote>
+<p><strong>不可重复读的重点是修改 :同样的条件, 你读取过的数据,再次读取出来发现值不一样了幻读的重点在于新增或者删除:同样的条件, 第 1 次和第 2 次读出来的记录数不一样</strong></p>
+<ul>
+<li><code>propagation()</code>表示事务的传播属性<br>事务的传播是指事务的嵌套的时候，它们的事务属性。常见的传播属性有如下几个</li>
+</ul>
+<ol>
+<li><p><code>PROPAGATION_REQUIRED</code>(spring 默认)<br>假设外层事务 Service A 的 Method A() 调用 内层Service B 的 Method B()。如果ServiceB.methodB() 的事务级别定义为 PROPAGATION_REQUIRED，那么执行 ServiceA.methodA() 的时候spring已经起了事务，这时调用 ServiceB.methodB()，ServiceB.methodB() 看到自己已经运行在 ServiceA.methodA() 的事务内部，就不再起新的事务。假如 ServiceB.methodB() 运行的时候发现自己没有在事务中，他就会为自己分配一个事务。不管如何，ServiceB.methodB()都会在事务中。</p>
+</li>
+<li><p><code>PROPAGATION_REQUIRES_NEW</code><br>比如我们设计 ServiceA.methodA() 的事务级别为 PROPAGATION_REQUIRED，ServiceB.methodB() 的事务级别为 PROPAGATION_REQUIRES_NEW。那么当执行到 ServiceB.methodB() 的时候，ServiceA.methodA() 所在的事务就会挂起，ServiceB.methodB() 会起一个新的事务，等待 ServiceB.methodB() 的事务完成以后，它才继续执行。它与1中的区别在于ServiceB.methodB() 新起了一个事务。如过ServiceA.methodA() 发生异常，ServiceB.methodB() 已经提交的事务是不会回滚的。</p>
+</li>
+<li><p><code>PROPAGATION_SUPPORTS</code><br>假设ServiceB.methodB() 的事务级别为 PROPAGATION_SUPPORTS，那么当执行到ServiceB.methodB()时，如果发现ServiceA.methodA()已经开启了一个事务，则加入当前的事务，如果发现ServiceA.methodA()没有开启事务，则自己也不开启事务。这种时候，内部方法的事务性完全依赖于最外层的事务。<br>剩下几种就不多介绍，可以参考这篇文章。<a href="https://www.jianshu.com/p/249f2cd42692" target="_blank" rel="external">https://www.jianshu.com/p/249f2cd42692</a></p>
+</li>
+</ol>
+<ul>
+<li><code>readOnly()</code> 事务超时设置.超过这个时间，发生回滚</li>
+<li><p><code>readOnly()</code> 只读事务<br>从这一点设置的时间点开始（时间点a）到这个事务结束的过程中，其他事务所提交的数据，该事务将看不见！（查询中不会出现别人在时间点a之后提交的数据）。<br><strong>注意是一次执行多次查询来统计某些信息，这时为了保证数据整体的一致性，要用只读事务</strong></p>
+</li>
+<li><p><code>rollbackFor()</code>导致事务回滚的异常类数组.</p>
+</li>
+<li><code>rollbackForClassName()</code> 导致事务回滚的异常类名字数组</li>
+<li><code>noRollbackFor</code> 不会导致事务回滚的异常类数组</li>
+<li><code>noRollbackForClassName</code> 不会导致事务回滚的异常类名字数组</li>
+</ul>
+<h5 id="3-Transactional-使用应该注意的地方"><a href="#3-Transactional-使用应该注意的地方" class="headerlink" title="3. @Transactional 使用应该注意的地方"></a>3. <code>@Transactional</code> 使用应该注意的地方</h5><h6 id="3-1-默认情况下，如果在事务中抛出了未检查异常（继承自-RuntimeException-的异常）或者-Error，则-Spring-将回滚事务；除此之外，Spring-不会回滚事务。你如果想要在特定的异常回滚可以考虑rollbackFor-等属性"><a href="#3-1-默认情况下，如果在事务中抛出了未检查异常（继承自-RuntimeException-的异常）或者-Error，则-Spring-将回滚事务；除此之外，Spring-不会回滚事务。你如果想要在特定的异常回滚可以考虑rollbackFor-等属性" class="headerlink" title="3.1 默认情况下，如果在事务中抛出了未检查异常（继承自 RuntimeException 的异常）或者 Error，则 Spring 将回滚事务；除此之外，Spring 不会回滚事务。你如果想要在特定的异常回滚可以考虑rollbackFor()等属性"></a>3.1 默认情况下，如果在事务中抛出了未检查异常（继承自 RuntimeException 的异常）或者 Error，则 Spring 将回滚事务；除此之外，Spring 不会回滚事务。你如果想要在特定的异常回滚可以考虑<code>rollbackFor()</code>等属性</h6><h6 id="3-2-Transactional-只能应用到-public-方法才有效。"><a href="#3-2-Transactional-只能应用到-public-方法才有效。" class="headerlink" title="3.2  @Transactional 只能应用到 public 方法才有效。"></a>3.2  <code>@Transactional</code> 只能应用到 public 方法才有效。</h6><p>这是因为在使用 Spring AOP 代理时，Spring 会调用 <code>TransactionInterceptor</code>在目标方法执行前后进行拦截之前，<code>DynamicAdvisedInterceptor</code>（<code>CglibAopProxy</code>的内部类）的的 <code>intercept</code>方法或 JdkDynamicAopProxy 的 invoke 方法会间接调用 <code>AbstractFallbackTransactionAttributeSource</code>（Spring 通过这个类获取<code>@Transactional</code> 注解的事务属性配置属性信息）的 <code>computeTransactionAttribute</code> 方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Nullable</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> TransactionAttribute <span class="title">computeTransactionAttribute</span><span class="params">(Method method, @Nullable Class&lt;?&gt; targetClass)</span> </span>&#123;</div><div class="line">       <span class="comment">//这里判断是否是public方法</span></div><div class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.allowPublicMethodsOnly() &amp;&amp; !Modifier.isPublic(method.getModifiers())) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125; </div><div class="line"><span class="comment">//省略其他代码</span></div></pre></td></tr></table></figure></p>
+<p>若不是 public，就不会获取@Transactional 的属性配置信息，最终会造成不会用 TransactionInterceptor 来拦截该目标方法进行事务管理。整个事务执行的时序图如下。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-fecd22fffdc8d181.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h6 id="3-3-Spring-的-AOP-的自调用问题"><a href="#3-3-Spring-的-AOP-的自调用问题" class="headerlink" title="3.3 Spring 的 AOP 的自调用问题"></a>3.3 Spring 的 AOP 的自调用问题</h6><p>在 Spring 的 AOP 代理下，只有目标方法由外部调用，目标方法才由 Spring 生成的代理对象来管理，这会造成自调用问题。若同一类中的其他没有<code>@Transactional</code>注解的方法内部调用有<code>@Transactional</code>注解的方法，有<code>@Transactional</code>注解的方法的事务被忽略，不会发生回滚。这个问题是由于Spring AOP 代理造成的(如下面代码所示）。之所以没有应用事务，是因为在内部调用，而代理后的类(把目标类作为成员变量静态代理)只是调用成员变量中的对应方法，自然也就没有aop中的advice，造成只能调用父类的方法。另外一个问题是只能应用在public方法上。为解决这两个问题，使用 AspectJ （静态编译）取代 Spring AOP 动态代理。或者采用3.4中的方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Transactional</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveUser</span><span class="params">()</span></span>&#123;</div><div class="line">        User user = <span class="keyword">new</span> User();</div><div class="line">        user.setAge(<span class="number">22</span>);</div><div class="line">        user.setName(<span class="string">"mask"</span>);</div><div class="line">        logger.info(<span class="string">"save the user&#123;&#125;"</span>,user);</div><div class="line">        userRepository.save(user);</div><div class="line">       <span class="comment">// throw new RuntimeException("exception");</span></div><div class="line">    &#125;</div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveUserBack</span><span class="params">()</span></span>&#123;</div><div class="line">        saveUser();   <span class="comment">//自调用发生</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h6 id="3-4-自注入解决办法"><a href="#3-4-自注入解决办法" class="headerlink" title="3.4 自注入解决办法"></a>3.4 自注入解决办法</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> </span>&#123;</div><div class="line"></div><div class="line">    Logger logger = LoggerFactory.getLogger(UserService.class);</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    UserRepository userRepository;</div><div class="line">    </div><div class="line">    <span class="meta">@Autowired</span> </div><div class="line">    UserService userService; <span class="comment">//自注入来解决</span></div><div class="line"></div><div class="line">    <span class="meta">@Transactional</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveUser</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">        User user = <span class="keyword">new</span> User();</div><div class="line">        user.setAge(<span class="number">22</span>);</div><div class="line">        user.setName(<span class="string">"mask"</span>);</div><div class="line">        logger.info(<span class="string">"save the user&#123;&#125;"</span>,user);</div><div class="line">        userRepository.save(user);</div><div class="line">       <span class="comment">// throw new RuntimeException("exception");</span></div><div class="line">    &#125;</div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveUserBack</span><span class="params">()</span></span>&#123;</div><div class="line">        saveUser();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外也可以把注解加到类上来解决。</p>
+<h5 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h5><p><code>@Transactional</code>用起来是方便，但是我们需要明白它背后的原理，避免入坑。另外<code>@Transactional</code>不建议用在处理时间过长的事务。因为，它会一直持有数据库线程池的连接，造成不能及时返回。就是尽量是的事务的处理时间短。</p>
+<p>参考文章：</p>
+<p><a href="https://blog.csdn.net/aichuanwendang/article/details/53306351" target="_blank" rel="external">Spring @Transactional的使用及原理</a><br><a href="https://www.jianshu.com/p/99f8787f9eaa" target="_blank" rel="external">深入理解 Spring 事务原理</a><br><a href="https://www.ibm.com/developerworks/cn/java/j-master-spring-transactional-use/index.html" target="_blank" rel="external">透彻的掌握 Spring 中@transactional 的使用</a><br><a href="https://blog.csdn.net/clementad/article/details/47339519" target="_blank" rel="external">在同一个类中，一个方法调用另外一个有注解（比如@Async，@Transational）的方法，注解失效的原因和解决方法</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/16/Transaction必知必会/" data-id="cjmw6phfy001tlgorzs3h3nbz" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/16/flink和spark对比/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          flink和spark对比(译)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/05/Netty读书笔记5-使用LengthFieldBasedFrameDecoder解码器自定义协议/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">Netty读书笔记5: 使用LengthFieldBasedFrameDecoder解码器自定义协议</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categorieën</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DesignPattern/">DesignPattern</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java基础/">Java基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java源码分析/">Java源码分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Springboot/">Springboot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flink/">flink</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件比赛/">中间件比赛</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构与算法/">数据结构与算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Labels</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cookie-Session/">Cookie&Session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-2/">HTTP/2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java基础/">Java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambada表达式/">Lambada表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springboot/">Springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件比赛/">中间件比赛</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/红黑树/">红黑树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Cookie-Session/" style="font-size: 10px;">Cookie&Session</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-2/" style="font-size: 12.5px;">HTTP/2</a> <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/Java基础/" style="font-size: 12.5px;">Java基础</a> <a href="/tags/Lambada表达式/" style="font-size: 10px;">Lambada表达式</a> <a href="/tags/LeetCode/" style="font-size: 12.5px;">LeetCode</a> <a href="/tags/Netty/" style="font-size: 12.5px;">Netty</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 12.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/flink/" style="font-size: 15px;">flink</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/netty/" style="font-size: 12.5px;">netty</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/中间件比赛/" style="font-size: 10px;">中间件比赛</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/设计模式/" style="font-size: 17.5px;">设计模式</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/28/第四届阿里中间件性能挑战赛总结和思考/">第四届阿里中间件性能挑战赛总结和思考</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/28/Redis面试必备知识点/">Redis面试必备知识点</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/Leetcode-Permutations-II/">Leetcode:Permutations II</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/LeetCode53-Maximum-Subarray/">LeetCode53. Maximum Subarray</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/13/Netty源码分析系列1-BootStrap的分析/">Netty源码分析系列1:BootStrap的分析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Maskwang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

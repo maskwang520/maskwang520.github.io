@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深入理解HTTPS协议 | Maskwang blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="HTTS协议实际就是标准的HTTP协议加上SSL/TLS层.它能防止我们的信息被窃取,暴露出不安全.或者进入钓鱼网址.通过下面这个讲解,我希望能明白SSL/TLS层到底为我们做了哪些事情,才能保证我们的信息安全.">
+<meta name="keywords" content="HTTP&#x2F;2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解HTTPS协议">
+<meta property="og:url" content="http://yoursite.com/2018/03/24/深入理解HTTPS协议/index.html">
+<meta property="og:site_name" content="Maskwang blogs">
+<meta property="og:description" content="HTTS协议实际就是标准的HTTP协议加上SSL/TLS层.它能防止我们的信息被窃取,暴露出不安全.或者进入钓鱼网址.通过下面这个讲解,我希望能明白SSL/TLS层到底为我们做了哪些事情,才能保证我们的信息安全.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-ffbc5130891ca4b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-3151b5a6eedbedca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-24T15:06:14.217Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解HTTPS协议">
+<meta name="twitter:description" content="HTTS协议实际就是标准的HTTP协议加上SSL/TLS层.它能防止我们的信息被窃取,暴露出不安全.或者进入钓鱼网址.通过下面这个讲解,我希望能明白SSL/TLS层到底为我们做了哪些事情,才能保证我们的信息安全.">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5281821-ffbc5130891ca4b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Maskwang blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Talk is nothing,Show me the code</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-深入理解HTTPS协议" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/24/深入理解HTTPS协议/" class="article-date">
+  <time datetime="2018-03-24T15:04:38.000Z" itemprop="datePublished">2018-03-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机网络/">计算机网络</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      深入理解HTTPS协议
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>HTTS协议实际就是标准的HTTP协议加上SSL/TLS层.它能防止我们的信息被窃取,暴露出不安全.或者进入钓鱼网址.通过下面这个讲解,我希望能明白SSL/TLS层到底为我们做了哪些事情,才能保证我们的信息安全.<br><a id="more"></a></p>
+<h5 id="1-HTTPS到底做了哪些事情"><a href="#1-HTTPS到底做了哪些事情" class="headerlink" title="1. HTTPS到底做了哪些事情"></a>1. HTTPS到底做了哪些事情</h5><p>HTTPS采用众所周知和理解的HTTP协议，并简单地将SSL / TLS加密层层叠在其上。服务器和客户端仍然使用相同的HTTP，但通过安全的SSL连接来加密和解密他们的请求和响应。 SSL层有两个主要目的：</p>
+<ul>
+<li>保证你是在跟真正的服务器通信,而不是伪装的服务器.</li>
+<li>保证只有真正的服务器才能解密你发送的信息.同时,也只有你才能解密服务器跟你发送消息.就是保证是你跟真正的服务器在通信,这过程中没有第三者.</li>
+</ul>
+<p><strong>在这过程中,其他人还是可以中途截取到你发送的信息,但是是加密的,它们拿到也无法解密.</strong></p>
+<h5 id="2-SSL-TLS是如何建立连接的"><a href="#2-SSL-TLS是如何建立连接的" class="headerlink" title="2. SSL/TLS是如何建立连接的"></a>2. SSL/TLS是如何建立连接的</h5><p>客户端和服务器端通过握手来建立连接的，目的有以下3点。</p>
+<ul>
+<li>保证客户端正在和正确的服务器通信（反之亦然）</li>
+<li>有关各方已就“密码套件”达成一致，该密码套件包括将用于交换数据的加密算法</li>
+<li>对密匙达成一致，双方使用相同的密匙</li>
+</ul>
+<p>一旦建立连接，双方就可以使用商定的算法和密钥将消息安全地发送给对方。我们将握手分为三个主要阶段 - Hello，证书交换和密钥交换。</p>
+<ol>
+<li>Hello - 握手从客户端发送ClientHello消息开始。这包含服务器通过SSL/TLS连接到客户端所需的所有信息，包括它支持的各种密码套件和最大SSL/TLS版本。服务器响应ServerHello，其中包含客户端所需的类似信息，包括基于客户端有关哪个密码套件和SSL/TLS版本将被使用的偏好的决定。</li>
+<li>证书交换 - 现在联系已建立，服务器必须向客户证明其身份。这是通过使用SSL证书来实现的，该证书与其护照非常相似。 SSL证书包含各种数据，包括所有者的名称，所连接的属性（例如域），证书的公钥，数字签名以及有关证书有效日期的信息。客户端检查它是隐式信任证书，还是验证它是否被其隐含信任的几个证书颁发机构（CA）之一验证和信任。请注意，服务器也可以要求证书来证明客户的身份，但这通常只发生在非常敏感的应用程序中。</li>
+<li>密钥交换 - 客户端和服务器交换的实际消息数据的加密将使用对称加密算法完成，其确切性质在Hello阶段已经达成一致。对称算法使用单个密钥进行加密和解密，与需要公钥/私钥对的非对称算法相反。双方需要就这个单一的对称密钥达成一致，这个安全使用非对称加密和服务器的公钥/私钥完成的过程。<strong>客户端先用非对称加密算法的公钥把通信过程中需要的私钥传给服务端，服务端用私钥解读出以后通信过程中的私钥。</strong></li>
+</ol>
+<p>客户端生成一个用于对称加密算法的随机密钥。它使用在Hello阶段同意的算法和服务器的公钥（在其SSL证书上找到）对其进行加密。它将这个加密的密钥发送到服务器，在那里使用服务器的私钥解密，并且握手的有趣部分已完成。双方都非常高兴，他们正在与正确的人交谈，并秘密地同意了一个密钥，以对称加密的方式加密他们将要发送的数据。 HTTP请求和响应现在可以通过形成明文消息然后加密并发送来发送。另一方是唯一知道如何解密此消息的人，因此中间人攻击者无法读取或修改他们可能拦截的任何请求。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-ffbc5130891ca4b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="3-证书"><a href="#3-证书" class="headerlink" title="3. 证书"></a>3. 证书</h5><p>对于请求方来说，它怎么能确定它所得到的公钥一定是从目标主机那里发布的，而且没有被篡改过呢？亦或者请求的目标主机本本身就从事窃取用户信息的不正当行为呢？这时候，我们需要有一个权威的值得信赖的第三方机构(一般是由政府审核并授权的机构)来统一对外发放主机机构的公钥，只要请求方这种机构获取公钥，就避免了上述问题的发生。<br>用户首先产生自己的密钥对，并将公共密钥及部分个人身份信息传送给认证中心。认证中心在核实身份后，将执行一些必要的步骤，以确信请求确实由用户发送而来，然后，认证中心将发给用户一个数字证书，该证书内包含用户的个人信息和他的公钥信息，同时还附有认证中心的签名信息(根证书私钥签名)。用户就可以使用自己的数字证书进行相关的各种活动。数字证书由独立的证书发行机构发布，数字证书各不相同，每种证书可提供不同级别的可信度。<br>证书的验证是通过验证证书的数字签名(CA的公钥来解开签名,并与原文hash之后的摘要做对比).</p>
+<h5 id="4-数字签名"><a href="#4-数字签名" class="headerlink" title="4. 数字签名"></a>4. 数字签名</h5><p>数字签名技术就是对“非对称密钥加解密”和“数字摘要“两项技术的应用，它将摘要信息用发送者的私钥加密，与原文一起传送给接收者。 接收者只有用发送者的<strong>公钥</strong>才能解密被加密的摘要信息，然后用HASH函数对收到的原文产生一个<strong>摘要信息</strong>，与解密的摘要信息对比。 如果相同，则说明收到的信息是完整的，在传输过程中没有被修改，否则说明信息被修改过，因此数字签名能够验证信息的完整性。<br>数字签名的过程如下：</p>
+<blockquote>
+<p>明文 –&gt; hash运算 –&gt; 摘要 –&gt; 私钥加密 –&gt; 数字签名</p>
+</blockquote>
+<p>数字签名有两种功效：</p>
+<ul>
+<li>能确定消息确实是由发送方签名并发出来的，因为别人假冒不了发送方的签名。</li>
+<li>数字签名能确定消息的完整性。</li>
+</ul>
+<p>真个HTTPS的握手过程如下<br><img src="https://upload-images.jianshu.io/upload_images/5281821-3151b5a6eedbedca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h5><p>HTTPS不是不可破解的，并且SSL协议必须随着新攻击被发现和压制而不断发展。但它仍然是一种传递秘密数据的的方式，无需关心谁看到您的消息。当然，这里没有提到许多实现细节，例如握手消息的确切格式和顺序，在不需要重新协商密钥和密码套件的情况下选择最近会话的简短握手，以及在每个阶段可用的众多不同的加密选项。关键要记住的是，虽然HTTPS可以保证数据安全地连接到目的地，但它绝不会保护您（作为用户或开发人员）抵御XSS或数据库泄漏或任何其他事情 。看看威尔史密斯，“Walk in shadow, move in silence, guard against extra-terrestrial violence”。</p>
+<p>参考文章:<br><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html</a><br><a href="https://robertheaton.com/2014/03/27/how-does-https-actually-work/" target="_blank" rel="external">https://robertheaton.com/2014/03/27/how-does-https-actually-work/</a><br><a href="http://www.wxtlife.com/2016/03/27/%E8%AF%A6%E8%A7%A3https%E6%98%AF%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E5%AE%89%E5%85%A8%E7%9A%84%EF%BC%9F/#u6570_u5B57_u8BC1_u4E66" target="_blank" rel="external">http://www.wxtlife.com/2016/03/27/%E8%AF%A6%E8%A7%A3https%E6%98%AF%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E5%AE%89%E5%85%A8%E7%9A%84%EF%BC%9F/#u6570_u5B57_u8BC1_u4E66</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/24/深入理解HTTPS协议/" data-id="cjmw6phgt0028lgorq85qaubg" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP-2/">HTTP/2</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/24/深入理解Java8Lambada表达式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          深入理解Java8Lambada表达式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/20/重拾jdk源码重点系列-8-ThreadLocal源码分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">重拾jdk源码重点系列-8:ThreadLocal源码分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categorieën</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DesignPattern/">DesignPattern</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java基础/">Java基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java源码分析/">Java源码分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Springboot/">Springboot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flink/">flink</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件比赛/">中间件比赛</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构与算法/">数据结构与算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Labels</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cookie-Session/">Cookie&Session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-2/">HTTP/2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java基础/">Java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambada表达式/">Lambada表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springboot/">Springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件比赛/">中间件比赛</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/红黑树/">红黑树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Cookie-Session/" style="font-size: 10px;">Cookie&Session</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-2/" style="font-size: 12.5px;">HTTP/2</a> <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/Java基础/" style="font-size: 12.5px;">Java基础</a> <a href="/tags/Lambada表达式/" style="font-size: 10px;">Lambada表达式</a> <a href="/tags/LeetCode/" style="font-size: 12.5px;">LeetCode</a> <a href="/tags/Netty/" style="font-size: 12.5px;">Netty</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 12.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/flink/" style="font-size: 15px;">flink</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/netty/" style="font-size: 12.5px;">netty</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/中间件比赛/" style="font-size: 10px;">中间件比赛</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/设计模式/" style="font-size: 17.5px;">设计模式</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/28/第四届阿里中间件性能挑战赛总结和思考/">第四届阿里中间件性能挑战赛总结和思考</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/28/Redis面试必备知识点/">Redis面试必备知识点</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/Leetcode-Permutations-II/">Leetcode:Permutations II</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/LeetCode53-Maximum-Subarray/">LeetCode53. Maximum Subarray</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/13/Netty源码分析系列1-BootStrap的分析/">Netty源码分析系列1:BootStrap的分析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Maskwang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

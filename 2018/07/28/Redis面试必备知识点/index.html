@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Redis面试必备知识点 | Maskwang blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. Redis五种基本的数据结构 字符串（strings)  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这是最简单Redis类型。如果你只用这种类型，Redis就像一个可以持久化的memcached服务器.key,value就是字符串.">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis面试必备知识点">
+<meta property="og:url" content="http://yoursite.com/2018/07/28/Redis面试必备知识点/index.html">
+<meta property="og:site_name" content="Maskwang blogs">
+<meta property="og:description" content="1. Redis五种基本的数据结构 字符串（strings)  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这是最简单Redis类型。如果你只用这种类型，Redis就像一个可以持久化的memcached服务器.key,value就是字符串.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-dbc5b81037963204.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-75c06d68a9b1998d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-8749384af05dd0b8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-178876aeea1697fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-4010502c74674f87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-3ffd602c75d39912.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-77350c2e671edff0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-82281a0678d16807.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-8b8b7465b6ef464b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-c967f9247c84a647.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-4ab068b72b59ba2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-3d2c5c6790b035d4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-07-28T15:01:27.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis面试必备知识点">
+<meta name="twitter:description" content="1. Redis五种基本的数据结构 字符串（strings)  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这是最简单Redis类型。如果你只用这种类型，Redis就像一个可以持久化的memcached服务器.key,value就是字符串.">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5281821-dbc5b81037963204.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Maskwang blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Talk is nothing,Show me the code</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Redis面试必备知识点" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/28/Redis面试必备知识点/" class="article-date">
+  <time datetime="2018-07-28T14:38:35.000Z" itemprop="datePublished">2018-07-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis面试必备知识点
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-Redis五种基本的数据结构"><a href="#1-Redis五种基本的数据结构" class="headerlink" title="1. Redis五种基本的数据结构"></a>1. Redis五种基本的数据结构</h4><ul>
+<li>字符串（strings)</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这是最简单Redis类型。如果你只用这种类型，Redis就像一个可以持久化的memcached服务器.key,value就是字符串.<br><img src="https://upload-images.jianshu.io/upload_images/5281821-dbc5b81037963204.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="string.jpg"><br><a id="more"></a><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">set mykey maskwang</div><div class="line">get mykey</div><div class="line">//设置多个值</div><div class="line">mset a 10 b 20 c 30</div><div class="line">//设置5秒的过期</div><div class="line">expire key 5</div></pre></td></tr></table></figure></p>
+<ul>
+<li>列表(Redis Lists)</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;一个列表结构可以有序的存储多个字符串，多个字符串是可以重复的。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-75c06d68a9b1998d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未命名文件 (1).jpg"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span> rpush mylist A</div><div class="line">(integer) 1</div><div class="line"><span class="meta">&gt;</span> rpush mylist B</div><div class="line">(integer) 2</div><div class="line"><span class="meta">&gt;</span> lpush mylist first</div><div class="line">(integer) 3</div><div class="line">//顺序取列表中每个值</div><div class="line"><span class="meta">&gt;</span> lrange mylist 0 -1</div><div class="line">1) "first"</div><div class="line">2) "A"</div><div class="line">3) "B"</div></pre></td></tr></table></figure>
+<ul>
+<li>集合(set)</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Redis的集合和列表都可以存储多个字符串，不同之处在于，列表可以存储多个相同的字符串，而集合则通过散列表保证自己存储的每个字符串都是各不相同的。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-8749384af05dd0b8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未命名文件 (3).jpg"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span> sadd myset 1 2 3</div><div class="line">(integer) 3</div><div class="line"><span class="meta">&gt;</span> smembers myset</div><div class="line">1. 3</div><div class="line">2. 1</div><div class="line">3. 2</div></pre></td></tr></table></figure>
+<ul>
+<li>散列（hash)</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Redis的散列可以存储多个键值对之间的映射。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-178876aeea1697fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未命名文件.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span> hmset user:1000 username maskwang birthyear 1994 verified 1</div><div class="line">OK</div><div class="line"><span class="meta">&gt;</span> hget user:1000 username</div><div class="line">"maskwang"</div><div class="line"><span class="meta">&gt;</span> hget user:1000 birthyear</div><div class="line">"1993"</div><div class="line"><span class="meta">&gt;</span> hgetall user:1000</div><div class="line">1) "username"</div><div class="line">2) "maskwang"</div><div class="line">3) "birthyear"</div><div class="line">4) "1994"</div><div class="line">5) "verified"</div><div class="line">6) "1"</div></pre></td></tr></table></figure>
+<ul>
+<li>有序集合（zset)</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;有序集合和散列一样，都用于存储键值对：有序集合的键成为成员（member),每个成员都是各不相同的；而有序集合的值称为分值（score),分值必须是浮点数。有序集合是Redis里面唯一一个既可以根据成员访问元素，又可以根据分值的排列顺序来访问元素的结构。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-4010502c74674f87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未命名文件 (1).png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span> zadd student 1994 "maskwang"</div><div class="line">(integer) 1</div><div class="line"><span class="meta">&gt;</span> zadd student  1987 "tom"</div><div class="line">(integer 1)</div><div class="line"><span class="meta">&gt;</span> zadd student  1999 "bob"</div><div class="line">(integer) 1</div><div class="line"><span class="meta">&gt;</span> zadd student  1949 "mary"</div><div class="line">(integer) 1</div><div class="line">//遍历zset,元素则按分值大小从小到大显示。</div><div class="line"><span class="meta">&gt;</span> zrange hackers 0 -1</div><div class="line">1) "mary"</div><div class="line">2) "tom"</div><div class="line">3) "maskwang"</div><div class="line">4) "bob"</div></pre></td></tr></table></figure>
+<h4 id="2-Redis持久化"><a href="#2-Redis持久化" class="headerlink" title="2. Redis持久化"></a>2. Redis持久化</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Redis是内存数据库，它把数据存储在内存中，这样在加快读取速度的同时也对数据安全性产生了新的问题，即当redis所在服务器发生宕机后，redis数据库里的所有数据将会全部丢失。Redis提供了两种持久化方式，分别是RDB和AOF。</p>
+<ul>
+<li>持久化之全量写入：RDB</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;RDB持久化是把当前进程数据生成快照保存到硬盘的过程.类似于savepoint.<br>如果要启用RDB，需要在在redis.conf配置如下。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//900秒内有1次写入，则会触发BGSAVE命令，执行RDB持久化</div><div class="line">save 900 1</div><div class="line">save 300 10</div><div class="line">save 60 10000</div><div class="line">dbfilename "dump.rdb"          #持久化文件名称</div><div class="line">dir "./"    #持久化数据文件存放的路径</div></pre></td></tr></table></figure></p>
+<p><strong>RDB的优点</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;（1）RDB是一个紧凑的单一文件，它保存了某个时间点得数据集,非常适用于数据集的备份。<br> &nbsp;&nbsp;&nbsp;&nbsp;（2）RDB在保存RDB文件时父进程唯一需要做的就是fork出一个子进程,接下来的工作全部由子进程来做，父进程不需要再做其他IO操作，所以RDB持久化方式可以最大化redis的性能.<br>&nbsp;&nbsp;&nbsp;&nbsp;（3）与AOF相比,在恢复大的数据集的时候，RDB方式会更快一些.<br><strong>RDB的缺点</strong><br> &nbsp;&nbsp;&nbsp;&nbsp;（1）如果你希望在redis意外停止工作（例如电源中断）的情况下丢失的数据最少的话，那么RDB不适合你.会丢失两次备份之间这段时间内数据的新增，删除，以及变化。<br>&nbsp;&nbsp;&nbsp;&nbsp;（2）RDB 需要经常fork子进程来保存数据集到硬盘上,当数据集比较大的时候,fork的过程是非常耗时的,可能会导致Redis在一些毫秒级内不能响应客户端的请求.如果数据集巨大并且CPU性能不是很好的情况下,这种情况会持续1秒。（这个过程的原理是一个<em>CopyOnWrite</em>机制，将原来的数据复制到一个新的空间进行修改，读写分离的思想）</p>
+<blockquote>
+<p>fork()用于创建一个进程，所创建的进程复制父进程的代码段/数据段/BSS段/堆/栈等所有用户空间信息；在内核中操作系统重新为其申请了一个PCB，并使用父进程的PCB进行初始化； </p>
+</blockquote>
+<ul>
+<li>持久化之增量写入：AOF</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;与RDB的保存整个redis数据库状态不同，AOF是通过保存对redis服务端的写命令（如set、sadd、rpush）来记录数据库状态的，即保存你对redis数据库的写操作.<br>如果要启用AOF，需要在在redis.conf配置如下。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">dir "./"           #AOF文件存放目录</div><div class="line">3 appendonly yes                       #开启AOF持久化，默认关闭</div><div class="line">4 appendfilename "appendonly.aof"      #AOF文件名称（默认）</div><div class="line">5 appendfsync no                       #AOF持久化策略</div><div class="line">6 auto-aof-rewrite-percentage 100      #触发AOF文件重写的条件（默认）</div><div class="line">7 auto-aof-rewrite-min-size 64mb       #触发AOF文件重写的条件（默认）</div></pre></td></tr></table></figure></p>
+<p><strong>AOF 优点</strong><br>（1）默认的fsync策略是1秒，一旦出现故障，你最多丢失1秒的数据.(这个策略可以配置）<br>（2）Redis 可以在 AOF 文件体积变得过大时，自动地在后台对 AOF 进行重写： 重写后的新 AOF 文件包含了恢复当前数据集所需的最小命令集合。<br>（3）AOF 文件有序地保存了Redis执行的所有写入操作， 这些写入操作以 Redis 协议的格式保存， 因此 AOF 文件的内容非常容易被人读懂， 对文件进行分析也很轻松。<br><strong>AOF 缺点</strong><br>（1）对于相同的数据集来说，AOF 文件的体积通常要大于 RDB 文件的体积。<br>（2）根据所使用的 fsync 策略，AOF 的速度可能会慢于 RDB 。 在一般情况下， 每秒 fsync 的性能依然非常高， 而关闭 fsync 可以让 AOF 的速度和 RDB 一样快， 即使在高负荷之下也是如此。 不过在处理巨大的写入载入时，RDB 可以提供更有保证的最大延迟时间。</p>
+<h3 id="3-Redis事务"><a href="#3-Redis事务" class="headerlink" title="3. Redis事务"></a>3. Redis事务</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;事务提供了一种“将多个命令打包， 然后一次性、按顺序地执行”的机制， 并且事务在执行的期间不会主动中断 —— 服务器在执行完事务中的所有命令之后， 才会继续处理其他客户端的其他命令，通常如下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span> MULTI</div><div class="line">OK</div><div class="line"><span class="meta">&gt;</span> SET book-name "Mastering C++ in 21 days"</div><div class="line">QUEUED</div><div class="line"><span class="meta">&gt;</span> GET book-name</div><div class="line">QUEUED</div><div class="line"><span class="meta">&gt;</span> SADD tag "C++" "Programming" "Mastering Series"</div><div class="line">QUEUED</div><div class="line"><span class="meta">&gt;</span> SMEMBERS tag</div><div class="line">QUEUED</div><div class="line"><span class="meta">&gt;</span> EXEC</div><div class="line">1) OK</div><div class="line">2) "Mastering C++ in 21 days"</div><div class="line">3) (integer) 3</div><div class="line">4) 1) "Mastering Series"</div><div class="line">   2) "C++"</div><div class="line">   3) "Programming"</div></pre></td></tr></table></figure>
+<p>一个事务从开始到执行会经历以下三个阶段：</p>
+<ul>
+<li>开始事务</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这个命令唯一做的就是， 将客户端的 REDIS_MULTI 选项打开， 让客户端从非事务状态切换到事务状态。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-3ffd602c75d39912.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li>命令入队</li>
+</ul>
+<p>命令执行过程如下：<br><img src="https://upload-images.jianshu.io/upload_images/5281821-77350c2e671edff0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;当客户端处于非事务状态下时， 所有发送给服务器端的命令都会立即被服务器执行。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span> SET msg "maskwang"</div><div class="line">OK</div><div class="line"><span class="meta">&gt;</span> GET msg</div><div class="line">"maskwang"</div></pre></td></tr></table></figure></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;但是， 当客户端进入事务状态之后， 服务器在收到来自客户端的命令时， 不会立即执行命令， 而是将这些命令全部放进一个事务队列里， 然后返回 QUEUED ， 表示命令已入队：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span> MULTI</div><div class="line">OK</div><div class="line"><span class="meta">&gt;</span> SET msg "maskwang"</div><div class="line">QUEUED</div><div class="line"><span class="meta">&gt;</span> GET msg</div><div class="line">QUEUED</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>事务队列是一个数组， 每个数组项是都包含三个属性：<br>要执行的命令（cmd）,命令的参数（argv）,参数的个数（argc）。</p>
+</blockquote>
+<ul>
+<li>执行事务</li>
+</ul>
+<p>（1）如果客户端正处于事务状态， 那么当 EXEC 命令执行时， 服务器根据客户端所保存的事务队列， 以先进先出（FIFO）的方式执行事务队列中的命令。<br>（2）执行事务中的命令所得的结果会以 FIFO 的顺序保存到一个回复队列中。<br>（3）当事务队列里的所有命令被执行完之后，EXEC 命令会将回复队列作为自己的执行结果返回给客户端， 客户端从事务状态返回到非事务状态， 至此， 事务执行完毕。<br><strong>需要注意的地方：</strong><br>除了 EXEC 之外， 服务器在客户端处于事务状态时， 不加入到事务队列而直接执行的另外三个命令是 DISCARD 、 MULTI 和 WATCH 。</p>
+<ul>
+<li>带 WATCH 的事务</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;WATCH 命令用于在事务开始之前监视任意数量的键： 当调用 EXEC 命令执行事务时， 如果任意一个被监视的键已经被其他客户端修改了， 那么整个事务不再执行， 直接返回失败。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">redis&gt;</span> WATCH name</div><div class="line">OK</div><div class="line"><span class="meta">&gt;</span> MULTI</div><div class="line">OK</div><div class="line"><span class="meta">&gt;</span> SET name mask</div><div class="line">QUEUED</div><div class="line"><span class="meta">&gt;</span> EXEC</div><div class="line">(nil)</div></pre></td></tr></table></figure></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;带 WATCH 的事务是以乐观锁的形式执行的，也就是说先执行，再判断所监控的键有没有变化，是一种CAS的思想。</p>
+<ul>
+<li>DISCARD</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; DISCARD命令用于取消一个事务， 它清空客户端的整个事务队列， 然后将客户端从事务状态调整回非事务状态， 最后返回字符串 OK 给客户端， 说明事务已被取消。</p>
+<h4 id="Redis发布订阅"><a href="#Redis发布订阅" class="headerlink" title="Redis发布订阅"></a>Redis发布订阅</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Redis 通过 PUBLISH、 SUBSCRIBE等命令实现了订阅与发布模式， 这个功能提供两种信息机制， 分别是订阅/发布到频道和订阅/发布到模式。这个功能和消息队列类似于rabbitmq,rocketmq等消息队列的用处一样。由于Redis在这方面的性能表现不及专门的消息队列好，但是在小规模下，依然有应用的场景。</p>
+<ul>
+<li>频道的订阅和发布</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Redis的SUBSCRIBE命令可以让客户端订阅任意数量的频道， 每当有新信息发送到被订阅的频道时， 信息就会被发送给所有订阅指定频道的客户端。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-82281a0678d16807.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>&nbsp;&nbsp;&nbsp;&nbsp;当有新消息通过PUBLISH命令发送给频道 <code>channel1</code> 时， 这个消息就会被发送给订阅它的三个客户端：<br><img src="https://upload-images.jianshu.io/upload_images/5281821-8b8b7465b6ef464b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>&nbsp;&nbsp;&nbsp;&nbsp;原理：通过一个pubsub_channels的字典来实现的，字典的键为频道，与每个频道对应的值为一个链表，对应着订阅了某频道的客户端。<br><img src="https://upload-images.jianshu.io/upload_images/5281821-c967f9247c84a647.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li>模式的订阅与信息发送</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;当使用 PUBLISH命令发送信息到某个频道时， 不仅所有订阅该频道的客户端会收到信息， 如果有某个/某些模式和这个频道匹配的话， 那么所有订阅这个/这些频道的客户端也同样会收到信息。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;下图展示了一个带有频道和模式的例子， 其中 <code>tweet.shop.*</code> 模式匹配了 <code>tweet.shop.kindle</code> 频道和 <code>tweet.shop.ipad</code> 频道， 并且有不同的客户端分别订阅它们三个：<br><img src="https://upload-images.jianshu.io/upload_images/5281821-4ab068b72b59ba2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>&nbsp;&nbsp;&nbsp;&nbsp;当有信息发送到 tweet.shop.kindle 频道时， 信息除了发送给 clientX 和 clientY 之外， 还会发送给订阅 tweet.shop.* 模式的 client123 和 client256 。模式的订阅与发布的实现原理和频道的相似，只不过是现在字典key是一个模式，利用正则表达式匹配客户端而已。</p>
+<h4 id="Redis实现分布式锁"><a href="#Redis实现分布式锁" class="headerlink" title="Redis实现分布式锁"></a>Redis实现分布式锁</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;分布式锁一般有三种实现方式：1. 数据库乐观锁；2. 基于Redis的分布式锁；3. 基于ZooKeeper的分布式锁，实现redis锁需要确保锁的实现同时满足以下四个条件：</p>
+<ul>
+<li>互斥性：在任意时刻，只有一个客户端能持有锁。 </li>
+<li>无死锁：即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。</li>
+<li>容错性：只要大部分的Redis节点正常运行，客户端就可以加锁和解锁。</li>
+<li>解锁和加锁必须是同一个对象：加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。</li>
+</ul>
+<p>网上的实现：<a href="https://yq.aliyun.com/articles/307547?utm_content=m_37928" target="_blank" rel="external">https://yq.aliyun.com/articles/307547?utm_content=m_37928</a><br>官方推荐的实现Redisson实现：<a href="https://redisson.org/" target="_blank" rel="external">https://redisson.org/</a></p>
+<h4 id="Redis实现Session共享"><a href="#Redis实现Session共享" class="headerlink" title="Redis实现Session共享"></a>Redis实现Session共享</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;在tomcat等web容器中，Session是保存在本机内存中。如果我们对tomcat做集群，不可避免要涉及到Session同步的问题，必须保证同一个集群中的tomcat的Session是共享的，因此如何让Session在不同的节点之间共享就成为关键之一。通常来说有Session sticky，redis保存Session等方式。<br>&nbsp;&nbsp;&nbsp;&nbsp;这里采用的是Spring Session+Redis简单实现的，把Session存储在Redis里面。</p>
+<ul>
+<li><p>pom文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- spring 引入 session 信息存储到redis里的依赖包  --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.session<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-session-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>application.properties里面配置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># session的存储方式的类型配置</div><div class="line">spring.session.store-type=redis</div><div class="line"># session 存活时间</div><div class="line">server.session.timeout=300</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>配置完之后，就可以跟平常一样获取Session。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpSession httpSession = request.getSession();</div></pre></td></tr></table></figure></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;SpringSession实现会话共享的关键代码是通过<code>SessionRepositoryFilter</code>这个过滤器拦截每个每个请求，通过 Filter 将使用我们上文的<code>SessionRepositoryRequestWrapper</code>封装<code>HttpServletRequest</code> 请求,之后每次获取Session,都是通过 <code>SessionRepositoryRequestWrapper</code>来获取。如果Redis存在，则Redis里面获取，否则生成新的，放入到Redis里面。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doFilterInternal</span><span class="params">(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</div><div class="line">        request.setAttribute(SESSION_REPOSITORY_ATTR, <span class="keyword">this</span>.sessionRepository);</div><div class="line">        SessionRepositoryFilter&lt;S&gt;.SessionRepositoryRequestWrapper wrappedRequest = <span class="keyword">new</span> SessionRepositoryFilter.SessionRepositoryRequestWrapper(request, response, <span class="keyword">this</span>.servletContext);</div><div class="line">        SessionRepositoryFilter&lt;S&gt;.SessionRepositoryResponseWrapper wrappedResponse = <span class="keyword">new</span> SessionRepositoryFilter.SessionRepositoryResponseWrapper(wrappedRequest, response);</div><div class="line">        HttpServletRequest strategyRequest = <span class="keyword">this</span>.httpSessionStrategy.wrapRequest(wrappedRequest, wrappedResponse);</div><div class="line">        HttpServletResponse strategyResponse = <span class="keyword">this</span>.httpSessionStrategy.wrapResponse(wrappedRequest, wrappedResponse);</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            filterChain.doFilter(strategyRequest, strategyResponse);</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            wrappedRequest.commitSession();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;上述问题是最常见的，我也是抛砖引玉。另外觉得写的有帮助的话，麻烦点下二维码关注下。你的关注是我不断创作的动力。</p>
+<h4 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h4><p><a href="https://yq.aliyun.com/articles/307547?utm_content=m_37928" target="_blank" rel="external">Redis 分布式锁的正确实现方式（ Java 版 ）</a><br><a href="http://redisbook.readthedocs.io/en/latest/index.html" target="_blank" rel="external">redis设计与实现</a><br><a href="http://www.redis.cn/topics/persistence.html" target="_blank" rel="external">Redis持久化</a><br><a href="https://juejin.im/entry/5a7594e56fb9a0634514904e" target="_blank" rel="external">Spring Boot系列十二 通过redis实现Tomcat集群的Session同步及从源码分析其原理</a><br><img src="https://upload-images.jianshu.io/upload_images/5281821-3d2c5c6790b035d4.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="qrcode_for_gh_2d4794fe3d16_258.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/28/Redis面试必备知识点/" data-id="cjmw6phfq001nlgorlz8mu3oq" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/28/第四届阿里中间件性能挑战赛总结和思考/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          第四届阿里中间件性能挑战赛总结和思考
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/27/Leetcode-Permutations-II/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">Leetcode:Permutations II</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categorieën</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DesignPattern/">DesignPattern</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java基础/">Java基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java源码分析/">Java源码分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Springboot/">Springboot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flink/">flink</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件比赛/">中间件比赛</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构与算法/">数据结构与算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Labels</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cookie-Session/">Cookie&Session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-2/">HTTP/2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java基础/">Java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambada表达式/">Lambada表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springboot/">Springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件比赛/">中间件比赛</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/红黑树/">红黑树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Cookie-Session/" style="font-size: 10px;">Cookie&Session</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-2/" style="font-size: 12.5px;">HTTP/2</a> <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/Java基础/" style="font-size: 12.5px;">Java基础</a> <a href="/tags/Lambada表达式/" style="font-size: 10px;">Lambada表达式</a> <a href="/tags/LeetCode/" style="font-size: 12.5px;">LeetCode</a> <a href="/tags/Netty/" style="font-size: 12.5px;">Netty</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 12.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/flink/" style="font-size: 15px;">flink</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/netty/" style="font-size: 12.5px;">netty</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/中间件比赛/" style="font-size: 10px;">中间件比赛</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/设计模式/" style="font-size: 17.5px;">设计模式</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/28/第四届阿里中间件性能挑战赛总结和思考/">第四届阿里中间件性能挑战赛总结和思考</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/28/Redis面试必备知识点/">Redis面试必备知识点</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/Leetcode-Permutations-II/">Leetcode:Permutations II</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/LeetCode53-Maximum-Subarray/">LeetCode53. Maximum Subarray</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/13/Netty源码分析系列1-BootStrap的分析/">Netty源码分析系列1:BootStrap的分析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Maskwang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

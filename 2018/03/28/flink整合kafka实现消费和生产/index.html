@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>flink整合kafka实现消费和生产 | Maskwang blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. flink通常整合kafka实现消费和生产。在很大原因上是由于kafka很适合流处理在我们平常的业务场景中，仅读取，写入和存储数据流是不够的，更多目的是启用流的实时处理。在Kafka中，流处理器是指从输入topic获取连续数据流，对该输入执行一些处理，并生成连续数据流以输出topic的任何内容。例如，零售应用程序可能会接受销售和装运的输入流，并输出一系列重新排序和根据此数据计算出的价格调整。">
+<meta name="keywords" content="flink,kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flink整合kafka实现消费和生产">
+<meta property="og:url" content="http://yoursite.com/2018/03/28/flink整合kafka实现消费和生产/index.html">
+<meta property="og:site_name" content="Maskwang blogs">
+<meta property="og:description" content="1. flink通常整合kafka实现消费和生产。在很大原因上是由于kafka很适合流处理在我们平常的业务场景中，仅读取，写入和存储数据流是不够的，更多目的是启用流的实时处理。在Kafka中，流处理器是指从输入topic获取连续数据流，对该输入执行一些处理，并生成连续数据流以输出topic的任何内容。例如，零售应用程序可能会接受销售和装运的输入流，并输出一系列重新排序和根据此数据计算出的价格调整。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-7d34bb0cf4b44d15.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-c750685e002c222b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5281821-3e618339943b08df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-30T14:48:53.115Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flink整合kafka实现消费和生产">
+<meta name="twitter:description" content="1. flink通常整合kafka实现消费和生产。在很大原因上是由于kafka很适合流处理在我们平常的业务场景中，仅读取，写入和存储数据流是不够的，更多目的是启用流的实时处理。在Kafka中，流处理器是指从输入topic获取连续数据流，对该输入执行一些处理，并生成连续数据流以输出topic的任何内容。例如，零售应用程序可能会接受销售和装运的输入流，并输出一系列重新排序和根据此数据计算出的价格调整。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5281821-7d34bb0cf4b44d15.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="Maskwang blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Maskwang blogs</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Talk is nothing,Show me the code</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-flink整合kafka实现消费和生产" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/28/flink整合kafka实现消费和生产/" class="article-date">
+  <time datetime="2018-03-28T15:27:55.000Z" itemprop="datePublished">2018-03-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/flink/">flink</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      flink整合kafka实现消费和生产
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="1-flink通常整合kafka实现消费和生产。在很大原因上是由于kafka很适合流处理"><a href="#1-flink通常整合kafka实现消费和生产。在很大原因上是由于kafka很适合流处理" class="headerlink" title="1. flink通常整合kafka实现消费和生产。在很大原因上是由于kafka很适合流处理"></a>1. flink通常整合kafka实现消费和生产。在很大原因上是由于kafka很适合流处理</h5><p>在我们平常的业务场景中，仅读取，写入和存储数据流是不够的，更多目的是启用流的实时处理。在Kafka中，流处理器是指从输入topic获取连续数据流，对该输入执行一些处理，并生成连续数据流以输出topic的任何内容。例如，零售应用程序可能会接受销售和装运的输入流，并输出一系列重新排序和根据此数据计算出的价格调整。<br><a id="more"></a><br>可以直接使用生产者API和消费者API进行简单的处理。然而，对于更复杂的转换，Kafka提供完全集成的Streams API。这允许构建应用程序进行非平凡的处理，从而计算聚合关闭流或将流连接在一起。在这过程中，fiink整合kafka来实现对流数据的处理是一个非常好的选择。</p>
+<h5 id="2-采用flink的Api，实现消费者。"><a href="#2-采用flink的Api，实现消费者。" class="headerlink" title="2. 采用flink的Api，实现消费者。"></a>2. 采用flink的Api，实现消费者。</h5><p>往kafka的“flinktest”这个topic不断发布消息，然后经过flink的消费之后，输出处理的时间和处理的字符串。采用的是flink1.4.2 和kafka1.0.0<br>pom文件如下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</div><div class="line">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.maskwang.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink_kafka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>flink_kafka<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.apache.org<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">flink.version</span>&gt;</span>1.4.2<span class="tag">&lt;/<span class="name">flink.version</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;flink.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-streaming-java_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;flink.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-clients_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;flink.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka-0.10 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-connector-kafka-0.10_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-shade-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">executions</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">execution</span>&gt;</span></div><div class="line">					<span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></div><div class="line">					<span class="tag">&lt;<span class="name">goals</span>&gt;</span></div><div class="line">						<span class="tag">&lt;<span class="name">goal</span>&gt;</span>shade<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></div><div class="line">					<span class="tag">&lt;/<span class="name">goals</span>&gt;</span></div><div class="line">					<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">						<span class="tag">&lt;<span class="name">artifactSet</span>&gt;</span></div><div class="line">							<span class="tag">&lt;<span class="name">excludes</span>&gt;</span></div><div class="line">								<span class="tag">&lt;<span class="name">exclude</span>&gt;</span>com.google.code.findbugs:jsr305<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></div><div class="line">								<span class="tag">&lt;<span class="name">exclude</span>&gt;</span>org.slf4j:*<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></div><div class="line">								<span class="tag">&lt;<span class="name">exclude</span>&gt;</span>log4j:*<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></div><div class="line">							<span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></div><div class="line">						<span class="tag">&lt;/<span class="name">artifactSet</span>&gt;</span></div><div class="line">						<span class="tag">&lt;<span class="name">filters</span>&gt;</span></div><div class="line">							<span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">								<span class="comment">&lt;!-- Do not copy the signatures in the META-INF folder.</span></div><div class="line">								Otherwise, this might cause SecurityExceptions when using the JAR. --&gt;</div><div class="line">								<span class="tag">&lt;<span class="name">artifact</span>&gt;</span>*:*<span class="tag">&lt;/<span class="name">artifact</span>&gt;</span></div><div class="line">								<span class="tag">&lt;<span class="name">excludes</span>&gt;</span></div><div class="line">									<span class="tag">&lt;<span class="name">exclude</span>&gt;</span>META-INF/*.SF<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></div><div class="line">									<span class="tag">&lt;<span class="name">exclude</span>&gt;</span>META-INF/*.DSA<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></div><div class="line">									<span class="tag">&lt;<span class="name">exclude</span>&gt;</span>META-INF/*.RSA<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></div><div class="line">								<span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></div><div class="line">							<span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line">						<span class="tag">&lt;/<span class="name">filters</span>&gt;</span></div><div class="line">						<span class="tag">&lt;<span class="name">transformers</span>&gt;</span></div><div class="line">							<span class="tag">&lt;<span class="name">transformer</span> <span class="attr">implementation</span>=<span class="string">"org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"</span>&gt;</span></div><div class="line">								<span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>com.maskwang.flink.ReadFromKafka<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span></div><div class="line">							<span class="tag">&lt;/<span class="name">transformer</span>&gt;</span></div><div class="line">						<span class="tag">&lt;/<span class="name">transformers</span>&gt;</span></div><div class="line">					<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">				<span class="tag">&lt;/<span class="name">execution</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">executions</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>业务逻辑如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.maskwang.flink;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.flink.api.common.functions.MapFunction;</div><div class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.datastream.DataStream;</div><div class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;</div><div class="line"><span class="keyword">import</span> org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;</div><div class="line"><span class="keyword">import</span> org.apache.flink.streaming.util.serialization.SimpleStringSchema;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReadFromKafka</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">		<span class="comment">// 构建环境</span></div><div class="line">		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();</div><div class="line">		Properties properties = <span class="keyword">new</span> Properties();</div><div class="line">		<span class="comment">//这里是由一个kafka</span></div><div class="line">		properties.setProperty(<span class="string">"bootstrap.servers"</span>, <span class="string">"localhost:9092"</span>);</div><div class="line">		properties.setProperty(<span class="string">"group.id"</span>, <span class="string">"flink_consumer"</span>);</div><div class="line">		<span class="comment">//第一个参数是topic的名称</span></div><div class="line">		DataStream&lt;String&gt; stream=env.addSource(<span class="keyword">new</span> FlinkKafkaConsumer010(<span class="string">"flinktest"</span>, <span class="keyword">new</span> SimpleStringSchema(), properties));</div><div class="line">		</div><div class="line">		stream.map(<span class="keyword">new</span> MapFunction&lt;String, String&gt;() &#123;</div><div class="line"></div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> String <span class="title">map</span><span class="params">(String value)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">new</span> Date().toString()+<span class="string">":  "</span>+value;</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">		&#125;).print();</div><div class="line">		env.execute();</div><div class="line">		</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>没有运用到集群，所以只需要添加一个ip地址就可以。如果是集群，则把其他的地址加入到这里。</li>
+<li>我采用的是flink1.4.2。所以这里使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">**注意这里有个坑，之前我不是采用这种打包方式，导致会产生如下异常**</div><div class="line">```java</div><div class="line">java.lang.NoClassDefFoundError: org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumer010</div><div class="line">	at com.maskwang.flink.ReadFromKafka.main(ReadFromKafka.java:22)</div><div class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</div><div class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</div><div class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</div><div class="line">	at java.lang.reflect.Method.invoke(Method.java:497)</div><div class="line">	at org.apache.flink.client.program.PackagedProgram.callMainMethod(PackagedProgram.java:525)</div><div class="line">	at org.apache.flink.client.program.PackagedProgram.invokeInteractiveModeForExecution(PackagedProgram.java:417)</div><div class="line">	at org.apache.flink.client.program.ClusterClient.run(ClusterClient.java:396)</div><div class="line">	at org.apache.flink.client.CliFrontend.executeProgram(CliFrontend.java:802)</div><div class="line">	at org.apache.flink.client.CliFrontend.run(CliFrontend.java:282)</div><div class="line">	at org.apache.flink.client.CliFrontend.parseParameters(CliFrontend.java:1054)</div><div class="line">	at org.apache.flink.client.CliFrontend$1.call(CliFrontend.java:1101)</div><div class="line">	at org.apache.flink.client.CliFrontend$1.call(CliFrontend.java:1098)</div><div class="line">	at org.apache.flink.runtime.security.HadoopSecurityContext$$Lambda$8/989447607.run(Unknown Source)</div><div class="line">	at java.security.AccessController.doPrivileged(Native Method)</div><div class="line">	at javax.security.auth.Subject.doAs(Subject.java:422)</div><div class="line">	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1807)</div><div class="line">	at org.apache.flink.runtime.security.HadoopSecurityContext.runSecured(HadoopSecurityContext.java:41)</div><div class="line">	at org.apache.flink.client.CliFrontend.main(CliFrontend.java:1098)</div><div class="line">Caused by: java.lang.ClassNotFoundException: org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010</div><div class="line">	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)</div><div class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)</div><div class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)</div><div class="line">	... 19 more</div></pre></td></tr></table></figure></li>
+</ul>
+<p>运行状态如下：</p>
+<ul>
+<li>向kafka的topic推送数据<br><img src="https://upload-images.jianshu.io/upload_images/5281821-7d34bb0cf4b44d15.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
+<li>flink作为客户对订阅topic实现消费并输出<br><img src="https://upload-images.jianshu.io/upload_images/5281821-c750685e002c222b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
+</ul>
+<h5 id="3-flink作为生产者向topic推送数据"><a href="#3-flink作为生产者向topic推送数据" class="headerlink" title="3. flink作为生产者向topic推送数据"></a>3. flink作为生产者向topic推送数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.maskwang.flink;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.datastream.DataStream;</div><div class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;</div><div class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.functions.source.SourceFunction;</div><div class="line"><span class="keyword">import</span> org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010;</div><div class="line"><span class="keyword">import</span> org.apache.flink.streaming.util.serialization.SimpleStringSchema;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WriteToKafka</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();</div><div class="line"></div><div class="line">		Properties properties = <span class="keyword">new</span> Properties();</div><div class="line">		properties.setProperty(<span class="string">"bootstrap.servers"</span>, <span class="string">"localhost:9092"</span>);</div><div class="line"></div><div class="line">		DataStream&lt;String&gt; stream = env.addSource(<span class="keyword">new</span> SimpleStringGenerator());</div><div class="line">		stream.addSink(<span class="keyword">new</span> FlinkKafkaProducer010(<span class="string">"flinkwrite"</span>, <span class="keyword">new</span> SimpleStringSchema(), properties));  <span class="comment">//配置topic</span></div><div class="line"></div><div class="line">		env.execute();</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleStringGenerator</span> <span class="keyword">implements</span> <span class="title">SourceFunction</span>&lt;<span class="title">String</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">		<span class="keyword">long</span> i = <span class="number">0</span>;</div><div class="line">		<span class="keyword">boolean</span> swith = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">		<span class="meta">@Override</span></div><div class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(SourceContext&lt;String&gt; ctx)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;<span class="number">5</span>;k++) &#123;</div><div class="line">				ctx.collect(<span class="string">"flink:"</span> + k++);</div><div class="line">				<span class="comment">//Thread.sleep(5);  //家里这个后会有问题</span></div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="meta">@Override</span></div><div class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cancel</span><span class="params">()</span> </span>&#123;</div><div class="line">			swith = <span class="keyword">false</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在kafka上的finkwrite(与消费的队列不同,可以自定义) topic上可以看到,数据确实被生产了<br>运行结果:<br><img src="https://upload-images.jianshu.io/upload_images/5281821-3e618339943b08df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>参考文章<br><a href="https://www.zhihu.com/question/28925721" target="_blank" rel="external">https://www.zhihu.com/question/28925721</a><br><a href="https://github.com/tgrall/kafka-flink-101" target="_blank" rel="external">https://github.com/tgrall/kafka-flink-101</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/28/flink整合kafka实现消费和生产/" data-id="cjmw6phgi0021lgorxq3anp6e" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flink/">flink</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/">kafka</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/04/flink-watermark的原理和实践/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          flink watermark的原理和实践
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/24/深入理解Java8Lambada表达式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">深入理解Java8Lambada表达式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categorieën</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DesignPattern/">DesignPattern</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java基础/">Java基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java源码分析/">Java源码分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Springboot/">Springboot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/flink/">flink</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件比赛/">中间件比赛</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构与算法/">数据结构与算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Labels</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cookie-Session/">Cookie&Session</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP-2/">HTTP/2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java基础/">Java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambada表达式/">Lambada表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Netty/">Netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springboot/">Springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/websocket/">websocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/中间件比赛/">中间件比赛</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/红黑树/">红黑树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集合/">集合</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Cookie-Session/" style="font-size: 10px;">Cookie&Session</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/HTTP-2/" style="font-size: 12.5px;">HTTP/2</a> <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/Java基础/" style="font-size: 12.5px;">Java基础</a> <a href="/tags/Lambada表达式/" style="font-size: 10px;">Lambada表达式</a> <a href="/tags/LeetCode/" style="font-size: 12.5px;">LeetCode</a> <a href="/tags/Netty/" style="font-size: 12.5px;">Netty</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 12.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/flink/" style="font-size: 15px;">flink</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/netty/" style="font-size: 12.5px;">netty</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/中间件比赛/" style="font-size: 10px;">中间件比赛</a> <a href="/tags/红黑树/" style="font-size: 10px;">红黑树</a> <a href="/tags/设计模式/" style="font-size: 17.5px;">设计模式</a> <a href="/tags/集合/" style="font-size: 10px;">集合</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/28/第四届阿里中间件性能挑战赛总结和思考/">第四届阿里中间件性能挑战赛总结和思考</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/28/Redis面试必备知识点/">Redis面试必备知识点</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/Leetcode-Permutations-II/">Leetcode:Permutations II</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/LeetCode53-Maximum-Subarray/">LeetCode53. Maximum Subarray</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/13/Netty源码分析系列1-BootStrap的分析/">Netty源码分析系列1:BootStrap的分析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Maskwang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
